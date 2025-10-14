@@ -1263,7 +1263,14 @@ Details: 62.5 GB | 125 seeds | YTS
             let sources = [];
             
             if (manualSourcesEnabled) {
-                sources = allSources.filter(s => !disabledSources.has(s));
+                sources = [];
+                allSources.forEach(source => {
+                    const checkboxId = `manual-${source.replace(/[.\s]/g, '')}`;
+                    const checkbox = document.getElementById(checkboxId);
+                    if (checkbox && checkbox.checked) {
+                        sources.push(source);
+                    }
+                });
             } else if (speed === 'fast') {
                 sources = ['YTS', 'EZTV', '1337x', 'Nyaa.si', 'The Pirate Bay', 'RARBG'];
             } else if (speed === 'balanced') {
