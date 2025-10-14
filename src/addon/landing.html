@@ -1909,6 +1909,12 @@ Details: 62.5 GB | 125 seeds | YTS
                     }
                 }
                 
+                // Handle Live TV checkbox
+                if (config.enableLiveTV === 'on') {
+                    document.getElementById('enableLiveTV').checked = true;
+                    toggleLiveTV(true);
+                }
+                
                 // Handle debrid services - check boxes if API keys exist
                 if (config.realDebridKey) {
                     document.getElementById('enableRealDebrid').checked = true;
