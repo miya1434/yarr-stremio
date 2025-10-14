@@ -28,15 +28,9 @@ export const manifest: Manifest = {
       name: "YARR! Popular",
       extra: [{ name: "skip" }],
     },
-    {
-      id: "yarr-livetv",
-      type: "tv",
-      name: "YARR! Live TV",
-      extra: [{ name: "genre" }, { name: "skip" }],
-    },
   ],
   resources: ["catalog", "stream"],
-  types: ["movie", "series", "tv"],
+  types: ["movie", "series"],
   name: "YARR!",
   description:
     "High-performance torrent addon • 58+ torrent sources • 3000+ IPTV channels (TVPass, Hilay, A1XS, Pluto, Plex, Roku + 300 more) • HBO, ESPN, Sky Sports • Multi-debrid • Zero config",

@@ -78,13 +78,30 @@ export const serveHTTP = async (port: number) => {
   });
   
   app.get("/:config/manifest.json", (req, res) => {
+    const config = parseConfig(req.params.config);
+    const dynamicManifest = { ...manifest };
+    
+    if (config.enableLiveTV === 'on') {
+      dynamicManifest.catalogs = [
+        ...manifest.catalogs,
+        {
+          id: "yarr-livetv",
+          type: "tv",
+          name: "YARR! Live TV",
+          extra: [{ name: "genre" }, { name: "skip" }],
+        },
+      ];
+      dynamicManifest.types = ["movie", "series", "tv"];
+    }
+    
     res.setHeader("Content-Type", "application/json");
     res.setHeader("Cache-Control", "max-age=3600, public");
-    res.send(JSON.stringify(manifest, null, 2));
+    res.send(JSON.stringify(dynamicManifest, null, 2));
   });
   
   // Serve streams
   app.get("/:config?/stream/:type/:id.json", async (req, res) => {
+    console.log(`📥 STREAM ENDPOINT HIT - Type: ${req.params.type}, ID: ${req.params.id}`);
     try {
       const config = req.params.config ? parseConfig(req.params.config) : {};
       const result = await streamHandler({
@@ -96,6 +113,7 @@ export const serveHTTP = async (port: number) => {
       res.setHeader("Content-Type", "application/json");
       res.send(JSON.stringify(result));
     } catch (error: any) {
+      console.error(`❌ Stream endpoint error:`, error);
       res.status(500).json({ error: error.message });
     }
   });
