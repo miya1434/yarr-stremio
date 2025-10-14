@@ -5,18 +5,19 @@
 </div>
 
 <p align="center">
-  <strong>Yet Another Rapid Retriever</strong> - A free, open-source Stremio addon with 60+ torrent sources, smart ranking, and instant debrid streaming. Quick 5-step setup.
+  <strong>Yet Another Rapid Retriever</strong> - A free, open-source Stremio addon with 58+ torrent sources, IPTV live TV, smart ranking, and instant debrid streaming. Quick 5-step setup.
 </p>
 
 ---
 
 ## What is it?
 
-YARR! is a Stremio addon that acts as your personal pirate crew, fetching torrents from all corners of the internet. It integrates with debrid services to give you instant, high-speed streaming, and it's smart enough to find the best quality links for whatever you're watching. It's built to be simple, fast, and completely customizable.
+YARR! is a Stremio addon that acts as your personal pirate crew, fetching torrents from all corners of the internet and providing live IPTV streaming. It integrates with debrid services to give you instant, high-speed streaming, and it's smart enough to find the best quality links for whatever you're watching. It's built to be simple, fast, and completely customizable.
 
 ## Features
 
-- **Tons of Sources**: We're talking 60+ public trackers, anime sites, and international indexers.
+- **Tons of Sources**: We're talking 58+ public trackers, anime sites, and international indexers.
+- **Live TV Streaming**: Watch 850+ live TV channels including sports, news, and entertainment via DaddyLive integration.
 - **Zilean Integration**: Get instant results from a massive, free torrent database.
 - **Indexer Support**: Plug in Prowlarr or Jackett to access over 1000 more trackers.
 - **Debrid Power**: Works with RealDebrid, Premiumize, AllDebrid, DebridLink, TorBox, and PikPak. If a torrent is cached, you stream it instantly.
@@ -128,6 +129,9 @@ Yep! Add as many as you have. YARR! will check all of them.
 
 **What's Zilean?**
 A free, public torrent database that gives you instant search results. It's awesome, you should definitely use it.
+
+**What live TV channels are available?**
+Enable the DaddyLive option to access 850+ live TV channels including ESPN, Fox Sports, CNN, BBC, HBO, and international sports networks. Channels include USA TV networks, sports, news, entertainment, and premium content.
 
 **Does this thing track me?**
 No way. Zero tracking, zero analytics. It's your server, your business.
