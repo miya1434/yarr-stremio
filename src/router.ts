@@ -1,4 +1,5 @@
 import { Router } from "express";
+import axios from "axios";
 import { searchTorrents } from "./torrent/search.js";
 import {
   getFile,
@@ -44,39 +45,66 @@ router.post("/test-debrid", async (req, res) => {
   }
   
   try {
-   
-    const testMagnet = "magnet:?xt=urn:btih:08ada5a7a6183aae1e09d831df6748d566095a10"; // Ubuntu torrent
+    
     
     let isValid = false;
     
     switch (service) {
       case 'RealDebrid':
-        isValid = await checkRealDebridCached(testMagnet, apiKey);
+        // Make a simple API call to validate the key
+        const rdResponse = await axios.get('https://api.real-debrid.com/rest/1.0/user', {
+          headers: { Authorization: `Bearer ${apiKey}` },
+          timeout: 5000,
+        });
+        isValid = rdResponse.status === 200 && rdResponse.data;
         break;
       case 'Premiumize':
-        isValid = await checkPremiumizeCached(testMagnet, apiKey);
+        const pmResponse = await axios.get('https://www.premiumize.me/api/account/info', {
+          params: { apikey: apiKey },
+          timeout: 5000,
+        });
+        isValid = pmResponse.status === 200 && pmResponse.data.status === 'success';
         break;
       case 'AllDebrid':
-        isValid = await checkAllDebridCached(testMagnet, apiKey);
+        const adResponse = await axios.get('https://api.alldebrid.com/v4/user', {
+          params: { agent: 'yarr', apikey: apiKey },
+          timeout: 5000,
+        });
+        isValid = adResponse.status === 200 && adResponse.data.status === 'success';
         break;
       case 'DebridLink':
-        isValid = await checkDebridLinkCached(testMagnet, apiKey);
+        const dlResponse = await axios.get('https://debrid-link.com/api/v2/account/infos', {
+          headers: { Authorization: `Bearer ${apiKey}` },
+          timeout: 5000,
+        });
+        isValid = dlResponse.status === 200 && dlResponse.data.value;
         break;
       case 'TorBox':
-        isValid = await checkTorBoxCached(testMagnet, apiKey);
+        const tbResponse = await axios.get('https://api.torbox.app/v1/api/user/me', {
+          headers: { Authorization: `Bearer ${apiKey}` },
+          timeout: 5000,
+        });
+        isValid = tbResponse.status === 200 && tbResponse.data.data;
         break;
       case 'PikPak':
-        isValid = await checkPikPakCached(testMagnet, apiKey);
+        const ppResponse = await axios.get('https://api-drive.mypikpak.com/drive/v1/about', {
+          headers: { Authorization: `Bearer ${apiKey}` },
+          timeout: 5000,
+        });
+        isValid = ppResponse.status === 200;
         break;
       default:
         return res.status(400).json({ valid: false, error: "Unknown service" });
     }
     
-    
-    res.json({ valid: true, service, message: "API key is valid!" });
+    if (isValid) {
+      res.json({ valid: true, service, message: "API key is valid and working!" });
+    } else {
+      res.json({ valid: false, error: "API key validation failed" });
+    }
   } catch (error: any) {
     console.error(`Debrid test error for ${service}:`, error.message);
-    res.json({ valid: false, error: error.message || "Invalid API key" });
+    res.json({ valid: false, error: error.message || "Invalid API key or service unavailable" });
   }
 });
 
