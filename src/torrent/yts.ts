@@ -33,6 +33,7 @@ export const searchYts = async (
         peers: torrent.peers,
         torrent: torrent.url,
         magnet: `magnet:?xt=urn:btih:${torrent.hash}${trackersString}`,
+        infohash: torrent.hash.toLowerCase(),
       }));
     } else {
       const res = await search({ query_term: searchQuery });
@@ -49,6 +50,7 @@ export const searchYts = async (
           peers: torrent.peers,
           torrent: torrent.url,
           magnet: `magnet:?xt=urn:btih:${torrent.hash}${trackersString}`,
+          infohash: torrent.hash.toLowerCase(),
         }))
       );
     }

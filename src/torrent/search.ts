@@ -134,6 +134,7 @@ export interface TorrentSearchResult {
   peers?: number;
   torrent?: string;
   magnet?: string;
+  infohash?: string;
 }
 
 export const searchTorrents = async (

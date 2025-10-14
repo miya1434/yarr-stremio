@@ -40,6 +40,7 @@ export const searchZilean = async (
         seeds: item.seeders || 0,
         peers: item.leechers || 0,
         magnet,
+        infohash: item.info_hash.toLowerCase(),
       });
     }
 
