@@ -1621,7 +1621,7 @@ Details: 62.5 GB | 125 seeds | YTS
                 .join('&');
             
             const manifestUrl = configStr 
-                ? `${window.location.origin}/manifest.json?${configStr}`
+                ? `${window.location.origin}/${configStr}/manifest.json`
                 : `${window.location.origin}/manifest.json`;
             
             window.location.href = `stremio://${manifestUrl.replace('http://', '').replace('https://', '')}`;
