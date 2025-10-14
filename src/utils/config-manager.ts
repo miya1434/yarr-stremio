@@ -176,8 +176,6 @@ export function importConfig(jsonString: string): any {
     config.showStatistics = imported.features.showStatistics ? "on" : "";
     config.showExternalDownloads = imported.features.showExternalDownloads ? "on" : "";
 
-    // Note: Trakt token won't be imported for security
-
     return config;
   } catch (error) {
     console.error("Config import error:", error);

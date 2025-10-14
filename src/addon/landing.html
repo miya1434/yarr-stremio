@@ -1630,9 +1630,8 @@ Details: 62.5 GB | 125 seeds | YTS
                 if (data.result && data.result.addons) {
                     stremioAddons = data.result.addons;
                     
-                    // Add YARR! to the top if not already there
                     const yarrManifest = getCurrentManifestUrl();
-                    const yarrExists = stremioAddons.some(a => a.transportUrl === yarrManifest);
+                    const yarrExists = stremioAddons.some(a => a.transportUrl === yarrManifest || a.transportUrl.includes('yarr'));
                     if (!yarrExists) {
                         stremioAddons.unshift({
                             transportUrl: yarrManifest,
@@ -1643,12 +1642,9 @@ Details: 62.5 GB | 125 seeds | YTS
                         });
                     }
                     
-                    // Show addon manager screen
                     document.getElementById('stremioLoginScreen').style.display = 'none';
                     document.getElementById('stremioAddonManager').style.display = 'block';
                     renderAddonList();
-                    
-                    // Update connection status UI
                     updateStremioConnectionStatus();
                 } else {
                     throw new Error('Failed to load addons');

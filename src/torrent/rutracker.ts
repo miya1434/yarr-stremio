@@ -15,9 +15,6 @@ export const searchRutracker = async (
       return [];
     }
 
-    // TODO: Implement login and search
-    // RuTracker has anti-bot protection, would need cookie management
-    // For now, returning empty array
     console.log("RuTracker requires authentication - not implemented yet");
     return [];
   } catch (error) {
