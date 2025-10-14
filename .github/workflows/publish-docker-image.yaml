@@ -15,7 +15,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: ${{ github.actor }}/${{ github.event.repository.name }}
+          images: yarrhoster/yarr-stremio
           flavor: |
             latest=true
           tags: |
