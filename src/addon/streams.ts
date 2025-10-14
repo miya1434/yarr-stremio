@@ -638,12 +638,11 @@ async function processStreamRequest(
             
             if (isCached) {
               console.log(`   ✅ Stream ${idx} is CACHED!`);
-              // Mark as cached in description
               const originalStream = stream.stream;
               return {
                 ...originalStream,
-                name: `⚡ ${originalStream.name} [Cached]`,
-                title: `🟢 ${debridService} Cached\n${originalStream.title || ''}`,
+                name: `⚡ CACHED | ${originalStream.name}`,
+                title: `✅ ${debridService} - INSTANT STREAMING\n\n${originalStream.title || ''}`,
               };
             } else {
               console.log(`   ⭕ Stream ${idx} not cached`);
