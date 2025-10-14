@@ -42,14 +42,17 @@ Save it, then run `docker-compose up -d` in the same directory. Done.
 
 ## For the Devs: Running from Source
 
-If you want to tinker with the code or just prefer running things with Node.js, here’s how.
+If you want to tinker with the code or just prefer running things with Node.js, here's how.
 
-You'll need **Node.js (version 18 or newer)** and **pnpm**.
+You'll need **Node.js (version 18 or newer)**, **pnpm**, and **TypeScript**.
 
 ```bash
 # Clone the repository
 git clone https://github.com/spookyhost1/yarr-stremio.git
 cd yarr-stremio
+
+# Install pnpm and TypeScript globally (if you don't have them)
+npm install -g pnpm typescript
 
 # Install all the things
 pnpm install
@@ -61,7 +64,7 @@ pnpm build
 pnpm start
 ```
 
-It’ll be running on `http://localhost:58827`.
+It'll be running on `http://localhost:58827`.
 
 ---
 
