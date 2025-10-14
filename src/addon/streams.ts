@@ -92,6 +92,7 @@ interface HandlerArgs {
     enableSubsPlease: string;
     enableAniLibria: string;
     enableErai: string;
+    enableAnimeTosho: string;
     
     debridService: string;
     debridApiKey: string;
@@ -223,6 +224,7 @@ async function processStreamRequest(
   if (config.enableSubsPlease === "on") sources.push("subsplease");
   if (config.enableAniLibria === "on") sources.push("anilibria");
   if (config.enableErai === "on") sources.push("erai");
+  if (config.enableAnimeTosho === "on") sources.push("animetosho");
 
   
   const speedPreference = config?.speedPreference || "balanced";
