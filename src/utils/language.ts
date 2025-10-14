@@ -1,6 +1,7 @@
 const LANGUAGE_MAP: Record<string, string[]> = {
   English: ["eng", "english", "en"],
-  Spanish: ["spa", "spanish", "es", "español", "castellano", "latino"],
+  "Spanish (LA)": ["latino", "latam", "lat", "latin", "mx", "arg", "spanish lat"],
+  "Spanish (EU)": ["spa", "spanish", "es", "español", "castellano", "spain"],
   French: ["fre", "french", "fr", "français", "vff", "vfq"],
   German: ["ger", "german", "de", "deutsch"],
   Italian: ["ita", "italian", "it"],

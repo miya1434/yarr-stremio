@@ -127,6 +127,12 @@ interface HandlerArgs {
     disable4k: string;
     disableCam: string;
     disable3d: string;
+    allow4k: string;
+    allow1440p: string;
+    allow1080p: string;
+    allow720p: string;
+    allow480p: string;
+    allow360p: string;
     disableRemux: string;
     disableDolbyVision: string;
   };
@@ -866,24 +872,18 @@ export const getStreamsFromTorrent = async (
 
 const isAllowedQuality = (config: HandlerArgs["config"], quality: string) => {
   if (config?.disable4k === "on" && quality.includes("4K")) return false;
-
   if (config?.disableCam === "on" && quality.includes("CAM")) return false;
-
-  if (
-    config?.disableHdr === "on" &&
-    quality.includes("HDR")
-  )
-    return false;
-
-  if (
-    config?.disableDolbyVision === "on" &&
-    quality.includes("Dolby Vision")
-  )
-    return false;
-
+  if (config?.disableHdr === "on" && quality.includes("HDR")) return false;
+  if (config?.disableDolbyVision === "on" && quality.includes("Dolby Vision")) return false;
   if (config?.disable3d === "on" && quality.includes("3D")) return false;
-
   if (config?.disableRemux === "on" && quality.includes("REMUX")) return false;
+
+  if (config?.allow4k !== "on" && (quality.includes("4K") || quality.includes("2160p"))) return false;
+  if (config?.allow1440p !== "on" && quality.includes("1440p")) return false;
+  if (config?.allow1080p !== "on" && quality.includes("1080p")) return false;
+  if (config?.allow720p !== "on" && quality.includes("720p")) return false;
+  if (config?.allow480p !== "on" && quality.includes("480p")) return false;
+  if (config?.allow360p !== "on" && (quality.includes("360p") || quality.includes("SD"))) return false;
 
   return true;
 };

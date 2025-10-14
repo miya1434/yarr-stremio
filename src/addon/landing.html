@@ -318,8 +318,12 @@
                                                     <label for="lang-en" class="ml-2 text-sm text-gray-700">English</label>
             </div>
                                                 <div class="flex items-center">
-                                                    <input type="checkbox" name="language" value="Spanish" id="lang-es" class="h-4 w-4 text-primary-600 border-gray-300 rounded">
-                                                    <label for="lang-es" class="ml-2 text-sm text-gray-700">Spanish</label>
+                                                    <input type="checkbox" name="language" value="Spanish (EU)" id="lang-es-eu" class="h-4 w-4 text-primary-600 border-gray-300 rounded">
+                                                    <label for="lang-es-eu" class="ml-2 text-sm text-gray-700">Spanish (EU)</label>
+                        </div>
+                                                <div class="flex items-center">
+                                                    <input type="checkbox" name="language" value="Spanish (LA)" id="lang-es-la" class="h-4 w-4 text-primary-600 border-gray-300 rounded">
+                                                    <label for="lang-es-la" class="ml-2 text-sm text-gray-700">Spanish (LA)</label>
                         </div>
                                                 <div class="flex items-center">
                                                     <input type="checkbox" name="language" value="French" id="lang-fr" class="h-4 w-4 text-primary-600 border-gray-300 rounded">
@@ -1245,8 +1249,15 @@ Details: 62.5 GB | 125 seeds | YTS
         // Track disabled sources
         let disabledSources = new Set();
         
-        // Toggle source on/off
         function toggleSource(source) {
+            if (manualSourcesEnabled) {
+                const checkboxId = `manual-${source.replace(/[.\s]/g, '')}`;
+                const checkbox = document.getElementById(checkboxId);
+                if (checkbox) {
+                    checkbox.checked = false;
+                }
+            }
+            
             if (disabledSources.has(source)) {
                 disabledSources.delete(source);
             } else {
