@@ -132,6 +132,25 @@ A free, public torrent database that gives you instant search results. It's awes
 **Does this thing track me?**
 No way. Zero tracking, zero analytics. It's your server, your business.
 
+**Installation fails with native module errors?**
+```bash
+# Use the clean install method
+pnpm install --ignore-scripts
+pnpm rebuild
+pnpm build
+```
+
+**Proxy not working?**
+Make sure your `.env` file has the correct proxy URL format:
+```bash
+PROXY_URL=http://username:password@proxy-host:port
+```
+
+**Live TV not showing?**
+1. Enable "Live TV" in the configuration page
+2. Save settings
+3. Refresh Stremio
+
 ---
 
 ## Deployment

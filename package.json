@@ -8,7 +8,9 @@
     "build": "tsc && npm run copy-assets",
     "copy-assets": "node -e \"require('fs-extra').copySync('src/addon/landing.html', 'dist/addon/landing.html') && require('fs-extra').copySync('src/iptv/m3u-sources', 'dist/iptv/m3u-sources')\"",
     "start": "node --no-warnings dist/index.js",
-    "dev": "esrun --node-no-warnings --watch src/index.ts"
+    "dev": "esrun --node-no-warnings --watch src/index.ts",
+    "install:clean": "pnpm install --ignore-scripts && pnpm rebuild",
+    "postinstall": "echo '🏴‍☠️ YARR! dependencies installed successfully!'"
   },
   "keywords": [
     "stremio",
@@ -55,6 +57,9 @@
     "express-rate-limit": "^7.1.5",
     "eztv-crawler": "^1.3.6",
     "fs-extra": "^11.2.0",
+    "got-scraping": "^4.1.2",
+    "http-proxy-agent": "^7.0.2",
+    "https-proxy-agent": "^7.0.5",
     "localtunnel": "^2.0.2",
     "magnet-uri": "^7.0.7",
     "memory-chunk-store": "^1.3.5",

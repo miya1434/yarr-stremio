@@ -94,8 +94,13 @@ elif [ "$INSTALL_METHOD" = "node" ]; then
     fi
     
     echo "✅ pnpm ready"
-    echo "📥 Installing dependencies..."
-    pnpm install
+    echo "📥 Installing dependencies (this may take a few minutes)..."
+    
+    # Install with ignore scripts first to avoid build errors
+    pnpm install --ignore-scripts
+    
+    echo "🔧 Rebuilding native modules..."
+    pnpm rebuild
     
     echo "🔨 Building project..."
     pnpm build
