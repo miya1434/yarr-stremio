@@ -7,18 +7,20 @@ export const checkTorBoxCached = async (
   apiKey: string
 ): Promise<boolean> => {
   try {
-    // Extract info hash from magnet link
     const hashMatch = magnetLink.match(/btih:([a-f0-9]{40})/i);
     if (!hashMatch) return false;
 
     const hash = hashMatch[1];
 
-    const response = await axios.get(
+    const response = await axios.post(
       `${TORBOX_API_BASE}/torrents/checkcached`,
       {
+        hashes: [hash],
+      },
+      {
         params: {
-          hash: hash,
           format: "list",
+          list_files: true,
         },
         headers: {
           Authorization: `Bearer ${apiKey}`,
@@ -27,7 +29,12 @@ export const checkTorBoxCached = async (
       }
     );
 
-    return response.data.data && response.data.data[hash] === true;
+    if (!response.data?.success || !response.data?.data) {
+      return false;
+    }
+
+    const torrent = response.data.data.find((t: any) => t.hash === hash);
+    return torrent && torrent.cached === true;
   } catch (error) {
     console.error("TorBox cache check error:", error);
     return false;
