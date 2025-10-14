@@ -8,7 +8,7 @@ export const searchPelisPanda = async (
   searchQuery: string
 ): Promise<TorrentSearchResult[]> => {
   try {
-    const searchUrl = `${BASE_URL}/?s=${encodeURIComponent(searchQuery)}`;
+    const searchUrl = `${BASE_URL}/search?query=${encodeURIComponent(searchQuery)}`;
 
     const response = await axios.get(searchUrl, {
       headers: {
@@ -21,31 +21,21 @@ export const searchPelisPanda = async (
     const $ = cheerio.load(response.data);
     const results: TorrentSearchResult[] = [];
 
-    $("article, .movie-item, .post").each((_, element) => {
+    $('a[href*="/pelicula/"], a[href*="/serie/"]').each((_, element) => {
       try {
-        const name = $(element).find("h2, h3, .title").first().text().trim();
-        const magnetLink = $(element).find('a[href^="magnet:"]').attr("href");
-        const quality = $(element).find(".quality, .Qlty").text().trim();
-        const sizeText = $(element).find(".size, .file-size").text().trim();
+        const name = $(element).find("h3").text().trim();
+        const detailLink = $(element).attr("href");
 
-        if (!name || !magnetLink) return;
-
-        const sizeMatch = sizeText.match(/([0-9.]+)\s*([KMGT]B)/i);
-        const size = sizeMatch
-          ? parseSizeToBytes(sizeMatch[1], sizeMatch[2])
-          : 0;
-
-        const hash = magnetLink.match(/btih:([a-f0-9]{40})/i)?.[1];
+        if (!name || !detailLink) return;
 
         results.push({
-          name: `${name} ${quality}`.trim(),
+          name,
           tracker: "PelisPanda",
           category: "Movies/TV (Latino)",
-          size,
+          size: 0,
           seeds: 15,
           peers: 5,
-          magnet: magnetLink,
-          infohash: hash?.toLowerCase(),
+          torrent: `${BASE_URL}${detailLink}`,
         });
       } catch (error) {
         
