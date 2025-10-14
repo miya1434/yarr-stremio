@@ -1183,18 +1183,17 @@ Details: 62.5 GB | 125 seeds | YTS
             updateSourceCount();
         }
         
-        // Handle manual source checkbox changes
         function handleManualSourceChange(source, checked) {
             if (!checked) {
                 disabledSources.add(source);
             } else {
                 disabledSources.delete(source);
             }
-            // Update the main sources list to reflect changes
             updateSourcesList(
                 document.getElementById('speedPreference').value,
                 document.getElementById('providerPreset').value
             );
+            updateSourceCount();
         }
 
         // Speed selection
@@ -1259,13 +1258,13 @@ Details: 62.5 GB | 125 seeds | YTS
             );
         }
         
-        // Update sources list
         function updateSourcesList(speed, preset) {
             const sourcesList = document.getElementById('sourcesList');
             let sources = [];
             
-            // ALWAYS show only preset-based sources, regardless of manual mode
-            if (speed === 'fast') {
+            if (manualSourcesEnabled) {
+                sources = allSources.filter(s => !disabledSources.has(s));
+            } else if (speed === 'fast') {
                 sources = ['YTS', 'EZTV', '1337x', 'Nyaa.si', 'The Pirate Bay', 'RARBG'];
             } else if (speed === 'balanced') {
                 sources = ['YTS', 'EZTV', '1337x', 'Nyaa.si', 'The Pirate Bay', 'RARBG', 'KickassTorrents', 'TorrentGalaxy', 'TokyoTosho', 'LimeTorrents'];
