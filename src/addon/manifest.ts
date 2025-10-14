@@ -33,7 +33,7 @@ export const manifest: Manifest = {
   types: ["movie", "series"],
   name: "YARR!",
   description:
-    "High-performance torrent addon • 60+ sources • Smart ranking • Multi-debrid • Trakt integration • Zero config",
+    "High-performance torrent addon • 62+ sources • Smart ranking • Multi-debrid • Trakt integration • Zero config",
   logo: "https://spooky.host/yarrwhite.png",
   background: "https://spooky.host/yarrbg.png",
   idPrefixes: ["tt", "kitsu"],
