@@ -59,6 +59,8 @@ interface HandlerArgs {
     enableTokyoTosho: string;
     enableAniDex: string;
     enableCinecalidad: string;
+    enableMiTorrent: string;
+    enablePelisPanda: string;
     enableRutracker: string;
     
     enableProwlarr: string;
@@ -200,6 +202,8 @@ async function processStreamRequest(
   if (config.enableTokyoTosho === "on") sources.push("tokyotosho");
   if (config.enableAniDex === "on") sources.push("anidex");
   if (config.enableCinecalidad === "on") sources.push("cinecalidad");
+  if (config.enableMiTorrent === "on") sources.push("mitorrent");
+  if (config.enablePelisPanda === "on") sources.push("pelispanda");
   if (config.enableRutracker === "on") sources.push("rutracker");
  
   if (config.enableRutor === "on") sources.push("rutor");

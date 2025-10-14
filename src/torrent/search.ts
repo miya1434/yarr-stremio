@@ -28,6 +28,8 @@ import { searchBluDV } from "./bludv.js";
 import { searchTorrent9 } from "./torrent9.js";
 import { searchIlCorSaRoNeRo } from "./ilcorsaronero.js";
 import { searchMejorTorrent } from "./mejortorrent.js";
+import { searchMiTorrent } from "./mitorrent.js";
+import { searchPelisPanda } from "./pelispanda.js";
 import { searchWolfmax4k } from "./wolfmax4k.js";
 import { searchBestTorrents } from "./besttorrents.js";
 import { searchMicoLeaoDublado } from "./micoleaodublado.js";
@@ -70,6 +72,8 @@ export type TorrentSource =
   | "tokyotosho"
   | "anidex"
   | "cinecalidad"
+  | "mitorrent"
+  | "pelispanda"
   | "rutracker"
   | "prowlarr"
   | "zilean"
@@ -300,6 +304,14 @@ export const searchTorrents = async (
     if (options?.categories?.includes("movie") || searchAllCategories) {
       promises.push(searchCinecalidad(query));
     }
+  }
+
+  if (options?.sources?.includes("mitorrent") || searchAllSources) {
+    promises.push(searchMiTorrent(query));
+  }
+
+  if (options?.sources?.includes("pelispanda") || searchAllSources) {
+    promises.push(searchPelisPanda(query));
   }
 
   if (options?.sources?.includes("rutracker") || searchAllSources) {
