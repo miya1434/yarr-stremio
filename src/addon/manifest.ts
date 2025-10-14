@@ -71,7 +71,7 @@ export const manifest: Manifest = {
       default: "",
     },
     {
-      title: "Debrid Service",
+      title: "Debrid Service (Legacy)",
       key: "debridService",
       type: "select",
       // @ts-ignore
@@ -79,8 +79,42 @@ export const manifest: Manifest = {
       default: "None",
     },
     {
-      title: "Debrid API Key",
+      title: "Debrid API Key (Legacy)",
       key: "debridApiKey",
+      type: "password",
+    },
+
+    // ═══════════════════════════════════════════════════════════
+    // MULTI-DEBRID SUPPORT - Add API keys for each service
+    // ═══════════════════════════════════════════════════════════
+    {
+      title: "RealDebrid API Key",
+      key: "realDebridKey",
+      type: "password",
+    },
+    {
+      title: "TorBox API Key",
+      key: "torBoxKey",
+      type: "password",
+    },
+    {
+      title: "Premiumize API Key",
+      key: "premiumizeKey",
+      type: "password",
+    },
+    {
+      title: "AllDebrid API Key",
+      key: "allDebridKey",
+      type: "password",
+    },
+    {
+      title: "DebridLink API Key",
+      key: "debridLinkKey",
+      type: "password",
+    },
+    {
+      title: "PikPak API Key",
+      key: "pikPakKey",
       type: "password",
     },
     {
