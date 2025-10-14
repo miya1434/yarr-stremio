@@ -18,7 +18,9 @@ interface CatalogArgs {
 export const catalogHandler = async ({ type, id, extra, config }: CatalogArgs) => {
   const skip = parseInt(extra?.skip || "0");
 
-  console.log(`Catalog request: ${id} for ${type}, skip=${skip}`);
+  console.log(`📺 Catalog request: ${id} for type ${type}, skip=${skip}`);
+  console.log(`   Config:`, config);
+  console.log(`   Extra:`, extra);
 
   try {
     if (id === "yarr-trending") {
@@ -39,11 +41,14 @@ export const catalogHandler = async ({ type, id, extra, config }: CatalogArgs) =
       return { metas };
     }
 
-    if (id === "yarr-livetv-daddylive" && config?.enableDaddyLive) {
+    if (id === "yarr-livetv-daddylive") {
+      console.log(`🔴 LIVE TV CATALOG REQUESTED!`);
       const genre = extra?.genre;
       let channels = genre 
         ? await getChannelsByCategory(genre)
         : await getAllChannels();
+
+      console.log(`📡 Found ${channels.length} channels`);
 
       const metas = channels.map((channel) => ({
         id: `daddylive:${channel.id}`,
@@ -56,12 +61,13 @@ export const catalogHandler = async ({ type, id, extra, config }: CatalogArgs) =
         genres: [channel.category],
       }));
 
+      console.log(`✅ Returning ${metas.length} channel metas`);
       return { metas };
     }
 
     return { metas: [] };
   } catch (error) {
-    console.error("Catalog handler error:", error);
+    console.error("❌ Catalog handler error:", error);
     return { metas: [] };
   }
 };
