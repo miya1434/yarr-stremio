@@ -1,30 +1,47 @@
+// @ts-ignore
+import PremiumizeClient from "premiumize-api";
 import axios from "axios";
 
 const PM_API_BASE = "https://www.premiumize.me/api";
+
+// Use official Premiumize API library (same as Torrentio)
+export const checkPremiumizeCachedBatch = async (
+  magnetLinks: string[],
+  apiKey: string
+): Promise<Map<string, boolean>> => {
+  const results = new Map<string, boolean>();
+  
+  try {
+    if (magnetLinks.length === 0) return results;
+
+    const PM = new PremiumizeClient(apiKey);
+    
+    // Use official library's cache check
+    const response = await PM.cache.check(magnetLinks);
+    
+    if (response && response.response && Array.isArray(response.response)) {
+      magnetLinks.forEach((magnet, index) => {
+        const hash = magnet.match(/btih:([a-f0-9]{40})/i)?.[1].toLowerCase();
+        if (hash) {
+          results.set(hash, response.response[index] === true);
+        }
+      });
+    }
+    
+  } catch (error: any) {
+    console.error("Premiumize batch cache check error:", error.message || error);
+  }
+  
+  return results;
+};
 
 export const checkPremiumizeCached = async (
   magnetLink: string,
   apiKey: string
 ): Promise<boolean> => {
-  try {
-    const response = await axios.get(`${PM_API_BASE}/cache/check`, {
-      params: {
-        apikey: apiKey,
-        items: [magnetLink],
-      },
-      timeout: 5000,
-    });
-
-    return (
-      response.data &&
-      response.data.response &&
-      response.data.response.length > 0 &&
-      response.data.response[0] === true
-    );
-  } catch (error) {
-    console.error("Premiumize cache check error:", error);
-    return false;
-  }
+  const results = await checkPremiumizeCachedBatch([magnetLink], apiKey);
+  const hash = magnetLink.match(/btih:([a-f0-9]{40})/i)?.[1].toLowerCase();
+  return hash ? (results.get(hash) || false) : false;
 };
 
 export const getPremiumizeStream = async (

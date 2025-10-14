@@ -13,7 +13,13 @@ import { guessLanguage, prioritizeByLanguage } from "../utils/language.js";
 import { guessQuality } from "../utils/quality.js";
 import { isFileNameMatch, isTorrentNameMatch } from "../utils/shows.js";
 import { cache } from "../utils/cache.js";
-import { getDebridService } from "../debrid/index.js";
+import { 
+  getDebridService, 
+  checkRealDebridCachedBatch,
+  checkPremiumizeCachedBatch,
+  checkAllDebridCachedBatch,
+  checkTorBoxCachedBatch
+} from "../debrid/index.js";
 import { calculateTorrentScore } from "../utils/rtn-ranking.js";
 import { mlEngine } from "../utils/ml-engine.js";
 import { enhanceMagnetLink, isAnimeTracker, isRussianTracker, getTrackerSources } from "../utils/trackers.js";
@@ -34,6 +40,7 @@ interface HandlerArgs {
   config?: {
     
     enableDaddyLive?: string;
+    cacheFilter?: string;
     
     speedPreference?: string;
     
@@ -100,6 +107,14 @@ interface HandlerArgs {
     
     debridService: string;
     debridApiKey: string;
+    
+    // Multiple debrid services support
+    realDebridKey?: string;
+    premiumizeKey?: string;
+    allDebridKey?: string;
+    debridLinkKey?: string;
+    torBoxKey?: string;
+    pikPakKey?: string;
    
     sortBy: string;
     sortCached: string;
@@ -343,7 +358,7 @@ async function processStreamRequest(
 
   
   const MIN_RESULTS = speedPreference === "fast" ? 5 : speedPreference === "balanced" ? 10 : 20;
-  const SEARCH_TIMEOUT = speedPreference === "fast" ? 5000 : speedPreference === "balanced" ? 12000 : 40000;
+  const SEARCH_TIMEOUT = speedPreference === "fast" ? 8000 : speedPreference === "balanced" ? 20000 : 45000;
   const startTime = Date.now();
   
   
@@ -576,28 +591,34 @@ async function processStreamRequest(
   }
 
 
-  const sortBy = config?.sortBy || "Quality then Seeders";
-  const sortCached = config?.sortCached || "Same as above";
+  const sortBy = config?.sortBy || "Cached First then Quality";
+  const cacheFilter = config?.cacheFilter || "Prefer Cached";
   
-  // Check if we need separate sorting for cached vs uncached
-  if (sortBy === "Cached First then Quality" || sortCached !== "Same as above") {
-    
-    const cachedStreams = streams.filter((s: any) => s.cached);
-    const uncachedStreams = streams.filter((s: any) => !s.cached);
-
-    // Sort cached streams
-    const cachedSortMode = sortCached !== "Same as above" ? sortCached : "Quality";
-    cachedStreams.sort(getSortFunction(cachedSortMode));
-
-    // Sort uncached streams
-    uncachedStreams.sort(getSortFunction(sortBy === "Cached First then Quality" ? "Quality then Seeders" : sortBy));
-
-    // Combine: cached first
-    streams = [...cachedStreams, ...uncachedStreams];
-  } else {
-    // Single sorting for all streams
-    streams.sort(getSortFunction(sortBy));
+  console.log(`🎯 Sort mode: ${sortBy}, Cache filter: ${cacheFilter}`);
+  
+  // Apply cache filter FIRST
+  if (cacheFilter === "Only Cached") {
+    const cachedCount = streams.filter((s: any) => s.cached).length;
+    streams = streams.filter((s: any) => s.cached);
+    console.log(`🔒 Cache filter: Only showing ${streams.length} cached (filtered out ${cachedCount} uncached)`);
   }
+  
+  // ALWAYS sort cached first
+  const cachedStreams = streams.filter((s: any) => s.cached);
+  const uncachedStreams = streams.filter((s: any) => !s.cached);
+
+  console.log(`📊 Streams breakdown: ${cachedStreams.length} cached, ${uncachedStreams.length} uncached`);
+
+  // Sort cached streams
+  cachedStreams.sort(getSortFunction("Quality"));
+
+  // Sort uncached streams
+  uncachedStreams.sort(getSortFunction(sortBy));
+
+  // ALWAYS combine with cached first
+  streams = [...cachedStreams, ...uncachedStreams];
+  
+  console.log(`✅ Final order: ${cachedStreams.length} cached streams FIRST, then ${uncachedStreams.length} uncached`);
 
   // Apply max results per quality
   const maxResults = parseInt(config?.maxResults || "5");
@@ -629,70 +650,188 @@ async function processStreamRequest(
   }
 
   // Check if debrid service is configured
-  const debridService = config?.debridService;
-  const debridApiKey = config?.debridApiKey;
+  // Build list of enabled debrid services with their keys
+  const debridServices: Array<{ name: string; key: string }> = [];
+  
+  if (config?.realDebridKey) {
+    debridServices.push({ name: "RealDebrid", key: config.realDebridKey });
+  }
+  if (config?.premiumizeKey) {
+    debridServices.push({ name: "Premiumize", key: config.premiumizeKey });
+  }
+  if (config?.allDebridKey) {
+    debridServices.push({ name: "AllDebrid", key: config.allDebridKey });
+  }
+  if (config?.debridLinkKey) {
+    debridServices.push({ name: "DebridLink", key: config.debridLinkKey });
+  }
+  if (config?.torBoxKey) {
+    debridServices.push({ name: "TorBox", key: config.torBoxKey });
+  }
+  if (config?.pikPakKey) {
+    debridServices.push({ name: "PikPak", key: config.pikPakKey });
+  }
 
-  if (debridService && debridService !== "None" && debridApiKey) {
-    const service = getDebridService(debridService);
+  // Also check legacy debridService/debridApiKey for backwards compatibility
+  const legacyDebridService = config?.debridService;
+  const legacyDebridApiKey = config?.debridApiKey;
+  if (legacyDebridService && legacyDebridService !== "None" && legacyDebridApiKey) {
+    // Only add if not already in the list
+    if (!debridServices.some(s => s.name === legacyDebridService)) {
+      debridServices.push({ name: legacyDebridService, key: legacyDebridApiKey });
+    }
+  }
+
+  if (debridServices.length > 0) {
+    console.log(`🔍 Checking ${streams.length} streams against ${debridServices.length} debrid service(s): ${debridServices.map(s => s.name).join(', ')}...`);
     
-    if (service) {
-      console.log(`🔍 Checking ${streams.length} streams against ${debridService}...`);
-      
-      // Enhance streams with debrid cached status
-      const enhancedStreams = await Promise.all(
-        streams.map(async (stream, idx) => {
-          try {
-            // Verify stream structure
-            if (!stream.stream) {
-              console.error(`   ⚠️ Stream ${idx} has no .stream property!`, Object.keys(stream));
-              return null;
-            }
-            
-            // Extract magnet link from the original torrent
-            const torrent = torrents.find(t => stream.torrentName === t.name);
-            if (!torrent) {
-              console.warn(`   ⚠️ Stream ${idx} torrent not found: "${stream.torrentName}"`);
-              return stream.stream;
-            }
-            
-            if (!torrent.magnet) {
-              console.warn(`   ⚠️ Stream ${idx} has no magnet link`);
-              return stream.stream;
-            }
-            
-            const isCached = await service.checkCached(torrent.magnet, debridApiKey);
-            
-            if (isCached) {
-              console.log(`   ✅ Stream ${idx} is CACHED!`);
-              const originalStream = stream.stream;
-              return {
-                ...originalStream,
-                name: `⚡ CACHED | ${originalStream.name}`,
-                title: `✅ ${debridService} - INSTANT STREAMING\n\n${originalStream.title || ''}`,
-              };
-            } else {
-              console.log(`   ⭕ Stream ${idx} not cached`);
-            }
-            
-            return stream.stream;
-          } catch (error) {
-            console.error(`   ❌ Debrid check error for stream ${idx}:`, error);
-            return stream.stream;
+    // Build magnet -> stream index map
+    const magnetToStream = new Map<string, number>();
+    const validMagnets: string[] = [];
+    
+    streams.forEach((stream, idx) => {
+      const torrent = torrents.find(t => stream.torrentName === t.name);
+      if (torrent?.magnet) {
+        const hash = torrent.magnet.match(/btih:([a-f0-9]{40})/i)?.[1]?.toLowerCase();
+        if (hash) {
+          magnetToStream.set(hash, idx);
+          validMagnets.push(torrent.magnet);
+        }
+      }
+    });
+    
+    console.log(`   📦 Checking ${validMagnets.length} unique torrents`);
+    
+    // Check each debrid service - BATCH for RealDebrid, individual for others
+    const streamCachedServices = new Map<number, string[]>();
+    
+    for (const { name, key } of debridServices) {
+      try {
+        let batchResults: Map<string, boolean> | null = null;
+        
+        // Use batch checking for services that support it
+        if (validMagnets.length > 0) {
+          if (name === "RealDebrid") {
+            console.log(`   ⚡ Batch checking ${validMagnets.length} hashes on RealDebrid...`);
+            batchResults = await checkRealDebridCachedBatch(validMagnets, key);
+          } else if (name === "Premiumize") {
+            console.log(`   ⚡ Batch checking ${validMagnets.length} hashes on Premiumize...`);
+            batchResults = await checkPremiumizeCachedBatch(validMagnets, key);
+          } else if (name === "AllDebrid") {
+            console.log(`   ⚡ Batch checking ${validMagnets.length} hashes on AllDebrid...`);
+            batchResults = await checkAllDebridCachedBatch(validMagnets, key);
+          } else if (name === "TorBox") {
+            console.log(`   ⚡ Batch checking ${validMagnets.length} hashes on TorBox...`);
+            batchResults = await checkTorBoxCachedBatch(validMagnets, key);
           }
-        })
-      );
+        }
+        
+        if (batchResults) {
+          // Process batch results
+          let cachedCount = 0;
+          batchResults.forEach((isCached, hash) => {
+            if (isCached) {
+              const streamIdx = magnetToStream.get(hash);
+              if (streamIdx !== undefined) {
+                if (!streamCachedServices.has(streamIdx)) {
+                  streamCachedServices.set(streamIdx, []);
+                }
+                streamCachedServices.get(streamIdx)!.push(name);
+                cachedCount++;
+              }
+            }
+          });
+          console.log(`   ✅ ${name}: ${cachedCount}/${validMagnets.length} cached`);
+        } else {
+          // Individual check for services without batch support
+          const service = getDebridService(name);
+          if (service) {
+            let cachedCount = 0;
+            for (let idx = 0; idx < streams.length; idx++) {
+              const torrent = torrents.find(t => streams[idx].torrentName === t.name);
+              if (torrent?.magnet) {
+                try {
+                  const isCached = await service.checkCached(torrent.magnet, key);
+                  if (isCached) {
+                    if (!streamCachedServices.has(idx)) {
+                      streamCachedServices.set(idx, []);
+                    }
+                    streamCachedServices.get(idx)!.push(name);
+                    cachedCount++;
+                  }
+                } catch (error) {
+                  // Silent fail for individual checks
+                }
+              }
+            }
+            console.log(`   ✅ ${name}: ${cachedCount}/${streams.length} cached`);
+          }
+        }
+      } catch (error) {
+        console.error(`   ⚠️ ${name} check failed:`, error);
+      }
+    }
+    
+    // Build enhanced streams with cached status
+    const enhancedStreams = streams.map((stream, idx) => {
+      if (!stream.stream) {
+        console.error(`   ⚠️ Stream ${idx} has no .stream property!`);
+        return null;
+      }
+      
+      const cachedServices = streamCachedServices.get(idx) || [];
+      
+      if (cachedServices.length > 0) {
+        const servicesList = cachedServices.join(' + ');
+        return {
+          ...stream.stream,
+          name: `⚡ ${servicesList} | ${stream.stream.name}`,
+          title: `✅ INSTANT STREAMING (${servicesList})\n\n${stream.stream.title || ''}`,
+          cached: true,
+          cachedServices,
+        };
+      }
+      
+      return {
+        ...stream.stream,
+        cached: false,
+      };
+    });
       
       // Filter out null values
       const validStreams = enhancedStreams.filter(s => s !== null);
       
       console.log(`   📊 Valid streams after debrid check: ${validStreams.length}/${enhancedStreams.length}`);
 
+      // Apply cache filter based on user preference
+      const cacheFilter = config?.cacheFilter || "Prefer Cached";
+      console.log(`   🎯 Applying cache filter: "${cacheFilter}"`);
+      
+      let filteredStreams = validStreams;
+      
+      if (cacheFilter === "Only Cached") {
+        // Only show cached streams
+        const cachedOnly = validStreams.filter((s: any) => s.cached === true);
+        console.log(`   ⚡ Only Cached: ${cachedOnly.length} cached streams (hiding ${validStreams.length - cachedOnly.length} uncached)`);
+        filteredStreams = cachedOnly;
+      } else if (cacheFilter === "Prefer Cached") {
+        // Show cached first, then uncached
+        const cached = validStreams.filter((s: any) => s.cached === true);
+        const uncached = validStreams.filter((s: any) => s.cached !== true);
+        console.log(`   ✨ Prefer Cached: ${cached.length} cached first, then ${uncached.length} uncached`);
+        filteredStreams = [...cached, ...uncached];
+      } else {
+        // Show All - leave as-is (mixed)
+        const cachedCount = validStreams.filter((s: any) => s.cached === true).length;
+        console.log(`   📂 Show All: ${cachedCount} cached mixed with ${validStreams.length - cachedCount} uncached`);
+      }
+
       // Add statistics and external downloads if configured
-      let finalStreams = validStreams;
+      let finalStreams = filteredStreams;
       
       if (config?.showExternalDownloads === "on") {
         const withDownloads: any[] = [];
-        for (const stream of validStreams) {
+        for (const stream of filteredStreams) {
           withDownloads.push(stream);
           if (stream.url) {
             withDownloads.push({
@@ -720,9 +859,9 @@ async function processStreamRequest(
       const result = { streams: finalStreams };
       cache.set(cacheKey, result, 600); // Cache for 10 minutes
       return result;
-    }
   }
 
+  // No debrid services configured - return streams as-is
   // Add statistics and external downloads if configured
   let finalStreams = streams.map((stream) => stream.stream);
   

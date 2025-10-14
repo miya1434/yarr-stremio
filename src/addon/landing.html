@@ -502,6 +502,17 @@
                             <div class="px-4 py-5 sm:p-6">
                                 <div class="space-y-6">
                     <div>
+                                        <label for="cacheFilter" class="block text-sm font-medium text-gray-700 mb-2">
+                                            Cache Priority <span class="text-xs text-green-600">(How to handle cached files)</span>
+                                        </label>
+                                        <select name="cacheFilter" id="cacheFilter" class="block w-full pl-3 pr-10 py-2 border-gray-300 focus:ring-primary-500 focus:border-primary-500 rounded-md mb-6">
+                                            <option value="Prefer Cached">✨ Prefer Cached - Show cached first, then others</option>
+                                            <option value="Only Cached">⚡ Only Cached - Hide uncached files completely</option>
+                                            <option value="Show All">📂 Show All - Mix cached and uncached</option>
+                                        </select>
+                                    </div>
+                    
+                    <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-3">
                                         Debrid Services <span class="text-xs text-gray-500">(Check all you have - we'll try each one!)</span>
                             </label>

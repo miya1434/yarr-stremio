@@ -185,8 +185,16 @@ export const manifest: Manifest = {
       key: "sortBy",
       type: "select",
       // @ts-ignore
-      options: ["Quality then Seeders", "Cached First then Quality", "Seeders", "Quality"],
-      default: "Quality then Seeders",
+      options: ["Cached First then Quality", "Quality then Seeders", "Seeders", "Quality"],
+      default: "Cached First then Quality",
+    },
+    {
+      title: "Cache Filter",
+      key: "cacheFilter",
+      type: "select",
+      // @ts-ignore
+      options: ["Show All", "Only Cached", "Prefer Cached"],
+      default: "Prefer Cached",
     },
     {
       title: "Enable RTN Smart Ranking",

@@ -1,13 +1,16 @@
 import {
   checkRealDebridCached,
+  checkRealDebridCachedBatch,
   getRealDebridStream,
 } from "./realdebrid.js";
 import {
   checkPremiumizeCached,
+  checkPremiumizeCachedBatch,
   getPremiumizeStream,
 } from "./premiumize.js";
 import {
   checkAllDebridCached,
+  checkAllDebridCachedBatch,
   getAllDebridStream,
 } from "./alldebrid.js";
 import {
@@ -16,8 +19,17 @@ import {
 } from "./debridlink.js";
 import {
   checkTorBoxCached,
+  checkTorBoxCachedBatch,
   getTorBoxStream,
 } from "./torbox.js";
+
+// Export batch functions
+export { 
+  checkRealDebridCachedBatch,
+  checkPremiumizeCachedBatch,
+  checkAllDebridCachedBatch,
+  checkTorBoxCachedBatch
+};
 import {
   checkPikPakCached,
   getPikPakStream,

@@ -1,33 +1,47 @@
+// @ts-ignore
+import AllDebridClient from "all-debrid-api";
 import axios from "axios";
 
 const AD_API_BASE = "https://api.alldebrid.com/v4";
+
+// Use official AllDebrid API library (same as Torrentio)
+export const checkAllDebridCachedBatch = async (
+  magnetLinks: string[],
+  apiKey: string
+): Promise<Map<string, boolean>> => {
+  const results = new Map<string, boolean>();
+  
+  try {
+    if (magnetLinks.length === 0) return results;
+
+    const AD = new AllDebridClient(apiKey, { agent: "YARR" });
+    
+    // Use official library's instant check
+    const response = await AD.magnet.instant(magnetLinks);
+    
+    if (response && response.data && response.data.magnets) {
+      response.data.magnets.forEach((m: any, index: number) => {
+        const hash = magnetLinks[index].match(/btih:([a-f0-9]{40})/i)?.[1].toLowerCase();
+        if (hash) {
+          results.set(hash, m.instant === true);
+        }
+      });
+    }
+    
+  } catch (error: any) {
+    console.error("AllDebrid batch cache check error:", error.message || error);
+  }
+  
+  return results;
+};
 
 export const checkAllDebridCached = async (
   magnetLink: string,
   apiKey: string
 ): Promise<boolean> => {
-  try {
-    const response = await axios.get(`${AD_API_BASE}/magnet/instant`, {
-      params: {
-        agent: "YARR",
-        apikey: apiKey,
-        magnets: [magnetLink],
-      },
-      timeout: 5000,
-    });
-
-    return (
-      response.data &&
-      response.data.status === "success" &&
-      response.data.data &&
-      response.data.data.magnets &&
-      response.data.data.magnets.length > 0 &&
-      response.data.data.magnets[0].instant === true
-    );
-  } catch (error) {
-    console.error("AllDebrid cache check error:", error);
-    return false;
-  }
+  const results = await checkAllDebridCachedBatch([magnetLink], apiKey);
+  const hash = magnetLink.match(/btih:([a-f0-9]{40})/i)?.[1].toLowerCase();
+  return hash ? (results.get(hash) || false) : false;
 };
 
 export const getAllDebridStream = async (
