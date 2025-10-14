@@ -41,6 +41,7 @@ import { searchHorribleSubs } from "./horriblesubs.js";
 import { searchSubsPlease } from "./subsplease.js";
 import { searchSkyTorrents } from "./skytorrents.js";
 import { searchSolidTorrents } from "./solidtorrents.js";
+import { searchTorLock } from "./torlock.js";
 import { searchTorrentFunk } from "./torrentfunk.js";
 import { searchAniLibria } from "./anilibria.js";
 import { searchEraiRaws } from "./erai.js";
@@ -87,6 +88,7 @@ export type TorrentSource =
   | "subsplease"
   | "skytorrents"
   | "solidtorrents"
+  | "torlock"
   | "torrentfunk"
   | "anilibria"
   | "erai";
@@ -382,6 +384,10 @@ export const searchTorrents = async (
 
   if (options?.sources?.includes("solidtorrents") || searchAllSources) {
     promises.push(searchSolidTorrents(query));
+  }
+
+  if (options?.sources?.includes("torlock") || searchAllSources) {
+    promises.push(searchTorLock(query));
   }
 
   if (options?.sources?.includes("torrentfunk") || searchAllSources) {

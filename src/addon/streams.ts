@@ -85,6 +85,7 @@ interface HandlerArgs {
     enableTorrentz2: string;
     enableSkyTorrents: string;
     enableSolidTorrents: string;
+    enableTorLock: string;
     enableTorrentFunk: string;
     
     enableHorribleSubs: string;
@@ -215,6 +216,7 @@ async function processStreamRequest(
   if (config.enableTorrentz2 === "on") sources.push("torrentz2");
   if (config.enableSkyTorrents === "on") sources.push("skytorrents");
   if (config.enableSolidTorrents === "on") sources.push("solidtorrents");
+  if (config.enableTorLock === "on") sources.push("torlock");
   if (config.enableTorrentFunk === "on") sources.push("torrentfunk");
   
   if (config.enableHorribleSubs === "on") sources.push("horriblesubs");
