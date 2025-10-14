@@ -15,7 +15,7 @@ COPY package.json ./
 COPY patches ./patches/
 
 RUN pnpm install --ignore-scripts
-RUN pnpm rebuild esbuild
+RUN pnpm rebuild
 
 COPY . .
 
@@ -29,9 +29,13 @@ COPY --from=build /usr/src/app/node_modules ./node_modules
 COPY --from=build /usr/src/app/dist ./dist
 
 ENV NODE_ENV=production
+ENV PORT=58827
 
 USER node
 
 EXPOSE 58827
+
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+  CMD curl -f http://localhost:58827/configure || exit 1
 
 CMD ["npm", "start"]

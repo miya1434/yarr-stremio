@@ -153,6 +153,35 @@ PROXY_URL=http://username:password@proxy-host:port
 
 ---
 
+### 🐳 Docker Install
+
+**Option 1: One-Click Install**
+```bash
+# Using Docker Compose
+curl -sSL https://raw.githubusercontent.com/spookyhost1/yarr-stremio/main/install.sh | bash -s -- docker
+```
+
+**Option 2: Docker Hub (Latest)**
+```bash
+# Pull and run the latest image
+docker run -d \
+  --name yarr \
+  -p 58827:58827 \
+  spookyhost1/yarr-stremio:latest
+```
+
+**Option 3: Docker Compose**
+```yaml
+version: '3.8'
+services:
+  yarr:
+    image: spookyhost1/yarr-stremio:latest
+    container_name: yarr
+    ports:
+      - "58827:58827"
+    restart: unless-stopped
+```
+
 ## Deployment
 
 Check out [DEPLOYMENT.md](DEPLOYMENT.md) for all the different ways you can get YARR! running.
