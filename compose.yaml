@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   yarr:
-    image: spookyhost1/yarr-stremio:latest
+    build: .
     container_name: yarr
     ports:
       - "58827:58827"
