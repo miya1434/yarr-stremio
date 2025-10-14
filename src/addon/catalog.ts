@@ -1,6 +1,6 @@
 import { Request } from "express";
 import { getTrendingContent, getPopularContent, getTraktRecommendationsForUser } from "../metadata/catalog.js";
-import { getAllChannels, getChannelsByCategory } from "../iptv/daddylive.js";
+import { getAllUnifiedChannels, getChannelsByGroup } from "../iptv/unified.js";
 
 interface CatalogArgs {
   type: string;
@@ -11,7 +11,7 @@ interface CatalogArgs {
   };
   config?: {
     traktToken?: string;
-    enableDaddyLive?: string;
+    enableLiveTV?: string;
   };
 }
 
@@ -39,21 +39,26 @@ export const catalogHandler = async ({ type, id, extra, config }: CatalogArgs) =
       return { metas };
     }
 
-    if (id === "yarr-livetv-daddylive" && config?.enableDaddyLive) {
+    if (id === "yarr-livetv") {
       const genre = extra?.genre;
       let channels = genre 
-        ? await getChannelsByCategory(genre)
-        : await getAllChannels();
+        ? await getChannelsByGroup(genre)
+        : await getAllUnifiedChannels();
 
-      const metas = channels.map((channel) => ({
-        id: `daddylive:${channel.id}`,
+      const limitedChannels = channels.slice(0, 500);
+
+      console.log(`Returning ${limitedChannels.length} Live TV channels (showing ${limitedChannels.length} of ${channels.length} total)`);
+
+      const metas = limitedChannels.map((channel) => ({
+        id: `livetv_${channel.id}`,
         type: "tv" as const,
         name: channel.name,
-        poster: `https://via.placeholder.com/300x450/1a1a2e/eee?text=${encodeURIComponent(channel.name)}`,
-        background: `https://via.placeholder.com/1920x1080/1a1a2e/eee?text=${encodeURIComponent(channel.name)}`,
-        logo: `https://via.placeholder.com/300x150/1a1a2e/eee?text=${encodeURIComponent(channel.name)}`,
-        description: `${channel.category} - Live TV`,
-        genres: [channel.category],
+        poster: channel.logo,
+        background: channel.logo,
+        logo: channel.logo,
+        description: `📡 Live TV - ${channel.providers.length} source(s)`,
+        genres: [channel.group],
+        runtime: "Live",
       }));
 
       return { metas };

@@ -1,0 +1,170 @@
+#EXTM3U
+#EXTINF:-1 tvg-id="SkyNewsSports" tvg-name="Sky Sports News" group-title="Sports",Sky Sports News
+https://a1xs.vip/2000004
+#EXTINF:-1 tvg-id="SkySportsMEUHD" tvg-name="Sky Sports Main Event UHD" group-title="Sports",Sky Sports Main Event UHD
+https://a1xs.vip/2000015
+#EXTINF:-1 tvg-id="SkyF1UHD" tvg-name="Sky Sports F1 UHD" group-title="Sports",Sky Sports F1 UHD
+https://a1xs.vip/2000016
+#EXTINF:-1 tvg-id="SkySports1" tvg-name="Sky Sports 1 FHD" group-title="Sports",Sky Sports 1 FHD
+https://a1xs.vip/700031
+#EXTINF:-1 tvg-id="SkySports2" tvg-name="Sky Sports 2 FHD" group-title="Sports",Sky Sports 2 FHD
+https://a1xs.vip/700032
+#EXTINF:-1 tvg-id="SkySports3" tvg-name="Sky Sports 3 FHD" group-title="Sports",Sky Sports 3 FHD
+https://a1xs.vip/700033
+#EXTINF:-1 tvg-id="SkySports4" tvg-name="Sky Sports 4 FHD" group-title="Sports",Sky Sports 4 FHD
+https://a1xs.vip/700034
+#EXTINF:-1 tvg-id="SkySports5" tvg-name="Sky Sports 5 FHD" group-title="Sports",Sky Sports 5 FHD
+https://a1xs.vip/700035
+#EXTINF:-1 tvg-id="SkySports6" tvg-name="Sky Sports 6 FHD" group-title="Sports",Sky Sports 6 FHD
+https://a1xs.vip/700036
+#EXTINF:-1 tvg-id="SkySports7" tvg-name="Sky Sports 7 FHD" group-title="Sports",Sky Sports 7 FHD
+https://a1xs.vip/700037
+#EXTINF:-1 tvg-id="SkySports8" tvg-name="Sky Sports 8 FHD" group-title="Sports",Sky Sports 8 FHD
+https://a1xs.vip/700008
+#EXTINF:-1 tvg-id="TNTSports1" tvg-name="TNT Sports One UK" group-title="Sports",TNT Sports One UK
+https://a1xs.vip/2000021
+#EXTINF:-1 tvg-id="TNTSports2" tvg-name="TNT Sports Two UK" group-title="Sports",TNT Sports Two UK
+https://a1xs.vip/2000022
+#EXTINF:-1 tvg-id="TNTSports3" tvg-name="TNT Sports Three UK" group-title="Sports",TNT Sports Three UK
+https://a1xs.vip/2000023
+#EXTINF:-1 tvg-id="TNTSports4" tvg-name="TNT Sports Four" group-title="Sports",TNT Sports Four
+https://a1xs.vip/2000024
+#EXTINF:-1 tvg-id="tntultimate" tvg-name="TNT Sports Ultimate UHD" group-title="Sports",TNT Sports Ultimate UHD
+https://a1xs.vip/2000031
+#EXTINF:-1 tvg-id="ESPN" tvg-name="ESPN" group-title="Sports",ESPN
+https://maldivesn.net/hilaytv/espn
+#EXTINF:-1 tvg-id="ESPN2" tvg-name="ESPN A1XS" group-title="Sports",ESPN A1XS
+https://a1xs.vip/40000011
+#EXTINF:-1 tvg-id="ESPN2" tvg-name="ESPN 2" group-title="Sports",ESPN 2
+https://fl7.moveonjoy.com/ESPN_2/index.m3u8
+#EXTINF:-1 tvg-id="ESPNU" tvg-name="ESPN U" group-title="Sports",ESPN U
+http://23.237.104.106:8080/USA_ESPNU/index.m3u8
+#EXTINF:-1 tvg-id="ESPNNews" tvg-name="ESPN NEWS" group-title="Sports",ESPN NEWS
+http://fl7.moveonjoy.com/ESPN_NEWS/index.m3u8
+#EXTINF:-1 tvg-id="FoxSports1" tvg-name="Fox Sports One" group-title="Sports",Fox Sports One
+https://a1xs.vip/40000021
+#EXTINF:-1 tvg-id="foxsp2" tvg-name="Fox Sports Two" group-title="Sports",Fox Sports Two
+https://a1xs.vip/40000022
+#EXTINF:-1 tvg-id="BeinSports1" tvg-name="Bein Sports One" group-title="Sports",Bein Sports One
+https://a1xs.vip/410
+#EXTINF:-1 tvg-id="BeinSportsXtra" tvg-name="Bein Sports Xtra" group-title="Sports",Bein Sports Xtra
+https://amg01334-beinsportsllc-beinxtra-localnow-kcy6r.amagi.tv/playlist.m3u8
+#EXTINF:-1 tvg-id="nbcsportsnow" tvg-name="NBC Sports now" group-title="Sports",NBC Sports now
+https://d3f4oii5n0oeqi.cloudfront.net/11701/88814624/hls/master.m3u8
+#EXTINF:-1 tvg-id="TennisCh" tvg-name="Tennis Channel" group-title="Sports",Tennis Channel
+https://tennischannel-int-samsunguk.amagi.tv/playlist.m3u8
+#EXTINF:-1 tvg-id="CBSN" tvg-name="CBS Sports Network" group-title="Sports",CBS Sports Network
+https://a1xs.vip/4000008
+#EXTINF:-1 tvg-id="Golazo" tvg-name="CBS Golazo Network" group-title="Sports",CBS Golazo Network
+https://a1xs.vip/4000009
+#EXTINF:-1 tvg-id="realmadrid" tvg-name="Real Madrid TV" group-title="Sports",Real Madrid TV
+https://dbrb49pjoymg4.cloudfront.net/manifest/3fec3e5cac39a52b2132f9c66c83dae043dc17d4/prod_default_xumo-ams-aws/ac6366c8-78e1-4c09-bb3f-e27c4a2a51cc/5.m3u8
+#EXTINF:-1 tvg-id="boxingtv" tvg-name="Boxing TV" group-title="Sports",Boxing TV
+https://d35j504z0x2vu2.cloudfront.net/v1/master/0bc8e8376bd8417a1b6761138aa41c26c7309312/boxing-tv/bxntv.m3u8
+#EXTINF:-1 tvg-id="impactwrestling" tvg-name="TNA Impact Wrestling" group-title="Sports",TNA Impact Wrestling
+https://dbrb49pjoymg4.cloudfront.net/v1/master/3fec3e5cac39a52b2132f9c66c83dae043dc17d4/prod_default_xumo-ams-aws/master.m3u8?ads.xumo_channelId=99991341
+#EXTINF:-1 tvg-id="redbulltv" tvg-name="Redbull TV" group-title="Sports",Redbull TV
+https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master_3360.m3u8
+#EXTINF:-1 tvg-id="HBO" tvg-name="HBO" group-title="Premium",HBO
+http://fl7.moveonjoy.com/HBO/index.m3u8
+#EXTINF:-1 tvg-id="HBO2" tvg-name="HBO 2" group-title="Premium",HBO 2
+http://fl7.moveonjoy.com/HBO_2/index.m3u8
+#EXTINF:-1 tvg-id="HBOComedy" tvg-name="HBO Comedy" group-title="Premium",HBO Comedy
+http://fl7.moveonjoy.com/HBO_COMEDY/index.m3u8
+#EXTINF:-1 tvg-id="HBOZone" tvg-name="HBO Zone" group-title="Premium",HBO Zone
+http://fl7.moveonjoy.com/HBO_ZONE/index.m3u8
+#EXTINF:-1 tvg-id="HBOfamily" tvg-name="HBO Family" group-title="Premium",HBO Family
+http://fl7.moveonjoy.com/HBO_FAMILY/index.m3u8
+#EXTINF:-1 tvg-id="USA" tvg-name="USA Network East" group-title="Entertainment",USA Network East
+https://a1xs.vip/1100020
+#EXTINF:-1 tvg-id="Cartoonnetwork" tvg-name="Cartoon Network US" group-title="Kids",Cartoon Network US
+https://fl7.moveonjoy.com/CARTOON_NETWORK/index.m3u8
+#EXTINF:-1 tvg-id="Nickelodeon" tvg-name="Nickelodeon" group-title="Kids",Nickelodeon
+http://23.237.104.106:8080/USA_NICKELODEON/index.m3u8
+#EXTINF:-1 tvg-id="Nicktoons" tvg-name="Nicktoons" group-title="Kids",Nicktoons
+http://fl7.moveonjoy.com/NICKTOONS/index.m3u8
+#EXTINF:-1 tvg-id="NickJr" tvg-name="Nick Jr" group-title="Kids",Nick Jr
+https://fl7.moveonjoy.com/NICK_JR/index.m3u8
+#EXTINF:-1 tvg-id="Disney" tvg-name="Disney Channel" group-title="Kids",Disney Channel
+https://fl7.moveonjoy.com/DISNEY/index.m3u8
+#EXTINF:-1 tvg-id="DisneyJr" tvg-name="Disney Junior" group-title="Kids",Disney Junior
+http://fl7.moveonjoy.com/DISNEY_JR/index.m3u8
+#EXTINF:-1 tvg-id="DisneyXD" tvg-name="Disney XD" group-title="Kids",Disney XD
+http://fl7.moveonjoy.com/DISNEY_XD/index.m3u8
+#EXTINF:-1 tvg-id="Boomerang" tvg-name="Boomerang" group-title="Kids",Boomerang
+http://fl7.moveonjoy.com/BOOMERANG/index.m3u8
+#EXTINF:-1 tvg-id="Moonbug" tvg-name="Moonbug kids" group-title="Kids",Moonbug kids
+https://moonbug-rokuus.amagi.tv/playlist.m3u8
+#EXTINF:-1 tvg-id="PBSKids" tvg-name="PBS Kids" group-title="Kids",PBS Kids
+https://2-fss-2.streamhoster.com/pl_140/amlst:200914-1298290/playlist.m3u8
+#EXTINF:-1 tvg-id="discovery" tvg-name="Discovery Channel" group-title="Documentary",Discovery Channel
+http://fl7.moveonjoy.com/Discovery_Channel/index.m3u8
+#EXTINF:-1 tvg-id="discoveryscience" tvg-name="Discovery Science" group-title="Documentary",Discovery Science
+http://fl7.moveonjoy.com/Discovery_Science/index.m3u8
+#EXTINF:-1 tvg-id="investigationdiscovery" tvg-name="Investigation Discovery" group-title="Documentary",Investigation Discovery
+http://fl7.moveonjoy.com/INVESTIGATION_DISCOVERY/index.m3u8
+#EXTINF:-1 tvg-id="animalplanet" tvg-name="Discovery Animal Planet" group-title="Documentary",Discovery Animal Planet
+http://fl7.moveonjoy.com/Animal_Planet/index.m3u8
+#EXTINF:-1 tvg-id="NatGeo" tvg-name="National Geographic" group-title="Documentary",National Geographic
+http://fl7.moveonjoy.com/National_Geographic/index.m3u8
+#EXTINF:-1 tvg-id="NatWild" tvg-name="National Geographic Wild" group-title="Documentary",National Geographic Wild
+http://fl7.moveonjoy.com/Nat_Geo_Wild/index.m3u8
+#EXTINF:-1 tvg-id="history" tvg-name="History Channel" group-title="Documentary",History Channel
+http://fl7.moveonjoy.com/history_channel/index.m3u8
+#EXTINF:-1 tvg-id="smithsonian" tvg-name="Smithsonian Channel" group-title="Documentary",Smithsonian Channel
+http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/5f21ea08007a49000762d349/master.m3u8
+#EXTINF:-1 tvg-id="BBC" tvg-name="BBC World" group-title="News",BBC World
+https://d2vnbkvjbims7j.cloudfront.net/manifest/3fec3e5cac39a52b2132f9c66c83dae043dc17d4/prod_default_xumo-ams-aws/bd32c8aa-7fc7-41c9-981c-2adc7ede21f3/4.m3u8
+#EXTINF:-1 tvg-id="CNN" tvg-name="CNN International" group-title="News",CNN International
+https://a1xs.vip/300007
+#EXTINF:-1 tvg-id="AlJazeera" tvg-name="Al Jazeera TV" group-title="News",Al Jazeera TV
+https://f803ea8ce9bb4c4da10de19d54266609.mediatailor.us-east-1.amazonaws.com/v1/manifest/7b67fbda7ab859400a821e9aa0deda20ab7ca3d2/aljazeeraLive/903cca04-821e-4805-aaa3-6de2bc6c269d/4.m3u8
+#EXTINF:-1 tvg-id="GBNews" tvg-name="GB News" group-title="News",GB News
+https://amg01076-lightningintern-gbnewsnz-samsungnz-rlcsd.amagi.tv/playlist/amg01076-lightningintern-gbnewsnz-samsungnz/playlist.m3u8
+#EXTINF:-1 tvg-id="DWEnglish" tvg-name="DW English" group-title="News",DW English
+https://dwamdstream102.akamaized.net/hls/live/2015525/dwstream102/index.m3u8
+#EXTINF:-1 tvg-id="SkyNewsAu" tvg-name="Sky News International" group-title="News",Sky News International
+https://dbrb49pjoymg4.cloudfront.net/manifest/3fec3e5cac39a52b2132f9c66c83dae043dc17d4/prod_default_xumo-ams-aws/bd32c8aa-7fc7-41c9-981c-2adc7ede21f3/4.m3u8
+#EXTINF:-1 tvg-id="ScrippsNews" tvg-name="Scripps News" group-title="News",Scripps News
+https://content.uplynk.com/channel/33c48f602cfd4474b957eb4ad999caf8.m3u8
+#EXTINF:-1 tvg-id="CNAInternational" tvg-name="CNA International" group-title="News",CNA International
+https://d2e1asnsl7br7b.cloudfront.net/7782e205e72f43aeb4a48ec97f66ebbe/index.m3u8
+#EXTINF:-1 tvg-id="AlArabiya" tvg-name="Al Arabiya" group-title="News",Al Arabiya
+https://live.alarabiya.net/alarabiapublish/alarabiya.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="NDTV24x7" tvg-name="NDTV 24x7" group-title="News",NDTV 24x7
+https://ndtv24x7elemarchana.akamaized.net/hls/live/2003678/ndtv24x7/master.m3u8
+#EXTINF:-1 tvg-id="NHKWorldJapan" tvg-name="NHK World Japan" group-title="News",NHK World Japan
+https://media-tyo.hls.nhkworld.jp/hls/w/live/1/sig/e52230f79050aa333c4ac6430f40a08f0898e6ec1c43d5cb9bcb82f9573797c4/v2.m3u8
+#EXTINF:-1 tvg-id="france24" tvg-name="France 24" group-title="News",France 24
+https://live.france24.com/hls/live/2037218/F24_EN_HI_HLS/master_5000.m3u8
+#EXTINF:-1 tvg-id="cgtn" tvg-name="CGTN" group-title="News",CGTN
+https://english-livebkali.cgtn.com/live/encgtn_0.m3u8
+#EXTINF:-1 tvg-id="euronews" tvg-name="Euro News" group-title="News",Euro News
+https://aka-live1049.delivery.roku.com/f5af26d1-822b-43f3-93f4-2301a947e1f3/t2-origin/out/v1/live.m3u8
+#EXTINF:-1 tvg-id="Bloomburg" tvg-name="Bloomberg UHD" group-title="News",Bloomberg UHD
+https://a1xs.vip/blombuhd
+#EXTINF:-1 tvg-id="Loupe4k" tvg-name="Loupe 4K" group-title="UHD",Loupe 4K
+https://a1xs.vip/loupe4k
+#EXTINF:-1 tvg-id="LoveNature4K" tvg-name="Love Nature 4K" group-title="UHD",Love Nature 4K
+https://a1xs.vip/lovent4k
+#EXTINF:-1 tvg-id="FashionTVUHD" tvg-name="Fashion TV 4K" group-title="UHD",Fashion TV 4K
+https://fash2043.cloudycdn.services/slive/ftv_ftv_4k_hevc_73d_42080_default_466_hls.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="hgtv" tvg-name="HGTV" group-title="Lifestyle",HGTV
+https://cvtv.cvalley.net/hls/HGTVHD/HGTVHD.m3u8
+#EXTINF:-1 tvg-id="foodnetwork" tvg-name="Food Network" group-title="Lifestyle",Food Network
+http://fl7.moveonjoy.com/FOOD_NETWORK/index.m3u8
+#EXTINF:-1 tvg-id="cookingch" tvg-name="Cooking Channel" group-title="Lifestyle",Cooking Channel
+http://fl7.moveonjoy.com/COOKING_CHANNEL/index.m3u8
+#EXTINF:-1 tvg-id="travelch" tvg-name="Travel Channel" group-title="Lifestyle",Travel Channel
+http://fl7.moveonjoy.com/Travel_Channel/index.m3u8
+#EXTINF:-1 tvg-id="hallmarkfamily" tvg-name="Hallmark Family" group-title="Entertainment",Hallmark Family
+http://fl7.moveonjoy.com/HALLMARK_DRAMA/index.m3u8
+#EXTINF:-1 tvg-id="sonymovie" tvg-name="Sony Movie Channel" group-title="Entertainment",Sony Movie Channel
+http://fl7.moveonjoy.com/Sony_Movie_Channel/index.m3u8
+#EXTINF:-1 tvg-id="param" tvg-name="Paramount Network" group-title="Entertainment",Paramount Network
+http://fl7.moveonjoy.com/PARAMOUNT_NETWORK/index.m3u8
+#EXTINF:-1 tvg-id="VH1" tvg-name="VH1 TV" group-title="Music",VH1 TV
+http://fl7.moveonjoy.com/VH1/index.m3u8
+#EXTINF:-1 tvg-id="MTVHD" tvg-name="MTV HD" group-title="Music",MTV HD
+https://a1xs.vip/1000037
+

@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "build": "tsc && npm run copy-assets",
-    "copy-assets": "node -e \"require('fs-extra').copySync('src/addon/landing.html', 'dist/addon/landing.html')\"",
+    "copy-assets": "node -e \"require('fs-extra').copySync('src/addon/landing.html', 'dist/addon/landing.html') && require('fs-extra').copySync('src/iptv/m3u-sources', 'dist/iptv/m3u-sources')\"",
     "start": "node --no-warnings dist/index.js",
     "dev": "esrun --node-no-warnings --watch src/index.ts"
   },
@@ -42,10 +42,10 @@
     "@types/tough-cookie": "^4.0.5",
     "@types/webtorrent": "~0.109.8",
     "esrun": "^3.2.26",
-    "typescript": "^5.3.3"
+    "typescript": "^5.9.3"
   },
   "dependencies": {
-    "axios": "^1.6.5",
+    "axios": "1.7.9",
     "axios-cookiejar-support": "^4.0.7",
     "cheerio": "1.0.0-rc.12",
     "dotenv": "^16.4.5",

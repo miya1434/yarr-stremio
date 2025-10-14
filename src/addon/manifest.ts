@@ -28,22 +28,32 @@ export const manifest: Manifest = {
       name: "YARR! Popular",
       extra: [{ name: "skip" }],
     },
+    {
+      id: "yarr-livetv",
+      type: "tv",
+      name: "YARR! Live TV",
+      extra: [{ name: "genre" }, { name: "skip" }],
+    },
   ],
-  resources: ["stream", "catalog"],
-  types: ["movie", "series"],
+  resources: ["catalog", "stream"],
+  types: ["movie", "series", "tv"],
   name: "YARR!",
   description:
-    "High-performance torrent addon • 62+ sources • Smart ranking • Multi-debrid • Trakt integration • Zero config",
+    "High-performance torrent addon • 58+ torrent sources • 3000+ IPTV channels (TVPass, Hilay, A1XS, Pluto, Plex, Roku + 300 more) • HBO, ESPN, Sky Sports • Multi-debrid • Zero config",
   logo: "https://spooky.host/yarrwhite.png",
   background: "https://spooky.host/yarrbg.png",
-  idPrefixes: ["tt", "kitsu"],
+  idPrefixes: ["tt", "kitsu", "livetv_", "m3u_", "a1xs_", "cvtv_"],
   behaviorHints: {
     // @ts-ignore
     configurable: true,
     configurationRequired: false,
   },
   config: [
-  
+    {
+      title: "Enable Live TV (All Providers)",
+      key: "enableLiveTV",
+      type: "checkbox",
+    },
     {
       title: "Search Speed",
       key: "speedPreference",

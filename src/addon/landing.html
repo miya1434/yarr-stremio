@@ -303,16 +303,21 @@
                                             Live TV <span class="text-xs text-blue-600">(IPTV Streaming)</span>
                     </label>
                                         <div class="space-y-3">
-                                            <div class="flex items-center justify-between py-3 px-4 bg-gray-50 rounded-lg">
+                                            <div class="flex items-center justify-between py-3 px-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg border-2 border-blue-200">
                                                 <div class="flex items-center">
-                                                    <input type="checkbox" name="enableDaddyLive" id="enableDaddyLive" onchange="updateSourceCount()" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
-                                                    <label for="enableDaddyLive" class="ml-3 text-sm font-medium text-gray-700">DaddyLive (850+ Channels)</label>
+                                                    <input type="checkbox" id="enableLiveTV" onchange="toggleLiveTV(this.checked); updateSourceCount()" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
+                                                    <div class="ml-3">
+                                                        <label for="enableLiveTV" class="text-sm font-bold text-gray-900">Live TV - 3000+ Channels</label>
+                                                        <p class="text-xs text-gray-600 mt-0.5">TVPass, Hilay TV, A1XS, CVTV, Pluto TV, Plex, Roku, Samsung, Tubi, Xumo + 300 more providers</p>
+                                                        <p class="text-xs text-green-600 mt-1">✓ HBO, Showtime, Cinemax, Starz ✓ ESPN, NFL, NBA, MLB, NHL ✓ CNN, Fox News, BBC</p>
+                                                    </div>
                         </div>
-                                                <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">Live TV</span>
+                                                <span class="bg-gradient-to-r from-blue-500 to-purple-500 text-white text-xs px-3 py-1 rounded-full font-semibold">3000+ Channels</span>
                         </div>
                                         </div>
                                     </div>
                 
+                <input type="hidden" name="enableLiveTV" id="enableLiveTVHidden" value="off">
                 <input type="hidden" name="enableProwlarr" id="enableProwlarrHidden" value="off">
                                         <input type="hidden" name="prowlarrUrl" id="prowlarrUrlHidden">
                                         <input type="hidden" name="prowlarrKey" id="prowlarrKeyHidden">
@@ -1233,7 +1238,7 @@ Details: 62.5 GB | 125 seeds | YTS
             const zilean = document.getElementById('enableZilean').checked;
             const prowlarr = document.getElementById('enableProwlarr').checked;
             const jackett = document.getElementById('enableJackett').checked;
-            const daddylive = document.getElementById('enableDaddyLive') ? document.getElementById('enableDaddyLive').checked : false;
+            const livetv = document.getElementById('enableLiveTV') ? document.getElementById('enableLiveTV').checked : false;
             
             let totalCount = 0;
             if (speedPref === 'fast') {
@@ -1241,20 +1246,20 @@ Details: 62.5 GB | 125 seeds | YTS
                 if (zilean) totalCount += 1;
                 if (prowlarr) totalCount += 5;
                 if (jackett) totalCount += 5;
-                if (daddylive) totalCount += 1;
+                if (livetv) totalCount += 310;
             } else if (speedPref === 'balanced') {
                 totalCount = 10;
                 if (zilean) totalCount += 1;
                 if (prowlarr) totalCount += 5;
                 if (jackett) totalCount += 5;
-                if (daddylive) totalCount += 1;
+                if (livetv) totalCount += 310;
             } else {
                 const counts = { 'minimal': 7, 'movies': 25, 'tv': 20, 'anime': 15, 'international': 18, 'all': 60 };
                 totalCount = counts[preset] || 30;
                 if (zilean) totalCount += 1;
                 if (prowlarr) totalCount += 10;
                 if (jackett) totalCount += 10;
-                if (daddylive) totalCount += 1;
+                if (livetv) totalCount += 310;
             }
             
             document.getElementById('sourceCount').textContent = `~${totalCount}`;
@@ -1485,6 +1490,10 @@ Details: 62.5 GB | 125 seeds | YTS
             document.getElementById('jackettKeyHidden').value = key;
             closeJackettModal();
             updateSourceCount();
+        }
+        
+        function toggleLiveTV(checked) {
+            document.getElementById('enableLiveTVHidden').value = checked ? 'on' : 'off';
         }
 
         // Test manifest

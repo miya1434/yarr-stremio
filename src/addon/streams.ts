@@ -26,7 +26,7 @@ import { calculateStatistics, formatStatisticsStream } from "../utils/statistics
 import { getSortFunction } from "../utils/sort-functions.js";
 import { aggregateExternalAddons, convertExternalStream, ExternalAddon } from "../utils/addon-aggregator.js";
 import { mergeConfigWithPreset } from "../utils/provider-presets.js";
-import { getChannelById } from "../iptv/daddylive.js";
+import { getStreamsForChannel } from "../iptv/unified.js";
 
 interface HandlerArgs {
   type: string;
@@ -141,6 +141,7 @@ interface HandlerArgs {
 }
 
 export const streamHandler = async ({ type, id, config, req }: HandlerArgs) => {
+  console.log(`🎬 STREAM HANDLER CALLED - Type: ${type}, ID: ${id}`);
   
   config = mergeConfigWithPreset(config) as any;
   
@@ -166,29 +167,23 @@ async function processStreamRequest(
   req: any,
   cacheKey: string
 ) {
-  if (id.startsWith("daddylive:")) {
-    const channelId = id.split(":")[1];
-    console.log(`\n📺 DaddyLive IPTV request for channel ${channelId}`);
+  if (id.startsWith("livetv_")) {
+    const channelId = id.replace("livetv_", "");
+    const channelName = channelId.replace(/_/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
     
-    const channel = await getChannelById(channelId);
+    console.log(`\n📺 Live TV request for: ${channelName}`);
     
-    if (!channel) {
+    const streams = await getStreamsForChannel(channelId, channelName);
+    
+    if (streams.length === 0) {
+      console.log(`❌ No streams found for ${channelName}`);
       return { streams: [] };
     }
+    
+    console.log(`📤 Returning ${streams.length} stream(s) from multiple providers`);
 
-    const stream = {
-      name: `[DaddyLive] ${channel.name}`,
-      title: `${channel.category} - Live TV`,
-      url: channel.stream_url,
-      externalUrl: channel.watch_url,
-      behaviorHints: {
-        notWebReady: true,
-        bingeGroup: `daddylive-${channel.id}`,
-      },
-    };
-
-    const result = { streams: [stream] };
-    cache.set(cacheKey, result, 3600000);
+    const result = { streams };
+    cache.set(cacheKey, result, 1800000);
     return result;
   }
 
