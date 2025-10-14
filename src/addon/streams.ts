@@ -26,11 +26,14 @@ import { calculateStatistics, formatStatisticsStream } from "../utils/statistics
 import { getSortFunction } from "../utils/sort-functions.js";
 import { aggregateExternalAddons, convertExternalStream, ExternalAddon } from "../utils/addon-aggregator.js";
 import { mergeConfigWithPreset } from "../utils/provider-presets.js";
+import { getChannelById } from "../iptv/daddylive.js";
 
 interface HandlerArgs {
   type: string;
   id: string;
   config?: {
+    
+    enableDaddyLive?: string;
     
     speedPreference?: string;
     
@@ -163,6 +166,32 @@ async function processStreamRequest(
   req: any,
   cacheKey: string
 ) {
+  if (id.startsWith("daddylive:")) {
+    const channelId = id.split(":")[1];
+    console.log(`\n📺 DaddyLive IPTV request for channel ${channelId}`);
+    
+    const channel = await getChannelById(channelId);
+    
+    if (!channel) {
+      return { streams: [] };
+    }
+
+    const stream = {
+      name: `[DaddyLive] ${channel.name}`,
+      title: `${channel.category} - Live TV`,
+      url: channel.stream_url,
+      externalUrl: channel.watch_url,
+      behaviorHints: {
+        notWebReady: true,
+        bingeGroup: `daddylive-${channel.id}`,
+      },
+    };
+
+    const result = { streams: [stream] };
+    cache.set(cacheKey, result, 3600000);
+    return result;
+  }
+
   const [mediaId, season, episode] = id.split(":");
   console.log(`\n🔍 Stream request for ${type}:${id}`);
   console.log(`   Media: ${mediaId}, Season: ${season || 'N/A'}, Episode: ${episode || 'N/A'}`);

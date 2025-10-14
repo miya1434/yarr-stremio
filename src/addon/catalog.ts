@@ -1,5 +1,6 @@
 import { Request } from "express";
 import { getTrendingContent, getPopularContent, getTraktRecommendationsForUser } from "../metadata/catalog.js";
+import { getAllChannels, getChannelsByCategory } from "../iptv/daddylive.js";
 
 interface CatalogArgs {
   type: string;
@@ -10,6 +11,7 @@ interface CatalogArgs {
   };
   config?: {
     traktToken?: string;
+    enableDaddyLive?: string;
   };
 }
 
@@ -34,6 +36,26 @@ export const catalogHandler = async ({ type, id, extra, config }: CatalogArgs) =
         config.traktToken,
         type as "movie" | "series"
       );
+      return { metas };
+    }
+
+    if (id === "yarr-livetv-daddylive" && config?.enableDaddyLive) {
+      const genre = extra?.genre;
+      let channels = genre 
+        ? await getChannelsByCategory(genre)
+        : await getAllChannels();
+
+      const metas = channels.map((channel) => ({
+        id: `daddylive:${channel.id}`,
+        type: "tv" as const,
+        name: channel.name,
+        poster: `https://via.placeholder.com/300x450/1a1a2e/eee?text=${encodeURIComponent(channel.name)}`,
+        background: `https://via.placeholder.com/1920x1080/1a1a2e/eee?text=${encodeURIComponent(channel.name)}`,
+        logo: `https://via.placeholder.com/300x150/1a1a2e/eee?text=${encodeURIComponent(channel.name)}`,
+        description: `${channel.category} - Live TV`,
+        genres: [channel.category],
+      }));
+
       return { metas };
     }
 
