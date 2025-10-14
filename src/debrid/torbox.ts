@@ -1,4 +1,5 @@
 import axios from "axios";
+import { gotScraping } from "got-scraping";
 
 const TORBOX_API_BASE = "https://api.torbox.app/v1/api";
 
@@ -21,34 +22,26 @@ export const checkTorBoxCachedBatch = async (
 
     console.log(`   📤 Sending ${hashes.length} hashes to TorBox:`, hashes.slice(0, 3));
 
-    const response = await axios.post(
+    // Use got-scraping to bypass Cloudflare TLS fingerprinting
+    const response: any = await gotScraping.post(
       `${TORBOX_API_BASE}/torrents/checkcached`,
       {
-        hashes: hashes, // TorBox supports multiple hashes!
-      },
-      {
-        params: {
+        searchParams: {
           format: "list",
-          list_files: true,
+          list_files: "true",
+        },
+        json: {
+          hashes: hashes,
         },
         headers: {
           Authorization: `Bearer ${apiKey}`,
-          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
-          "Accept": "application/json, text/plain, */*",
-          "Accept-Language": "en-US,en;q=0.9",
-          "Accept-Encoding": "gzip, deflate, br",
-          "Origin": "https://torbox.app",
-          "Referer": "https://torbox.app/",
-          "Sec-Ch-Ua": '"Google Chrome";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
-          "Sec-Ch-Ua-Mobile": "?0",
-          "Sec-Ch-Ua-Platform": '"Windows"',
-          "Sec-Fetch-Dest": "empty",
-          "Sec-Fetch-Mode": "cors",
-          "Sec-Fetch-Site": "same-site",
         },
-        timeout: 30000,
+        timeout: {
+          request: 30000,
+        },
+        responseType: 'json',
       }
-    );
+    ).then(res => ({ data: res.body }));
 
     console.log(`   🔍 TorBox response:`, JSON.stringify(response.data, null, 2));
     
@@ -98,22 +91,21 @@ export const getTorBoxStream = async (
 ): Promise<string | null> => {
   try {
     // Create torrent
-    const createResponse = await axios.post(
+    const createResponse: any = await gotScraping.post(
       `${TORBOX_API_BASE}/torrents/createtorrent`,
       {
-        magnet: magnetLink,
-      },
-      {
+        json: {
+          magnet: magnetLink,
+        },
         headers: {
           Authorization: `Bearer ${apiKey}`,
-          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
-          "Accept": "application/json, text/plain, */*",
-          "Origin": "https://torbox.app",
-          "Referer": "https://torbox.app/",
         },
-        timeout: 30000,
+        timeout: {
+          request: 30000,
+        },
+        responseType: 'json',
       }
-    );
+    ).then(res => ({ data: res.body }));
 
     if (!createResponse.data.success) {
       return null;
@@ -122,22 +114,21 @@ export const getTorBoxStream = async (
     const torrentId = createResponse.data.data.torrent_id;
 
     // Get torrent info
-    const infoResponse = await axios.get(
+    const infoResponse: any = await gotScraping.get(
       `${TORBOX_API_BASE}/torrents/mylist`,
       {
-        params: {
+        searchParams: {
           id: torrentId,
         },
         headers: {
           Authorization: `Bearer ${apiKey}`,
-          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
-          "Accept": "application/json, text/plain, */*",
-          "Origin": "https://torbox.app",
-          "Referer": "https://torbox.app/",
         },
-        timeout: 30000,
+        timeout: {
+          request: 30000,
+        },
+        responseType: 'json',
       }
-    );
+    ).then(res => ({ data: res.body }));
 
     const torrent = infoResponse.data.data.find(
       (t: any) => t.id === torrentId
@@ -161,23 +152,20 @@ export const getTorBoxStream = async (
     );
 
     // Request download link
-    const downloadResponse = await axios.get(
+    const downloadResponse: any = await gotScraping.get(
       `${TORBOX_API_BASE}/torrents/requestdl`,
       {
-        params: {
+        searchParams: {
           token: apiKey,
-          torrent_id: torrentId,
-          file_id: largestFile.id,
+          torrent_id: torrentId.toString(),
+          file_id: largestFile.id.toString(),
         },
-        headers: {
-          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
-          "Accept": "application/json, text/plain, */*",
-          "Origin": "https://torbox.app",
-          "Referer": "https://torbox.app/",
+        timeout: {
+          request: 30000,
         },
-        timeout: 30000,
+        responseType: 'json',
       }
-    );
+    ).then(res => ({ data: res.body }));
 
     return downloadResponse.data.data;
   } catch (error) {
