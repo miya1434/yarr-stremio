@@ -42,7 +42,7 @@ export const manifest: Manifest = {
     "High-performance torrent addon • 58+ torrent sources • 3000+ IPTV channels (TVPass, Hilay, A1XS, Pluto, Plex, Roku + 300 more) • HBO, ESPN, Sky Sports • Multi-debrid • Zero config",
   logo: "https://spooky.host/yarrwhite.png",
   background: "https://spooky.host/yarrbg.png",
-  idPrefixes: ["tt", "kitsu", "livetv_", "m3u_", "a1xs_", "cvtv_"],
+  idPrefixes: ["tt", "kitsu"],
   behaviorHints: {
     // @ts-ignore
     configurable: true,

@@ -963,6 +963,27 @@
                         </div>
                     </div>
 
+    <!-- WIP Notice Modal -->
+    <div class="modal-overlay" id="wipModal" style="background: rgba(0,0,0,0.5);">
+        <div class="bg-white rounded-lg shadow-xl max-w-md w-full mx-4 border border-gray-200 p-6">
+            <div class="flex items-start gap-3">
+                <div class="text-3xl">🏗️</div>
+                <div class="flex-1">
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">Early Access</h3>
+                    <p class="text-sm text-gray-600 mb-4">
+                        YARR! is a work in progress. We're working hard on flushing out all features and fixing bugs. Thank you for being an early adopter!
+                    </p>
+                    <p class="text-xs text-gray-500 mb-4">
+                        Report issues or contribute on <a href="https://github.com/spookyhost1/yarr-stremio" target="_blank" class="text-primary-600 hover:underline">GitHub</a>
+                    </p>
+                    <button onclick="closeWIPModal()" class="w-full px-4 py-2 bg-primary-600 text-white rounded-md text-sm font-medium hover:bg-primary-700">
+                        Got it!
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Stremio Sync Modal -->
     <div class="modal-overlay" id="stremioSyncModal" style="background: rgba(0,0,0,0.5);">
         <div class="bg-white rounded-lg shadow-2xl max-w-2xl w-full mx-4 border border-gray-200 max-h-[90vh] overflow-y-auto">
@@ -1528,6 +1549,14 @@ Details: 62.5 GB | 125 seeds | YTS
         
         function toggleLiveTV(checked) {
             document.getElementById('enableLiveTVHidden').value = checked ? 'on' : 'off';
+        }
+        
+        function openWIPModal() {
+            document.getElementById('wipModal').classList.add('open');
+        }
+        
+        function closeWIPModal() {
+            document.getElementById('wipModal').classList.remove('open');
         }
 
         // Test manifest
