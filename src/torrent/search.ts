@@ -46,6 +46,7 @@ import { searchTorrentFunk } from "./torrentfunk.js";
 import { searchAniLibria } from "./anilibria.js";
 import { searchEraiRaws } from "./erai.js";
 import { searchAnimeTosho } from "./animetosho.js";
+import { searchEliteTorrent } from "./elitetorrent.js";
 import { providerHealth } from "../utils/provider-health.js";
 
 export type TorrentCategory = "movie" | "show";
@@ -93,7 +94,8 @@ export type TorrentSource =
   | "torrentfunk"
   | "anilibria"
   | "erai"
-  | "animetosho";
+  | "animetosho"
+  | "elitetorrent";
 
 export interface TorrentSearchOptions {
   categories?: TorrentCategory[];
@@ -415,6 +417,10 @@ export const searchTorrents = async (
 
   if (options?.sources?.includes("animetosho") || searchAllSources) {
     promises.push(searchAnimeTosho(query));
+  }
+
+  if (options?.sources?.includes("elitetorrent") || searchAllSources) {
+    promises.push(searchEliteTorrent(query));
   }
 
   // Execute all promises with proper error handling AND track provider health

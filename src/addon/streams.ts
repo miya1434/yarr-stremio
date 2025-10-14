@@ -93,6 +93,7 @@ interface HandlerArgs {
     enableAniLibria: string;
     enableErai: string;
     enableAnimeTosho: string;
+    enableEliteTorrent: string;
     
     debridService: string;
     debridApiKey: string;
@@ -225,6 +226,7 @@ async function processStreamRequest(
   if (config.enableAniLibria === "on") sources.push("anilibria");
   if (config.enableErai === "on") sources.push("erai");
   if (config.enableAnimeTosho === "on") sources.push("animetosho");
+  if (config.enableEliteTorrent === "on") sources.push("elitetorrent");
 
   
   const speedPreference = config?.speedPreference || "balanced";
