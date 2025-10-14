@@ -25,6 +25,8 @@ export const serveHTTP = async (port: number) => {
   // Create our own Express app
   const app = express();
   
+  app.set('trust proxy', true);
+  
   // CORS middleware for Stremio
   app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
