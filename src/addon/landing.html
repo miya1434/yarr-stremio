@@ -1109,13 +1109,12 @@ Details: 62.5 GB | 125 seeds | YTS
         // All 60+ sources
         const allSources = [
             'YTS', 'EZTV', '1337x', 'Nyaa.si', 'The Pirate Bay', 'RARBG',
-            'KickassTorrents', 'TorrentGalaxy', 'TokyoTosho', 'LimeTorrents',
+            'KickassTorrents', 'TorrentGalaxy', 'TokyoTosho',
             'MagnetDL', 'AniDex', 'Cinecalidad', 'MiTorrent', 'PelisPanda', 'RuTracker', 'Rutor',
             'Comandotorrents', 'BluDV', 'Torrent9', 'ilCorSaRoNeRo', 'MejorTorrent',
             'Wolfmax4k', 'BestTorrents', 'MicoLeaoDublado', 'Zooqle', 'ETTV',
-            'TorrentDownloads', 'BTDB', 'Torrentz2', 'SkyTorrents', 'GloTorrents',
-            'TorLock', 'YIFY', 'SolidTorrents', 'TorrentProject', 'TPBClean',
-            'TorrentFunk', 'HorribleSubs', 'SubsPlease', 'AniLibria', 'Erai-raws'
+            'TorrentDownloads', 'Torrentz2', 'SkyTorrents',
+            'SolidTorrents', 'TorrentFunk', 'HorribleSubs', 'SubsPlease', 'AniLibria', 'Erai-raws'
         ];
         
         let manualSourcesEnabled = false;
@@ -1125,19 +1124,19 @@ Details: 62.5 GB | 125 seeds | YTS
             if (speed === 'fast') {
                 return ['YTS', 'EZTV', '1337x', 'Nyaa.si', 'The Pirate Bay', 'RARBG'];
             } else if (speed === 'balanced') {
-                return ['YTS', 'EZTV', '1337x', 'Nyaa.si', 'The Pirate Bay', 'RARBG', 'KickassTorrents', 'TorrentGalaxy', 'TokyoTosho', 'LimeTorrents'];
+                return ['YTS', 'EZTV', '1337x', 'Nyaa.si', 'The Pirate Bay', 'RARBG', 'KickassTorrents', 'TorrentGalaxy', 'TokyoTosho', 'MagnetDL'];
             } else {
                 // Comprehensive
                 if (preset === 'anime') {
                     return ['Nyaa.si', 'TokyoTosho', 'AniDex', 'SubsPlease', 'Erai-raws', 'HorribleSubs', 'AniLibria'];
                 } else if (preset === 'movies') {
-                    return ['YTS', 'RARBG', '1337x', 'The Pirate Bay', 'TorrentGalaxy', 'YIFY', 'SolidTorrents', 'TorrentProject', 'MagnetDL', 'LimeTorrents'];
+                    return ['YTS', 'RARBG', '1337x', 'The Pirate Bay', 'TorrentGalaxy', 'SolidTorrents', 'MagnetDL', 'Zooqle', 'Torrentz2'];
                 } else if (preset === 'tv') {
-                    return ['EZTV', 'The Pirate Bay', '1337x', 'RARBG', 'TorrentGalaxy', 'KickassTorrents', 'ETTV', 'LimeTorrents'];
+                    return ['EZTV', 'The Pirate Bay', '1337x', 'RARBG', 'TorrentGalaxy', 'KickassTorrents', 'ETTV', 'TorrentDownloads'];
                 } else if (preset === 'international') {
                     return ['RuTracker', 'Rutor', 'Comandotorrents', 'BluDV', 'Torrent9', 'ilCorSaRoNeRo', 'MejorTorrent', 'Cinecalidad', 'MiTorrent', 'PelisPanda'];
                 } else {
-                    return ['YTS', 'EZTV', '1337x', 'The Pirate Bay', 'RARBG', 'Nyaa.si', 'TorrentGalaxy', 'KickassTorrents', 'TokyoTosho', 'LimeTorrents', 'MagnetDL', 'RuTracker'];
+                    return ['YTS', 'EZTV', '1337x', 'The Pirate Bay', 'RARBG', 'Nyaa.si', 'TorrentGalaxy', 'KickassTorrents', 'TokyoTosho', 'MagnetDL', 'RuTracker', 'SolidTorrents'];
                 }
             }
         }
@@ -1285,20 +1284,20 @@ Details: 62.5 GB | 125 seeds | YTS
             } else if (speed === 'fast') {
                 sources = ['YTS', 'EZTV', '1337x', 'Nyaa.si', 'The Pirate Bay', 'RARBG'];
             } else if (speed === 'balanced') {
-                sources = ['YTS', 'EZTV', '1337x', 'Nyaa.si', 'The Pirate Bay', 'RARBG', 'KickassTorrents', 'TorrentGalaxy', 'TokyoTosho', 'LimeTorrents'];
+                sources = ['YTS', 'EZTV', '1337x', 'Nyaa.si', 'The Pirate Bay', 'RARBG', 'KickassTorrents', 'TorrentGalaxy', 'TokyoTosho', 'MagnetDL'];
             } else {
                 // Comprehensive: Show actual sources based on preset
                 if (preset === 'anime') {
                     sources = ['Nyaa.si', 'TokyoTosho', 'AniDex', 'SubsPlease', 'Erai-raws', 'HorribleSubs', 'AniLibria'];
                 } else if (preset === 'movies') {
-                    sources = ['YTS', 'RARBG', '1337x', 'The Pirate Bay', 'TorrentGalaxy', 'YIFY', 'SolidTorrents', 'TorrentProject', 'MagnetDL', 'LimeTorrents'];
+                    sources = ['YTS', 'RARBG', '1337x', 'The Pirate Bay', 'TorrentGalaxy', 'SolidTorrents', 'MagnetDL', 'Zooqle', 'Torrentz2'];
                 } else if (preset === 'tv') {
-                    sources = ['EZTV', 'The Pirate Bay', '1337x', 'RARBG', 'TorrentGalaxy', 'KickassTorrents', 'ETTV', 'LimeTorrents'];
+                    sources = ['EZTV', 'The Pirate Bay', '1337x', 'RARBG', 'TorrentGalaxy', 'KickassTorrents', 'ETTV', 'TorrentDownloads'];
                 } else if (preset === 'international') {
                     sources = ['RuTracker', 'Rutor', 'Comandotorrents', 'BluDV', 'Torrent9', 'ilCorSaRoNeRo', 'MejorTorrent', 'Cinecalidad', 'MiTorrent', 'PelisPanda'];
                 } else {
                     // All content - show first 12
-                    sources = ['YTS', 'EZTV', '1337x', 'The Pirate Bay', 'RARBG', 'Nyaa.si', 'TorrentGalaxy', 'KickassTorrents', 'TokyoTosho', 'LimeTorrents', 'MagnetDL', 'RuTracker'];
+                    sources = ['YTS', 'EZTV', '1337x', 'The Pirate Bay', 'RARBG', 'Nyaa.si', 'TorrentGalaxy', 'KickassTorrents', 'TokyoTosho', 'MagnetDL', 'RuTracker', 'SolidTorrents'];
                 }
             }
             

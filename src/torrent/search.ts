@@ -33,21 +33,14 @@ import { searchPelisPanda } from "./pelispanda.js";
 import { searchWolfmax4k } from "./wolfmax4k.js";
 import { searchBestTorrents } from "./besttorrents.js";
 import { searchMicoLeaoDublado } from "./micoleaodublado.js";
-import { searchLimeTorrents } from "./limetorrents.js";
 import { searchZooqle } from "./zooqle.js";
 import { searchETTV } from "./ettv.js";
 import { searchTorrentDownloads } from "./torrentdownloads.js";
-import { searchBTDB } from "./btdb.js";
 import { searchTorrentz2 } from "./torrentz2.js";
 import { searchHorribleSubs } from "./horriblesubs.js";
 import { searchSubsPlease } from "./subsplease.js";
 import { searchSkyTorrents } from "./skytorrents.js";
-import { searchGloTorrents } from "./glodls.js";
-import { searchTorLock } from "./torlock.js";
-import { searchYIFY } from "./yify.js";
 import { searchSolidTorrents } from "./solidtorrents.js";
-import { searchTorrentProject } from "./torrentproject.js";
-import { searchTPBClean } from "./tpbclean.js";
 import { searchTorrentFunk } from "./torrentfunk.js";
 import { searchAniLibria } from "./anilibria.js";
 import { searchEraiRaws } from "./erai.js";
@@ -86,21 +79,14 @@ export type TorrentSource =
   | "wolfmax4k"
   | "besttorrents"
   | "micoleaodublado"
-  | "limetorrents"
   | "zooqle"
   | "ettv"
   | "torrentdownloads"
-  | "btdb"
   | "torrentz2"
   | "horriblesubs"
   | "subsplease"
   | "skytorrents"
-  | "glotorrents"
-  | "torlock"
-  | "yify"
   | "solidtorrents"
-  | "torrentproject"
-  | "tpbclean"
   | "torrentfunk"
   | "anilibria"
   | "erai";
@@ -372,11 +358,6 @@ export const searchTorrents = async (
     }
   }
 
-  // Additional general trackers
-  if (options?.sources?.includes("limetorrents") || searchAllSources) {
-    promises.push(searchLimeTorrents(query));
-  }
-
   if (options?.sources?.includes("zooqle") || searchAllSources) {
     promises.push(searchZooqle(query));
   }
@@ -391,10 +372,6 @@ export const searchTorrents = async (
     promises.push(searchTorrentDownloads(query));
   }
 
-  if (options?.sources?.includes("btdb") || searchAllSources) {
-    promises.push(searchBTDB(query));
-  }
-
   if (options?.sources?.includes("torrentz2") || searchAllSources) {
     promises.push(searchTorrentz2(query));
   }
@@ -403,30 +380,8 @@ export const searchTorrents = async (
     promises.push(searchSkyTorrents(query));
   }
 
-  if (options?.sources?.includes("glotorrents") || searchAllSources) {
-    promises.push(searchGloTorrents(query));
-  }
-
-  if (options?.sources?.includes("torlock") || searchAllSources) {
-    promises.push(searchTorLock(query));
-  }
-
-  if (options?.sources?.includes("yify") || searchAllSources) {
-    if (options?.categories?.includes("movie") || searchAllCategories) {
-      promises.push(searchYIFY(query));
-    }
-  }
-
   if (options?.sources?.includes("solidtorrents") || searchAllSources) {
     promises.push(searchSolidTorrents(query));
-  }
-
-  if (options?.sources?.includes("torrentproject") || searchAllSources) {
-    promises.push(searchTorrentProject(query));
-  }
-
-  if (options?.sources?.includes("tpbclean") || searchAllSources) {
-    promises.push(searchTPBClean(query));
   }
 
   if (options?.sources?.includes("torrentfunk") || searchAllSources) {

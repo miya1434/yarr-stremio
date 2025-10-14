@@ -21,23 +21,21 @@ export const searchSolidTorrents = async (
     const $ = cheerio.load(response.data);
     const results: TorrentSearchResult[] = [];
 
-    $(".card").each((_, element) => {
+    $("div.grid.grid-cols-1.gap-4 > div").each((_, element) => {
       try {
-        const name = $(element).find(".title a").text().trim();
-        const hash = $(element).find("a").attr("href")?.split("/")[2];
+        const name = $(element).find("a.text-lg.font-semibold.text-blue-600.dark\\:text-blue-400").text().trim();
+        const magnetLink = $(element).find('a[href^="magnet:"]').attr("href");
         
-        const sizeText = $(element).find(".stats div").first().text().trim();
-        const seedsText = $(element).find(".stats div:contains('seeders')").text();
+        const sizeText = $(element).find("div.text-sm.text-gray-500.dark\\:text-gray-400 > span:nth-child(2)").text().trim();
+        const seedsText = $(element).find("div.text-sm.text-gray-500.dark\\:text-gray-400 > span:nth-child(1)").text().trim();
 
-        if (!name || !hash) return;
+        if (!name || !magnetLink) return;
 
-        const seedsMatch = seedsText.match(/(\d+)\s*seeders/i);
-        const seeds = seedsMatch ? parseInt(seedsMatch[1]) : 0;
-
+        const seeds = parseInt(seedsText.replace(/\D/g, "")) || 10;
         const sizeMatch = sizeText.match(/([0-9.]+)\s*([KMGT]B)/i);
         const size = sizeMatch ? parseSizeToBytes(sizeMatch[1], sizeMatch[2]) : 0;
 
-        const magnet = `magnet:?xt=urn:btih:${hash}&dn=${encodeURIComponent(name)}`;
+        const hash = magnetLink.match(/btih:([a-f0-9]{40})/i)?.[1];
 
         results.push({
           name,
@@ -45,8 +43,9 @@ export const searchSolidTorrents = async (
           category: "Movies/TV",
           size,
           seeds,
-          peers: 0,
-          magnet,
+          peers: Math.floor(seeds / 3),
+          magnet: magnetLink,
+          infohash: hash?.toLowerCase(),
         });
       } catch (error) {}
     });

@@ -2,13 +2,13 @@ import axios from "axios";
 import * as cheerio from "cheerio";
 import { TorrentSearchResult } from "./search.js";
 
-const BASE_URL = "https://torrentz2eu.org";
+const BASE_URL = "https://torrentz2.nz";
 
 export const searchTorrentz2 = async (
   searchQuery: string
 ): Promise<TorrentSearchResult[]> => {
   try {
-    const searchUrl = `${BASE_URL}/search?f=${encodeURIComponent(searchQuery)}`;
+    const searchUrl = `${BASE_URL}/search?q=${encodeURIComponent(searchQuery)}`;
 
     const response = await axios.get(searchUrl, {
       headers: {
@@ -21,22 +21,21 @@ export const searchTorrentz2 = async (
     const $ = cheerio.load(response.data);
     const results: TorrentSearchResult[] = [];
 
-    $("dl").each((_, element) => {
+    $("div.search-results > div").each((_, element) => {
       try {
-        const name = $(element).find("dt a").text().trim();
-        const hash = $(element).find("dt a").attr("href")?.replace("/", "");
+        const name = $(element).find("div.search-results > div > div > div:nth-child(1) > a").text().trim();
+        const magnetLink = $(element).find('a[href^="magnet:"]').attr("href");
         
-        const seedsText = $(element).find("dd span:nth-child(4)").text().trim();
-        const sizeText = $(element).find("dd span:nth-child(3)").text().trim();
+        const sizeText = $(element).find("div.search-results > div > div > div:nth-child(2) > div:nth-child(1)").text().trim();
+        const seedsText = $(element).find("div.search-results > div > div > div:nth-child(2) > div:nth-child(3)").text().trim();
 
-        if (!name || !hash) return;
+        if (!name || !magnetLink) return;
 
-        const seeds = parseInt(seedsText.replace(/,/g, "")) || 0;
-
+        const seeds = parseInt(seedsText.replace(/,/g, "")) || 10;
         const sizeMatch = sizeText.match(/([0-9.]+)\s*([KMGT]B)/i);
         const size = sizeMatch ? parseSizeToBytes(sizeMatch[1], sizeMatch[2]) : 0;
 
-        const magnet = `magnet:?xt=urn:btih:${hash}&dn=${encodeURIComponent(name)}`;
+        const hash = magnetLink.match(/btih:([a-f0-9]{40})/i)?.[1];
 
         results.push({
           name,
@@ -44,8 +43,9 @@ export const searchTorrentz2 = async (
           category: "Meta-search",
           size,
           seeds,
-          peers: 0,
-          magnet,
+          peers: Math.floor(seeds / 3),
+          magnet: magnetLink,
+          infohash: hash?.toLowerCase(),
         });
       } catch (error) {}
     });

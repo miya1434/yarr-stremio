@@ -79,19 +79,12 @@ interface HandlerArgs {
     enableBestTorrents: string;
     enableMicoLeaoDublado: string;
    
-    enableLimeTorrents: string;
     enableZooqle: string;
     enableETTV: string;
     enableTorrentDownloads: string;
-    enableBTDB: string;
     enableTorrentz2: string;
     enableSkyTorrents: string;
-    enableGloTorrents: string;
-    enableTorLock: string;
-    enableYIFY: string;
     enableSolidTorrents: string;
-    enableTorrentProject: string;
-    enableTPBClean: string;
     enableTorrentFunk: string;
     
     enableHorribleSubs: string;
@@ -216,19 +209,12 @@ async function processStreamRequest(
   if (config.enableBestTorrents === "on") sources.push("besttorrents");
   if (config.enableMicoLeaoDublado === "on") sources.push("micoleaodublado");
   
-  if (config.enableLimeTorrents === "on") sources.push("limetorrents");
   if (config.enableZooqle === "on") sources.push("zooqle");
   if (config.enableETTV === "on") sources.push("ettv");
   if (config.enableTorrentDownloads === "on") sources.push("torrentdownloads");
-  if (config.enableBTDB === "on") sources.push("btdb");
   if (config.enableTorrentz2 === "on") sources.push("torrentz2");
   if (config.enableSkyTorrents === "on") sources.push("skytorrents");
-  if (config.enableGloTorrents === "on") sources.push("glotorrents");
-  if (config.enableTorLock === "on") sources.push("torlock");
-  if (config.enableYIFY === "on") sources.push("yify");
   if (config.enableSolidTorrents === "on") sources.push("solidtorrents");
-  if (config.enableTorrentProject === "on") sources.push("torrentproject");
-  if (config.enableTPBClean === "on") sources.push("tpbclean");
   if (config.enableTorrentFunk === "on") sources.push("torrentfunk");
   
   if (config.enableHorribleSubs === "on") sources.push("horriblesubs");
