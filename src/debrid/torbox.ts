@@ -33,8 +33,20 @@ export const checkTorBoxCachedBatch = async (
         },
         headers: {
           Authorization: `Bearer ${apiKey}`,
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+          "Accept": "application/json, text/plain, */*",
+          "Accept-Language": "en-US,en;q=0.9",
+          "Accept-Encoding": "gzip, deflate, br",
+          "Origin": "https://torbox.app",
+          "Referer": "https://torbox.app/",
+          "Sec-Ch-Ua": '"Google Chrome";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
+          "Sec-Ch-Ua-Mobile": "?0",
+          "Sec-Ch-Ua-Platform": '"Windows"',
+          "Sec-Fetch-Dest": "empty",
+          "Sec-Fetch-Mode": "cors",
+          "Sec-Fetch-Site": "same-site",
         },
-        timeout: 10000,
+        timeout: 30000,
       }
     );
 
@@ -94,8 +106,12 @@ export const getTorBoxStream = async (
       {
         headers: {
           Authorization: `Bearer ${apiKey}`,
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+          "Accept": "application/json, text/plain, */*",
+          "Origin": "https://torbox.app",
+          "Referer": "https://torbox.app/",
         },
-        timeout: 10000,
+        timeout: 30000,
       }
     );
 
@@ -114,8 +130,12 @@ export const getTorBoxStream = async (
         },
         headers: {
           Authorization: `Bearer ${apiKey}`,
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+          "Accept": "application/json, text/plain, */*",
+          "Origin": "https://torbox.app",
+          "Referer": "https://torbox.app/",
         },
-        timeout: 10000,
+        timeout: 30000,
       }
     );
 
@@ -149,7 +169,13 @@ export const getTorBoxStream = async (
           torrent_id: torrentId,
           file_id: largestFile.id,
         },
-        timeout: 10000,
+        headers: {
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+          "Accept": "application/json, text/plain, */*",
+          "Origin": "https://torbox.app",
+          "Referer": "https://torbox.app/",
+        },
+        timeout: 30000,
       }
     );
 
