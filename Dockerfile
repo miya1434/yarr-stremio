@@ -16,10 +16,27 @@ RUN --mount=type=bind,source=package.json,target=package.json \
     --mount=type=cache,target=/root/.local/share/pnpm/store \
     pnpm install --frozen-lockfile
 
+COPY . .ARG NODE_VERSION=20.11.1
+ARG PNPM_VERSION=8.15.4
+ARG TS_VERSION=5.3.3
+
+# Builder stage
+FROM node:${NODE_VERSION} as build
+
+WORKDIR /usr/src/app
+
+RUN npm install -g typescript@${TS_VERSION}
+RUN --mount=type=cache,target=/root/.npm \
+    npm install -g pnpm@${PNPM_VERSION}
+
+COPY package.json ./
+COPY patches ./patches/
+
+RUN pnpm install
+
 COPY . .
 
 RUN pnpm run build
-RUN pnpm prune --prod
 
 # Runner stage
 FROM node:${NODE_VERSION}-slim as final
