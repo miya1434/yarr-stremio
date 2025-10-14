@@ -29,12 +29,17 @@ export const checkRealDebridCached = async (
       }
     );
 
-    // Check if torrent has any available files
-    return !!(
-      response.data &&
-      Object.keys(response.data).length > 0 &&
-      Object.values(response.data)[0]
-    );
+    if (!response.data || typeof response.data !== 'object') {
+      return false;
+    }
+
+    const hashData = response.data[hash];
+    if (!hashData) {
+      return false;
+    }
+
+    const rdData = hashData.rd || hashData;
+    return Array.isArray(rdData) && rdData.length > 0 && rdData[0] && Object.keys(rdData[0]).length > 0;
   } catch (error) {
     console.error("RealDebrid cache check error:", error);
     return false;

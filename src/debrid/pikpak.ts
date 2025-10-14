@@ -7,9 +7,25 @@ export const checkPikPakCached = async (
   apiKey: string
 ): Promise<boolean> => {
   try {
-    // PikPak doesn't have a direct cache check API
-    // Would need to add the magnet and check status
-    return false;
+    const hashMatch = magnetLink.match(/btih:([a-f0-9]{40})/i);
+    if (!hashMatch) return false;
+
+    const hash = hashMatch[1];
+
+    const response = await axios.get(
+      `${PIKPAK_API_BASE}/offline/torrent/check`,
+      {
+        params: {
+          hash: hash,
+        },
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+        },
+        timeout: 5000,
+      }
+    );
+
+    return response.data && response.data.data && response.data.data.cached === true;
   } catch (error) {
     console.error("PikPak cache check error:", error);
     return false;
