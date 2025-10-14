@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  yarr:
+    image: spookyhost1/yarr-stremio:latest
+    container_name: yarr
+    ports:
+      - "58827:58827"
+    environment:
+      - ZILEAN_URL=https://zilean.elfhosted.com
+    restart: unless-stopped

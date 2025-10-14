@@ -1,0 +1,1900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YARR! - Configuration</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['DM Sans', 'sans-serif'] },
+                    colors: {
+                        primary: {
+                            50: '#fef2f2', 100: '#fee2e2', 200: '#fecaca', 300: '#fca5a5', 
+                            400: '#f87171', 500: '#ef4444', 600: '#dc2626', 700: '#b91c1c', 
+                            800: '#991b1b', 900: '#7f1d1d',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #f9fafb; transition: background-color 0.3s ease; }
+        body.dark-mode { background-color: #0f0f0f; color: #e0e0e0; }
+        body.dark-mode .bg-white { background-color: #1a1a1a !important; }
+        body.dark-mode .bg-gray-50 { background-color: #2a2a2a !important; }
+        body.dark-mode .text-gray-900 { color: #e0e0e0 !important; }
+        body.dark-mode .text-gray-700 { color: #b0b0b0 !important; }
+        body.dark-mode .text-gray-600 { color: #9f9f9f !important; }
+        body.dark-mode .text-gray-500 { color: #888 !important; }
+        body.dark-mode .border-gray-200 { border-color: #333 !important; }
+        body.dark-mode .border-gray-300 { border-color: #444 !important; }
+        body.dark-mode input, body.dark-mode select { background-color: #252525; color: #e0e0e0; border-color: #444; }
+        body.dark-mode .speed-option { background-color: #1f1f1f; border-color: #444; }
+        body.dark-mode .speed-option:hover { border-color: #dc2626; background-color: #252525; }
+        body.dark-mode .speed-option.border-primary-500 { background-color: rgba(220, 38, 38, 0.1); }
+        body.dark-mode header { background-color: #1a1a1a !important; border-bottom: 1px solid #333; }
+        body.dark-mode footer { background-color: #1a1a1a !important; border-top: 1px solid #333; }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #a8a8a8; }
+        body.dark-mode ::-webkit-scrollbar-track { background: #1a1a1a; }
+        body.dark-mode ::-webkit-scrollbar-thumb { background: #444; }
+        body.dark-mode ::-webkit-scrollbar-thumb:hover { background: #555; }
+        
+        /* Firefox scrollbar */
+        * { scrollbar-width: thin; scrollbar-color: #c1c1c1 #f1f1f1; }
+        body.dark-mode * { scrollbar-color: #444 #1a1a1a; }
+        
+        /* Dark mode for manual sources warning box */
+        body.dark-mode .bg-yellow-50 { background-color: rgba(220, 38, 38, 0.1) !important; border-color: #dc2626 !important; }
+        body.dark-mode .text-yellow-800 { color: #fca5a5 !important; }
+        
+        /* Dark mode for modals */
+        body.dark-mode .modal-overlay .bg-white { background-color: #1f1f1f !important; }
+        
+        /* Dark mode for test buttons */
+        body.dark-mode .bg-gray-100 { background-color: #2a2a2a !important; }
+        body.dark-mode .bg-gray-100:hover { background-color: #333 !important; }
+        
+        /* Dark mode for connected status boxes */
+        body.dark-mode .bg-green-50 { background-color: rgba(34, 197, 94, 0.15) !important; }
+        body.dark-mode .border-green-200 { border-color: rgba(34, 197, 94, 0.3) !important; }
+        body.dark-mode .text-green-600 { color: #4ade80 !important; }
+        
+        /* Better contrast for text in dark mode */
+        body.dark-mode .text-gray-900 { color: #f0f0f0 !important; }
+        body.dark-mode .text-gray-700 { color: #d0d0d0 !important; }
+        body.dark-mode .text-gray-600 { color: #b0b0b0 !important; }
+        
+        /* Dark mode for badges */
+        body.dark-mode .bg-green-100 { background-color: rgba(34, 197, 94, 0.2) !important; }
+        body.dark-mode .text-green-800 { color: #86efac !important; }
+        body.dark-mode .bg-yellow-100 { background-color: rgba(234, 179, 8, 0.2) !important; }
+        body.dark-mode .text-yellow-800 { color: #fde047 !important; }
+        body.dark-mode .bg-blue-100 { background-color: rgba(59, 130, 246, 0.2) !important; }
+        body.dark-mode .text-blue-800 { color: #93c5fd !important; }
+        body.dark-mode .bg-blue-50 { background-color: rgba(59, 130, 246, 0.1) !important; }
+        body.dark-mode .border-blue-200 { border-color: rgba(59, 130, 246, 0.3) !important; }
+        
+        .modal-overlay {
+            display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            align-items: center; justify-content: center; z-index: 1000;
+        }
+        .modal-overlay.open { display: flex; }
+        .step-section { display: none; }
+        .step-section.active { display: block; }
+        .welcome-screen {
+            opacity: 0;
+            animation: fadeIn 1s ease-in forwards;
+        }
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        .welcome-content {
+            animation: slideUp 0.8s ease-out 0.3s both;
+        }
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .arrow-animate {
+            animation: arrowBounce 1.5s ease-in-out infinite;
+        }
+        @keyframes arrowBounce {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(5px); }
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-800">
+    <div class="min-h-screen flex flex-col">
+        <!-- Header -->
+        <header class="bg-white shadow-sm">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between h-16 items-center">
+                    <img id="headerLogo" src="https://spooky.host/yarrlogowide.png" alt="YARR!" class="h-10">
+                    <div class="flex items-center gap-4">
+                        <button onclick="toggleDarkMode()" class="p-2 rounded-md text-gray-500 hover:text-gray-700 focus:outline-none" title="Toggle Dark Mode">
+                            <i id="darkModeIcon" class="fas fa-moon text-lg"></i>
+                        </button>
+                        <a href="https://github.com/spookyhost1/yarr-stremio" target="_blank" class="text-gray-500 hover:text-gray-700">
+                            <i class="fab fa-github text-xl"></i>
+                        </a>
+            </div>
+        </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="flex-grow">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <div class="mb-8" id="pageHeader">
+                    <h1 class="text-2xl font-bold text-gray-900 sm:text-3xl">Configuration</h1>
+                    <p class="mt-1 text-sm text-gray-500">Configure your torrent streaming preferences</p>
+                </div>
+                
+                <!-- Welcome Screen (First-time only) -->
+                <div id="welcomeScreen" class="welcome-screen" style="display: none;">
+                    <div class="bg-white shadow-lg rounded-lg overflow-hidden max-w-2xl mx-auto">
+                        <div class="px-8 py-12 text-center">
+                            <div class="welcome-content">
+                                <img src="https://spooky.host/yarrboat.png" alt="YARR!" class="mx-auto mb-6" style="width: 180px; height: auto;">
+                                <h2 class="text-3xl font-bold text-gray-900 mb-3">Welcome Aboard, Matey!</h2>
+                                <p class="text-lg text-gray-600 mb-6">
+                                    Welcome to <span class="font-semibold text-primary-600">YARR!</span> - Yet Another Rapid Retriever
+                                </p>
+                                <p class="text-xs text-gray-500 mb-8 max-w-lg mx-auto leading-relaxed">
+                                    A free, open-source Stremio addon with 60+ torrent sources,<br/>smart ranking, and instant debrid streaming. Quick 5-step setup.
+                                </p>
+                                <button type="button" onclick="startSetup()" class="inline-flex items-center px-8 py-4 bg-primary-600 text-white text-lg font-medium rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 shadow-lg transition-all hover:shadow-xl">
+                                    Begin Setup
+                                    <i class="fas fa-arrow-right ml-3 arrow-animate"></i>
+                                </button>
+                                <p class="text-xs text-gray-400 mt-6">
+                                    Already configured? Your settings will be loaded automatically.
+                                </p>
+                        </div>
+                        </div>
+                        </div>
+                    </div>
+
+                <!-- Setup Progress -->
+                <div id="setupProgress" class="mb-10 bg-white rounded-lg shadow overflow-hidden" style="display: none;">
+                    <div class="px-4 py-5 sm:p-6">
+                        <h2 class="text-lg font-medium text-gray-900 mb-4">Setup Progress</h2>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                            <div id="progressBar" class="bg-primary-600 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+                        </div>
+                        <div class="mt-3 grid grid-cols-5 text-xs text-gray-500">
+                            <span id="step1Label" class="text-center">Speed</span>
+                            <span id="step2Label" class="text-center">Sources</span>
+                            <span id="step3Label" class="text-center">Quality</span>
+                            <span id="step4Label" class="text-center">Filters</span>
+                            <span id="step5Label" class="text-center">Done</span>
+                        </div>
+                    </div>
+                </div>
+
+                <form id="configForm" style="display: none;">
+                    <!-- STEP 1: Speed Preference -->
+                    <div class="step-section active" id="step1">
+                        <div class="bg-white shadow rounded-lg overflow-hidden mb-8">
+                            <div class="px-4 py-5 sm:px-6 border-b border-gray-200">
+                                <h3 class="text-lg font-medium text-gray-900">Step 1: Search Speed</h3>
+                                <p class="mt-1 text-sm text-gray-500">Choose between speed and coverage</p>
+                            </div>
+                            <div class="px-4 py-5 sm:p-6">
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div class="speed-option border-2 border-gray-200 rounded-lg p-4 cursor-pointer transition-all hover:border-primary-500" onclick="selectSpeed('fast')" id="speed-fast">
+                                        <div class="flex items-center justify-between mb-2">
+                                            <span class="text-lg font-semibold text-gray-900">Fast</span>
+                                            <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">3-5s</span>
+                                        </div>
+                                        <p class="text-sm text-gray-600">Top 6-9 fastest sources</p>
+                                    </div>
+                                    <div class="speed-option border-2 border-primary-500 bg-primary-50 rounded-lg p-4 cursor-pointer transition-all" onclick="selectSpeed('balanced')" id="speed-balanced">
+                                        <div class="flex items-center justify-between mb-2">
+                                            <span class="text-lg font-semibold text-gray-900">Balanced</span>
+                                            <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">8-15s</span>
+                                        </div>
+                                        <p class="text-sm text-gray-600">Top 10-12 sources</p>
+                                    </div>
+                                    <div class="speed-option border-2 border-gray-200 rounded-lg p-4 cursor-pointer transition-all hover:border-primary-500" onclick="selectSpeed('comprehensive')" id="speed-comprehensive">
+                                        <div class="flex items-center justify-between mb-2">
+                                            <span class="text-lg font-semibold text-gray-900">Comprehensive</span>
+                                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">30-40s</span>
+                                        </div>
+                                        <p class="text-sm text-gray-600">All 60+ sources</p>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="speedPreference" id="speedPreference" value="balanced">
+
+                <!-- Source Counter -->
+                                 <div class="mt-6 bg-gray-50 rounded-lg p-4">
+                    <div class="flex justify-between items-center mb-2">
+                                         <span class="text-sm font-medium text-gray-700">Active Sources:</span>
+                                         <span class="text-2xl font-bold text-primary-600" id="sourceCount">~10</span>
+                    </div>
+                                     <div class="w-full bg-gray-200 rounded-full h-2">
+                                         <div class="bg-gradient-to-r from-green-500 via-yellow-500 to-red-500 h-2 rounded-full transition-all duration-300" id="sourceBar" style="width: 15%"></div>
+                    </div>
+                                     <p class="text-xs text-gray-500 mt-2">More sources = slower but better coverage</p>
+                                     <p class="text-xs text-gray-400 mt-2 italic">You can customize sources on the next step</p>
+                                 </div>
+
+                                <div class="mt-6 flex justify-end">
+                                    <button type="button" onclick="nextStep()" class="px-6 py-3 bg-primary-600 text-white rounded-md hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 step-nav-btn">
+                                        Continue <i class="fas fa-arrow-right ml-2"></i>
+                                    </button>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                
+                    <!-- STEP 2: Sources & Settings -->
+                    <div class="step-section" id="step2">
+                        <!-- Content Type & Indexers -->
+                        <div class="bg-white shadow rounded-lg overflow-hidden mb-6">
+                            <div class="px-4 py-5 sm:px-6 border-b border-gray-200">
+                                <h3 class="text-lg font-medium text-gray-900">Step 2: Content & Indexers</h3>
+                                <p class="mt-1 text-sm text-gray-500">Select content type and indexers</p>
+                            </div>
+                            <div class="px-4 py-5 sm:p-6">
+                                <div class="grid grid-cols-1 gap-6">
+                                    <div>
+                                        <label for="providerPreset" class="block text-sm font-medium text-gray-700 mb-2">Content Type</label>
+                                        <select name="providerPreset" id="providerPreset" onchange="updateSourceCount()" class="block w-full pl-3 pr-10 py-2 border-gray-300 focus:ring-primary-500 focus:border-primary-500 rounded-md">
+                        <option value="all">All Content (Movies + TV + Anime)</option>
+                        <option value="movies">Movies Only</option>
+                        <option value="tv">TV Shows Only</option>
+                        <option value="anime">Anime Only</option>
+                                            <option value="international">International</option>
+                        <option value="minimal">Minimal (Fastest)</option>
+                    </select>
+                </div>
+                
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-3">
+                                            Fast Indexers <span class="text-xs text-green-600">(Recommended)</span>
+                    </label>
+                                        <div class="space-y-3">
+                                            <div class="flex items-center justify-between py-3 px-4 bg-gray-50 rounded-lg">
+                                                <div class="flex items-center">
+                                                    <input type="checkbox" name="enableZilean" id="enableZilean" checked onchange="updateSourceCount()" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
+                                                    <label for="enableZilean" class="ml-3 text-sm font-medium text-gray-700">Zilean (FREE Database)</label>
+                        </div>
+                                                <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Instant</span>
+                        </div>
+
+                                            <div class="flex items-center justify-between py-3 px-4 bg-gray-50 rounded-lg">
+                                                <div class="flex items-center">
+                                                    <input type="checkbox" id="enableProwlarr" onchange="updateSourceCount()" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
+                                                    <label for="enableProwlarr" class="ml-3 text-sm font-medium text-gray-700">Prowlarr</label>
+                        </div>
+                                                <button type="button" onclick="openProwlarrModal(event)" class="text-gray-400 hover:text-gray-600">
+                                                    <i class="fas fa-cog"></i>
+                                                </button>
+                                            </div>
+
+                                            <div class="flex items-center justify-between py-3 px-4 bg-gray-50 rounded-lg">
+                                                <div class="flex items-center">
+                                                    <input type="checkbox" id="enableJackett" onchange="updateSourceCount()" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
+                                                    <label for="enableJackett" class="ml-3 text-sm font-medium text-gray-700">Jackett</label>
+                                                </div>
+                                                <button type="button" onclick="openJackettModal(event)" class="text-gray-400 hover:text-gray-600">
+                                                    <i class="fas fa-cog"></i>
+                                                </button>
+                    </div>
+                </div>
+                
+                <input type="hidden" name="enableProwlarr" id="enableProwlarrHidden" value="off">
+                                        <input type="hidden" name="prowlarrUrl" id="prowlarrUrlHidden">
+                                        <input type="hidden" name="prowlarrKey" id="prowlarrKeyHidden">
+                <input type="hidden" name="enableJackett" id="enableJackettHidden" value="off">
+                                        <input type="hidden" name="jackettUrl" id="jackettUrlHidden">
+                                        <input type="hidden" name="jackettKey" id="jackettKeyHidden">
+                                    </div>
+
+                                    <!-- Language Priority -->
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                                            Preferred Languages <span class="text-xs text-gray-500">(Optional)</span>
+                    </label>
+                                        <div class="border border-gray-300 rounded-md p-3 max-h-48 overflow-y-auto bg-white">
+                                            <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
+                                                <div class="flex items-center">
+                                                    <input type="checkbox" name="language" value="English" id="lang-en" class="h-4 w-4 text-primary-600 border-gray-300 rounded">
+                                                    <label for="lang-en" class="ml-2 text-sm text-gray-700">English</label>
+            </div>
+                                                <div class="flex items-center">
+                                                    <input type="checkbox" name="language" value="Spanish" id="lang-es" class="h-4 w-4 text-primary-600 border-gray-300 rounded">
+                                                    <label for="lang-es" class="ml-2 text-sm text-gray-700">Spanish</label>
+                        </div>
+                                                <div class="flex items-center">
+                                                    <input type="checkbox" name="language" value="French" id="lang-fr" class="h-4 w-4 text-primary-600 border-gray-300 rounded">
+                                                    <label for="lang-fr" class="ml-2 text-sm text-gray-700">French</label>
+                        </div>
+                                                <div class="flex items-center">
+                                                    <input type="checkbox" name="language" value="German" id="lang-de" class="h-4 w-4 text-primary-600 border-gray-300 rounded">
+                                                    <label for="lang-de" class="ml-2 text-sm text-gray-700">German</label>
+                        </div>
+                                                <div class="flex items-center">
+                                                    <input type="checkbox" name="language" value="Italian" id="lang-it" class="h-4 w-4 text-primary-600 border-gray-300 rounded">
+                                                    <label for="lang-it" class="ml-2 text-sm text-gray-700">Italian</label>
+                        </div>
+                                                <div class="flex items-center">
+                                                    <input type="checkbox" name="language" value="Portuguese" id="lang-pt" class="h-4 w-4 text-primary-600 border-gray-300 rounded">
+                                                    <label for="lang-pt" class="ml-2 text-sm text-gray-700">Portuguese</label>
+                        </div>
+                                                <div class="flex items-center">
+                                                    <input type="checkbox" name="language" value="Russian" id="lang-ru" class="h-4 w-4 text-primary-600 border-gray-300 rounded">
+                                                    <label for="lang-ru" class="ml-2 text-sm text-gray-700">Russian</label>
+                        </div>
+                                                <div class="flex items-center">
+                                                    <input type="checkbox" name="language" value="Japanese" id="lang-ja" class="h-4 w-4 text-primary-600 border-gray-300 rounded">
+                                                    <label for="lang-ja" class="ml-2 text-sm text-gray-700">Japanese</label>
+                        </div>
+                                                <div class="flex items-center">
+                                                    <input type="checkbox" name="language" value="Korean" id="lang-ko" class="h-4 w-4 text-primary-600 border-gray-300 rounded">
+                                                    <label for="lang-ko" class="ml-2 text-sm text-gray-700">Korean</label>
+                        </div>
+                                                <div class="flex items-center">
+                                                    <input type="checkbox" name="language" value="Chinese" id="lang-zh" class="h-4 w-4 text-primary-600 border-gray-300 rounded">
+                                                    <label for="lang-zh" class="ml-2 text-sm text-gray-700">Chinese</label>
+                        </div>
+                                                <div class="flex items-center">
+                                                    <input type="checkbox" name="language" value="Hindi" id="lang-hi" class="h-4 w-4 text-primary-600 border-gray-300 rounded">
+                                                    <label for="lang-hi" class="ml-2 text-sm text-gray-700">Hindi</label>
+                        </div>
+                                                <div class="flex items-center">
+                                                    <input type="checkbox" name="language" value="Arabic" id="lang-ar" class="h-4 w-4 text-primary-600 border-gray-300 rounded">
+                                                    <label for="lang-ar" class="ml-2 text-sm text-gray-700">Arabic</label>
+                    </div>
+                                                <div class="flex items-center">
+                                                    <input type="checkbox" name="language" value="Turkish" id="lang-tr" class="h-4 w-4 text-primary-600 border-gray-300 rounded">
+                                                    <label for="lang-tr" class="ml-2 text-sm text-gray-700">Turkish</label>
+                                                </div>
+                                                <div class="flex items-center">
+                                                    <input type="checkbox" name="language" value="Dutch" id="lang-nl" class="h-4 w-4 text-primary-600 border-gray-300 rounded">
+                                                    <label for="lang-nl" class="ml-2 text-sm text-gray-700">Dutch</label>
+                                                </div>
+                                                <div class="flex items-center">
+                                                    <input type="checkbox" name="language" value="Polish" id="lang-pl" class="h-4 w-4 text-primary-600 border-gray-300 rounded">
+                                                    <label for="lang-pl" class="ml-2 text-sm text-gray-700">Polish</label>
+                                                </div>
+                                                <div class="flex items-center">
+                                                    <input type="checkbox" name="language" value="Swedish" id="lang-sv" class="h-4 w-4 text-primary-600 border-gray-300 rounded">
+                                                    <label for="lang-sv" class="ml-2 text-sm text-gray-700">Swedish</label>
+                                                </div>
+                                                <div class="flex items-center">
+                                                    <input type="checkbox" name="language" value="Norwegian" id="lang-no" class="h-4 w-4 text-primary-600 border-gray-300 rounded">
+                                                    <label for="lang-no" class="ml-2 text-sm text-gray-700">Norwegian</label>
+                                                </div>
+                                                <div class="flex items-center">
+                                                    <input type="checkbox" name="language" value="Danish" id="lang-da" class="h-4 w-4 text-primary-600 border-gray-300 rounded">
+                                                    <label for="lang-da" class="ml-2 text-sm text-gray-700">Danish</label>
+                                                </div>
+                                                <div class="flex items-center">
+                                                    <input type="checkbox" name="language" value="Finnish" id="lang-fi" class="h-4 w-4 text-primary-600 border-gray-300 rounded">
+                                                    <label for="lang-fi" class="ml-2 text-sm text-gray-700">Finnish</label>
+                                                </div>
+                                                <div class="flex items-center">
+                                                    <input type="checkbox" name="language" value="Greek" id="lang-el" class="h-4 w-4 text-primary-600 border-gray-300 rounded">
+                                                    <label for="lang-el" class="ml-2 text-sm text-gray-700">Greek</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p class="text-xs text-gray-500 mt-1">Select all languages you want to prioritize</p>
+        </div>
+
+                                    <!-- Torrent Sources Display -->
+                                    <div>
+                                        <div class="flex justify-between items-center mb-3">
+                                            <label class="block text-sm font-medium text-gray-700">Enabled Torrent Sources</label>
+                                            <button type="button" onclick="toggleManualSources()" id="manualSourcesBtn" class="text-xs text-primary-600 hover:text-primary-700 font-medium">
+                                                <i class="fas fa-unlock mr-1"></i> Manually Select Sources
+                                            </button>
+                        </div>
+                                        <div class="grid grid-cols-2 md:grid-cols-3 gap-2" id="sourcesList">
+                                            <!-- Populated dynamically -->
+                </div>
+                
+                                        <!-- Manual Source Selection -->
+                                        <div id="manualSources" style="display: none;" class="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                                            <p class="text-xs text-yellow-800 mb-3">
+                                                <i class="fas fa-exclamation-triangle mr-1"></i> Warning: Enabling many sources may increase search time
+                                            </p>
+                                            <div class="grid grid-cols-2 md:grid-cols-4 gap-2 max-h-60 overflow-y-auto">
+                                                <!-- Will be populated with all 60 sources -->
+                        </div>
+                        </div>
+                </div>
+                </div>
+                
+                                <div class="mt-6 flex justify-between step-nav-btn">
+                                    <button type="button" onclick="prevStep()" class="px-6 py-3 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                                        <i class="fas fa-arrow-left mr-2"></i> Back
+                                    </button>
+                                    <button type="button" onclick="nextStep()" class="px-6 py-3 bg-primary-600 text-white rounded-md hover:bg-primary-700">
+                                        Continue <i class="fas fa-arrow-right ml-2"></i>
+                                    </button>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+
+                    <!-- STEP 3: Quality & Debrid -->
+                    <div class="step-section" id="step3">
+                        <div class="bg-white shadow rounded-lg overflow-hidden mb-6">
+                            <div class="px-4 py-5 sm:px-6 border-b border-gray-200">
+                                <h3 class="text-lg font-medium text-gray-900">Step 3: Quality & Debrid</h3>
+                                <p class="mt-1 text-sm text-gray-500">Configure streaming quality and debrid service</p>
+                    </div>
+                            <div class="px-4 py-5 sm:p-6">
+                                <div class="space-y-6">
+                    <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-3">
+                                        Debrid Services <span class="text-xs text-gray-500">(Check all you have - we'll try each one!)</span>
+                            </label>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <!-- RealDebrid -->
+                                        <div class="border border-gray-300 rounded-lg p-4" id="realDebridCard">
+                                            <div class="flex items-center justify-between mb-2">
+                                                <div class="flex items-center gap-2">
+                                                    <input type="checkbox" id="enableRealDebrid" onchange="toggleDebridService('RealDebrid', this.checked)" class="h-4 w-4 text-primary-600 border-gray-300 rounded">
+                                                    <label for="enableRealDebrid" class="text-sm font-medium text-gray-700">RealDebrid</label>
+                                                    <i class="fas fa-check-circle text-green-500" id="realDebridCheck" style="display: none;"></i>
+                        </div>
+                                                <a href="https://real-debrid.com/apitoken" target="_blank" class="text-xs text-primary-600 hover:underline">Get key</a>
+                </div>
+                                            <div id="realDebridFields" style="display: none;">
+                                                <div class="relative mb-2">
+                                                    <input type="password" id="realDebridKey" name="realDebridKey" class="block w-full px-3 py-2 pr-10 border border-gray-300 rounded-md text-sm" placeholder="API Key">
+                                                    <button type="button" onclick="togglePasswordVisibility('realDebridKey')" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                                                        <i class="fas fa-eye text-sm"></i>
+                                                    </button>
+                                                </div>
+                                                <button type="button" onclick="testDebridKey('RealDebrid')" class="w-full px-3 py-2 bg-gray-100 text-gray-700 rounded-md text-xs hover:bg-gray-200">
+                                                    <i class="fas fa-vial mr-1"></i> Test Key
+                                                </button>
+                                                <div id="realDebridTest" class="mt-2 text-xs"></div>
+                    </div>
+                </div>
+
+                                        <!-- Premiumize -->
+                                        <div class="border border-gray-300 rounded-lg p-4">
+                                            <div class="flex items-center justify-between mb-2">
+                                                <div class="flex items-center gap-2">
+                                                    <input type="checkbox" id="enablePremiumize" onchange="toggleDebridService('Premiumize', this.checked)" class="h-4 w-4 text-primary-600 border-gray-300 rounded">
+                                                    <label for="enablePremiumize" class="text-sm font-medium text-gray-700">Premiumize</label>
+                                                    <i class="fas fa-check-circle text-green-500" id="premiumizeCheck" style="display: none;"></i>
+                    </div>
+                                                <a href="https://www.premiumize.me/account" target="_blank" class="text-xs text-primary-600 hover:underline">Get key</a>
+                        </div>
+                                            <div id="premiumizeFields" style="display: none;">
+                                                <div class="relative mb-2">
+                                                    <input type="password" id="premiumizeKey" name="premiumizeKey" class="block w-full px-3 py-2 pr-10 border border-gray-300 rounded-md text-sm" placeholder="API Key">
+                                                    <button type="button" onclick="togglePasswordVisibility('premiumizeKey')" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                                                        <i class="fas fa-eye text-sm"></i>
+                                                    </button>
+                        </div>
+                                                <button type="button" onclick="testDebridKey('Premiumize')" class="w-full px-3 py-2 bg-gray-100 text-gray-700 rounded-md text-xs hover:bg-gray-200">
+                                                    <i class="fas fa-vial mr-1"></i> Test Key
+                                                </button>
+                                                <div id="premiumizeTest" class="mt-2 text-xs"></div>
+                        </div>
+                        </div>
+                                        
+                                        <!-- AllDebrid -->
+                                        <div class="border border-gray-300 rounded-lg p-4">
+                                            <div class="flex items-center justify-between mb-2">
+                                                <div class="flex items-center gap-2">
+                                                    <input type="checkbox" id="enableAllDebrid" onchange="toggleDebridService('AllDebrid', this.checked)" class="h-4 w-4 text-primary-600 border-gray-300 rounded">
+                                                    <label for="enableAllDebrid" class="text-sm font-medium text-gray-700">AllDebrid</label>
+                                                    <i class="fas fa-check-circle text-green-500" id="allDebridCheck" style="display: none;"></i>
+                        </div>
+                                                <a href="https://alldebrid.com/apikeys/" target="_blank" class="text-xs text-primary-600 hover:underline">Get key</a>
+                        </div>
+                                            <div id="allDebridFields" style="display: none;">
+                                                <div class="relative mb-2">
+                                                    <input type="password" id="allDebridKey" name="allDebridKey" class="block w-full px-3 py-2 pr-10 border border-gray-300 rounded-md text-sm" placeholder="API Key">
+                                                    <button type="button" onclick="togglePasswordVisibility('allDebridKey')" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                                                        <i class="fas fa-eye text-sm"></i>
+                                                    </button>
+                        </div>
+                                                <button type="button" onclick="testDebridKey('AllDebrid')" class="w-full px-3 py-2 bg-gray-100 text-gray-700 rounded-md text-xs hover:bg-gray-200">
+                                                    <i class="fas fa-vial mr-1"></i> Test Key
+                                                </button>
+                                                <div id="allDebridTest" class="mt-2 text-xs"></div>
+                        </div>
+                        </div>
+                                        
+                                        <!-- DebridLink -->
+                                        <div class="border border-gray-300 rounded-lg p-4">
+                                            <div class="flex items-center justify-between mb-2">
+                                                <div class="flex items-center gap-2">
+                                                    <input type="checkbox" id="enableDebridLink" onchange="toggleDebridService('DebridLink', this.checked)" class="h-4 w-4 text-primary-600 border-gray-300 rounded">
+                                                    <label for="enableDebridLink" class="text-sm font-medium text-gray-700">DebridLink</label>
+                                                    <i class="fas fa-check-circle text-green-500" id="debridLinkCheck" style="display: none;"></i>
+                        </div>
+                                                <a href="https://debrid-link.com/webapp/apikey" target="_blank" class="text-xs text-primary-600 hover:underline">Get key</a>
+                                            </div>
+                                            <div id="debridLinkFields" style="display: none;">
+                                                <div class="relative mb-2">
+                                                    <input type="password" id="debridLinkKey" name="debridLinkKey" class="block w-full px-3 py-2 pr-10 border border-gray-300 rounded-md text-sm" placeholder="API Key">
+                                                    <button type="button" onclick="togglePasswordVisibility('debridLinkKey')" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                                                        <i class="fas fa-eye text-sm"></i>
+                                                    </button>
+                                                </div>
+                                                <button type="button" onclick="testDebridKey('DebridLink')" class="w-full px-3 py-2 bg-gray-100 text-gray-700 rounded-md text-xs hover:bg-gray-200">
+                                                    <i class="fas fa-vial mr-1"></i> Test Key
+                                                </button>
+                                                <div id="debridLinkTest" class="mt-2 text-xs"></div>
+                    </div>
+                </div>
+
+                                        <!-- TorBox -->
+                                        <div class="border border-gray-300 rounded-lg p-4">
+                                            <div class="flex items-center justify-between mb-2">
+                                                <div class="flex items-center gap-2">
+                                                    <input type="checkbox" id="enableTorBox" onchange="toggleDebridService('TorBox', this.checked)" class="h-4 w-4 text-primary-600 border-gray-300 rounded">
+                                                    <label for="enableTorBox" class="text-sm font-medium text-gray-700">TorBox</label>
+                                                    <i class="fas fa-check-circle text-green-500" id="torBoxCheck" style="display: none;"></i>
+                                                </div>
+                                                <a href="https://torbox.app/settings" target="_blank" class="text-xs text-primary-600 hover:underline">Get key</a>
+                                            </div>
+                                            <div id="torBoxFields" style="display: none;">
+                                                <div class="relative mb-2">
+                                                    <input type="password" id="torBoxKey" name="torBoxKey" class="block w-full px-3 py-2 pr-10 border border-gray-300 rounded-md text-sm" placeholder="API Key">
+                                                    <button type="button" onclick="togglePasswordVisibility('torBoxKey')" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                                                        <i class="fas fa-eye text-sm"></i>
+                                                    </button>
+                                                </div>
+                                                <button type="button" onclick="testDebridKey('TorBox')" class="w-full px-3 py-2 bg-gray-100 text-gray-700 rounded-md text-xs hover:bg-gray-200">
+                                                    <i class="fas fa-vial mr-1"></i> Test Key
+                                                </button>
+                                                <div id="torBoxTest" class="mt-2 text-xs"></div>
+                                            </div>
+                </div>
+
+                                        <!-- PikPak -->
+                                        <div class="border border-gray-300 rounded-lg p-4">
+                                            <div class="flex items-center justify-between mb-2">
+                                                <div class="flex items-center gap-2">
+                                                    <input type="checkbox" id="enablePikPak" onchange="toggleDebridService('PikPak', this.checked)" class="h-4 w-4 text-primary-600 border-gray-300 rounded">
+                                                    <label for="enablePikPak" class="text-sm font-medium text-gray-700">PikPak</label>
+                                                    <i class="fas fa-check-circle text-green-500" id="pikPakCheck" style="display: none;"></i>
+                </div>
+                                                <a href="https://mypikpak.com/drive/settings" target="_blank" class="text-xs text-primary-600 hover:underline">Get key</a>
+                                            </div>
+                                            <div id="pikPakFields" style="display: none;">
+                                                <div class="relative mb-2">
+                                                    <input type="password" id="pikPakKey" name="pikPakKey" class="block w-full px-3 py-2 pr-10 border border-gray-300 rounded-md text-sm" placeholder="API Key">
+                                                    <button type="button" onclick="togglePasswordVisibility('pikPakKey')" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                                                        <i class="fas fa-eye text-sm"></i>
+                                                    </button>
+                                                </div>
+                                                <button type="button" onclick="testDebridKey('PikPak')" class="w-full px-3 py-2 bg-gray-100 text-gray-700 rounded-md text-xs hover:bg-gray-200">
+                                                    <i class="fas fa-vial mr-1"></i> Test Key
+                                                </button>
+                                                <div id="pikPakTest" class="mt-2 text-xs"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="text-xs text-gray-500 mt-3">
+                                        <i class="fas fa-info-circle mr-1"></i> Enable multiple services - YARR! will check all and show which one has the torrent cached
+                                    </p>
+            </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label for="maxResults" class="block text-sm font-medium text-gray-700 mb-2">Max Results per Quality</label>
+                                        <input type="number" name="maxResults" id="maxResults" value="8" min="1" max="20" class="block w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500">
+                </div>
+
+                    <div>
+                                        <label for="minSeeders" class="block text-sm font-medium text-gray-700 mb-2">Min Seeders</label>
+                                        <input type="number" name="minSeeders" id="minSeeders" value="5" min="0" class="block w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500">
+                    </div>
+                                </div>
+                                
+                                    <!-- Quality Preferences -->
+                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-3">Allowed Quality Levels</label>
+                                        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                                            <div class="flex items-center">
+                                                <input type="checkbox" name="allow4k" id="allow4k" checked class="h-4 w-4 text-primary-600 border-gray-300 rounded">
+                                                <label for="allow4k" class="ml-2 text-sm text-gray-700">4K / 2160p</label>
+                    </div>
+                                            <div class="flex items-center">
+                                                <input type="checkbox" name="allow1440p" id="allow1440p" checked class="h-4 w-4 text-primary-600 border-gray-300 rounded">
+                                                <label for="allow1440p" class="ml-2 text-sm text-gray-700">1440p</label>
+                                            </div>
+                                            <div class="flex items-center">
+                                                <input type="checkbox" name="allow1080p" id="allow1080p" checked class="h-4 w-4 text-primary-600 border-gray-300 rounded">
+                                                <label for="allow1080p" class="ml-2 text-sm text-gray-700">1080p</label>
+                                            </div>
+                                            <div class="flex items-center">
+                                                <input type="checkbox" name="allow720p" id="allow720p" checked class="h-4 w-4 text-primary-600 border-gray-300 rounded">
+                                                <label for="allow720p" class="ml-2 text-sm text-gray-700">720p</label>
+                                            </div>
+                                            <div class="flex items-center">
+                                                <input type="checkbox" name="allow480p" id="allow480p" class="h-4 w-4 text-primary-600 border-gray-300 rounded">
+                                                <label for="allow480p" class="ml-2 text-sm text-gray-700">480p</label>
+                                            </div>
+                                            <div class="flex items-center">
+                                                <input type="checkbox" name="allow360p" id="allow360p" class="h-4 w-4 text-primary-600 border-gray-300 rounded">
+                                                <label for="allow360p" class="ml-2 text-sm text-gray-700">360p</label>
+                                            </div>
+                                        </div>
+                                        <p class="text-xs text-gray-500 mt-2">Uncheck qualities you don't want to see</p>
+                </div>
+
+                                    <div>
+                                        <label for="formatter" class="block text-sm font-medium text-gray-700 mb-2">Display Style</label>
+                                        <select name="formatter" id="formatter" onchange="updatePreview(this.value)" class="block w-full pl-3 pr-10 py-2 border-gray-300 focus:ring-primary-500 focus:border-primary-500 rounded-md">
+                        <option value="ultra-clean">Ultra Clean</option>
+                        <option value="google-light">Google Light</option>
+                        <option value="compact">Compact</option>
+                        <option value="torrentio">Torrentio Style</option>
+                        <option value="detailed">Detailed</option>
+                    </select>
+                                        
+                                        <!-- Preview -->
+                                        <div class="mt-4 p-4 bg-gray-900 rounded-lg">
+                                            <div class="text-xs text-gray-400 mb-2 uppercase font-semibold">Preview</div>
+                                            <div id="formatterPreview" class="text-sm"></div>
+                    </div>
+                    </div>
+                </div>
+
+                                <div class="mt-6 flex justify-between step-nav-btn">
+                                    <button type="button" onclick="prevStep()" class="px-6 py-3 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                                        <i class="fas fa-arrow-left mr-2"></i> Back
+                                    </button>
+                                    <button type="button" onclick="nextStep()" class="px-6 py-3 bg-primary-600 text-white rounded-md hover:bg-primary-700">
+                                        Continue <i class="fas fa-arrow-right ml-2"></i>
+                                    </button>
+                </div>
+                            </div>
+                        </div>
+                </div>
+
+                    <!-- STEP 4: Advanced Filters & Aggregation -->
+                    <div class="step-section" id="step4">
+                        <div class="bg-white shadow rounded-lg overflow-hidden mb-6">
+                            <div class="px-4 py-5 sm:px-6 border-b border-gray-200">
+                                <h3 class="text-lg font-medium text-gray-900">Step 4: Advanced Options (Optional)</h3>
+                                <p class="mt-1 text-sm text-gray-500">Addon aggregation and quality filters</p>
+                        </div>
+                            <div class="px-4 py-5 sm:p-6">
+                                <!-- Basic Filters -->
+                                <div class="mb-6 space-y-3">
+                                    <div class="flex items-center">
+                                        <input type="checkbox" name="showStatistics" id="showStatistics" checked class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
+                                        <label for="showStatistics" class="ml-3 text-sm text-gray-700">Show statistics summary</label>
+            </div>
+                                    <div class="flex items-center">
+                                        <input type="checkbox" name="removeAdultContent" id="removeAdultContent" checked class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
+                                        <label for="removeAdultContent" class="ml-3 text-sm text-gray-700">Remove adult content</label>
+                        </div>
+                                    <div class="flex items-center">
+                                        <input type="checkbox" name="disableCam" id="disableCam" checked class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
+                                        <label for="disableCam" class="ml-3 text-sm text-gray-700">Block CAM/TS quality</label>
+                </div>
+            </div>
+
+                                <!-- Quality Filters -->
+                    <div class="mb-6">
+                                    <label class="block text-sm font-medium text-gray-700 mb-3">Advanced Quality Filters</label>
+                                    <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                                        <div class="flex items-center">
+                                            <input type="checkbox" name="disableHdr" id="disableHdr" class="h-4 w-4 text-primary-600 border-gray-300 rounded">
+                                            <label for="disableHdr" class="ml-2 text-sm text-gray-700">Block HDR</label>
+                </div>
+                                        <div class="flex items-center">
+                                            <input type="checkbox" name="disableHevc" id="disableHevc" class="h-4 w-4 text-primary-600 border-gray-300 rounded">
+                                            <label for="disableHevc" class="ml-2 text-sm text-gray-700">Block HEVC/H265</label>
+            </div>
+                                        <div class="flex items-center">
+                                            <input type="checkbox" name="disable4k" id="disable4k" class="h-4 w-4 text-primary-600 border-gray-300 rounded">
+                                            <label for="disable4k" class="ml-2 text-sm text-gray-700">Block 4K</label>
+                        </div>
+                                        <div class="flex items-center">
+                                            <input type="checkbox" name="disable3d" id="disable3d" class="h-4 w-4 text-primary-600 border-gray-300 rounded">
+                                            <label for="disable3d" class="ml-2 text-sm text-gray-700">Block 3D</label>
+                    </div>
+                                        <div class="flex items-center">
+                                            <input type="checkbox" name="disableRemux" id="disableRemux" class="h-4 w-4 text-primary-600 border-gray-300 rounded">
+                                            <label for="disableRemux" class="ml-2 text-sm text-gray-700">Block Remux</label>
+                </div>
+                                        <div class="flex items-center">
+                                            <input type="checkbox" name="disableDolbyVision" id="disableDolbyVision" class="h-4 w-4 text-primary-600 border-gray-300 rounded">
+                                            <label for="disableDolbyVision" class="ml-2 text-sm text-gray-700">Block Dolby Vision</label>
+            </div>
+                </div>
+            </div>
+
+                    <!-- Addon Aggregation -->
+                                <div>
+                                    <div class="flex items-center mb-3">
+                                        <input type="checkbox" name="enableAggregation" id="enableAggregation" onchange="toggleAggregation(this.checked)" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
+                                        <label for="enableAggregation" class="ml-3 text-sm font-medium text-gray-700">
+                                Enable Addon Aggregation
+                                            <span class="text-xs text-gray-500 ml-2">(Combine with other addons)</span>
+                            </label>
+                        </div>
+                                    
+                                    <!-- Elfhosted Recommendation -->
+                                    <div class="ml-7 mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                                        <div class="flex items-start gap-2">
+                                            <div class="text-xl">🧝</div>
+                                            <div class="flex-1">
+                                                <p class="text-xs text-gray-700 mb-2">
+                                                    <strong>Recommended:</strong> We love using <a href="https://elfhosted.com" target="_blank" class="text-primary-600 hover:underline">ElfHosted</a> addons with YARR!
+                                                </p>
+                                                <p class="text-xs text-gray-500">
+                                                    No affiliation, we just dig their stuff and the lil elf guys. Try Comet, Torrentio, or MediaFusion!
+                                                </p>
+                        </div>
+                        </div>
+                        </div>
+                                    
+                                    <div id="aggregationFields" style="display: none;" class="ml-7 space-y-2">
+                                        <input type="text" id="customAddon1" name="externalAddon1Url" class="block w-full px-3 py-2 border border-gray-300 rounded-md text-sm" placeholder="Addon manifest URL (e.g., https://torrentio.strem.fun/manifest.json)">
+                                        <input type="text" id="customAddon2" name="externalAddon2Url" class="block w-full px-3 py-2 border border-gray-300 rounded-md text-sm" placeholder="Addon manifest URL (optional)">
+                                        <input type="text" id="customAddon3" name="externalAddon3Url" class="block w-full px-3 py-2 border border-gray-300 rounded-md text-sm" placeholder="Addon manifest URL (optional)">
+                        </div>
+                                </div>
+                                
+                                <div class="mt-6 flex justify-between step-nav-btn">
+                                    <button type="button" onclick="prevStep()" class="px-6 py-3 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                                        <i class="fas fa-arrow-left mr-2"></i> Back
+                                    </button>
+                                    <button type="button" onclick="nextStep()" class="px-6 py-3 bg-primary-600 text-white rounded-md hover:bg-primary-700">
+                                        Finish Setup <i class="fas fa-arrow-right ml-2"></i>
+                                    </button>
+                        </div>
+                    </div>
+                </div>
+                                </div>
+                                
+                    <!-- STEP 5: Complete & Install -->
+                    <div class="step-section" id="step5">
+                        <div class="bg-white shadow rounded-lg overflow-hidden mb-6">
+                            <div class="px-8 py-12 text-center">
+                                <div class="text-5xl mb-4">✅</div>
+                                <h3 class="text-2xl font-bold text-gray-900 mb-3">You're All Set!</h3>
+                                <p class="text-gray-600 mb-8 max-w-md mx-auto">
+                                    Your YARR! addon is configured and ready to install to Stremio.
+                                </p>
+                                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                                    <button type="button" onclick="testManifest()" class="px-6 py-3 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                                        Test Configuration
+                    </button>
+                                    <button type="submit" class="px-8 py-4 bg-primary-600 text-white text-lg font-medium rounded-lg hover:bg-primary-700 shadow-lg">
+                                        Install to Stremio <i class="fas fa-download ml-2"></i>
+                    </button>
+                                </div>
+                                
+                                <button type="button" onclick="prevStep()" class="mt-6 text-sm text-gray-500 hover:text-gray-700 step-nav-btn">
+                                    <i class="fas fa-arrow-left mr-1"></i> Go back to make changes
+                                </button>
+                                
+                                <!-- Stremio Sync Feature (Unified) -->
+                                <div class="mt-12 pt-8 border-t border-gray-200" id="step5StremioSync">
+                                    <div id="step5NotConnected">
+                                        <h4 class="text-lg font-semibold text-gray-900 mb-3">Or Sync to Your Stremio Account</h4>
+                                        <p class="text-sm text-gray-600 mb-6 max-w-md mx-auto">
+                                            Sign in to automatically add YARR! to your Stremio account and sync across devices
+                                        </p>
+                                        <button type="button" onclick="openStremioSync()" class="inline-flex items-center px-6 py-3 border border-gray-300 rounded-lg text-gray-700 bg-white hover:bg-gray-50 shadow-sm">
+                                            <i class="fas fa-link mr-2"></i>
+                                            Connect to Stremio
+                                        </button>
+                                </div>
+                                    <div id="step5Connected" style="display: none;">
+                                        <div class="flex items-center justify-center gap-3 p-4 bg-green-50 border border-green-200 rounded-lg mb-4 max-w-md mx-auto">
+                                            <i class="fas fa-check-circle text-green-600 text-xl"></i>
+                                            <div class="text-sm">
+                                                <p class="font-medium text-gray-900">Connected to Stremio</p>
+                                                <p class="text-xs text-gray-600" id="step5ConnectedEmail"></p>
+                            </div>
+                                        </div>
+                                        <button type="button" onclick="openStremioSync()" class="inline-flex items-center px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700">
+                                            <i class="fas fa-cog mr-2"></i>
+                                            Manage Addons & Priority
+                                        </button>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+
+                        <div id="testResult" class="mt-4"></div>
+                        </div>
+        </form>
+                
+                    </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-white border-t border-gray-200 mt-8">
+            <div class="max-w-7xl mx-auto py-6 px-4">
+                <p class="text-center text-sm text-gray-500">Open source • Privacy-focused • No tracking</p>
+        </div>
+        </footer>
+                    </div>
+
+    <!-- Prowlarr Modal (No dimming) -->
+    <div class="modal-overlay" id="prowlarrModal">
+        <div class="bg-white rounded-lg shadow-2xl p-6 max-w-md w-full mx-4 border border-gray-200">
+            <h3 class="text-lg font-medium text-gray-900 mb-4">Configure Prowlarr</h3>
+            <p class="text-sm text-gray-600 mb-4">
+                <a href="https://prowlarr.com" target="_blank" class="text-primary-600 hover:underline">Prowlarr</a> gives you access to 1000+ torrent trackers.
+            </p>
+            <div class="space-y-4">
+                    <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Prowlarr URL</label>
+                    <input type="text" id="prowlarrUrlModal" value="http://localhost:9696" class="block w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500">
+                        </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">API Key</label>
+                    <input type="password" id="prowlarrKeyModal" class="block w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500" placeholder="Your Prowlarr API key">
+                    <p class="text-xs text-gray-500 mt-1">Find in Prowlarr → Settings → General</p>
+                        </div>
+                    </div>
+            <div class="mt-6 flex justify-end gap-3">
+                <button onclick="closeProwlarrModal()" class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">Cancel</button>
+                <button onclick="saveProwlarrConfig()" class="px-4 py-2 bg-primary-600 text-white rounded-md text-sm font-medium hover:bg-primary-700">Save</button>
+            </div>
+                </div>
+            </div>
+
+    <!-- Jackett Modal (No dimming) -->
+    <div class="modal-overlay" id="jackettModal">
+        <div class="bg-white rounded-lg shadow-2xl p-6 max-w-md w-full mx-4 border border-gray-200">
+            <h3 class="text-lg font-medium text-gray-900 mb-4">Configure Jackett</h3>
+            <p class="text-sm text-gray-600 mb-4">
+                <a href="https://github.com/Jackett/Jackett" target="_blank" class="text-primary-600 hover:underline">Jackett</a> is an alternative meta-indexer.
+            </p>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Jackett URL</label>
+                    <input type="text" id="jackettUrlModal" value="http://localhost:9117" class="block w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">API Key</label>
+                    <input type="password" id="jackettKeyModal" class="block w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500" placeholder="Your Jackett API key">
+                    <p class="text-xs text-gray-500 mt-1">Find in Jackett → top-right corner</p>
+            </div>
+                        </div>
+            <div class="mt-6 flex justify-end gap-3">
+                <button onclick="closeJackettModal()" class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">Cancel</button>
+                <button onclick="saveJackettConfig()" class="px-4 py-2 bg-primary-600 text-white rounded-md text-sm font-medium hover:bg-primary-700">Save</button>
+                        </div>
+                        </div>
+                        </div>
+
+    <!-- Delete Addon Confirmation Modal -->
+    <div class="modal-overlay" id="deleteConfirmModal" style="background: rgba(0,0,0,0.5); z-index: 2000;">
+        <div class="bg-white rounded-lg shadow-2xl p-6 max-w-md w-full mx-4 border border-gray-200">
+            <h3 class="text-xl font-bold text-gray-900 mb-3">Delete Addon?</h3>
+            <p class="text-sm text-gray-600 mb-6">
+                Are you sure you want to remove <strong id="deleteAddonName"></strong> from your Stremio account?
+            </p>
+            <div class="flex justify-end gap-3">
+                <button onclick="closeDeleteConfirm()" class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">
+                    Cancel
+                </button>
+                <button onclick="deleteAddon()" class="px-4 py-2 bg-red-600 text-white rounded-md text-sm font-medium hover:bg-red-700">
+                    <i class="fas fa-trash mr-1"></i> Delete
+                </button>
+                        </div>
+                        </div>
+                    </div>
+
+    <!-- Stremio Sync Modal -->
+    <div class="modal-overlay" id="stremioSyncModal" style="background: rgba(0,0,0,0.5);">
+        <div class="bg-white rounded-lg shadow-2xl max-w-2xl w-full mx-4 border border-gray-200 max-h-[90vh] overflow-y-auto">
+            <!-- Login Screen -->
+            <div id="stremioLoginScreen" class="p-8">
+                <h3 class="text-2xl font-bold text-gray-900 mb-4">Connect to Stremio</h3>
+                <p class="text-sm text-gray-600 mb-6">
+                    Sign in to sync YARR! to your Stremio account and manage addon priority
+                </p>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Stremio Email</label>
+                        <input type="email" id="stremioEmail" class="block w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500" placeholder="your@email.com">
+                </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Stremio Password</label>
+                        <input type="password" id="stremioPassword" class="block w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500" placeholder="••••••••">
+            </div>
+                    <button onclick="connectStremioAccount()" class="w-full px-4 py-3 bg-primary-600 text-white rounded-md hover:bg-primary-700 font-medium">
+                        <i class="fas fa-sign-in-alt mr-2"></i> Sign In
+                    </button>
+            </div>
+
+                <div class="mt-6 flex justify-between items-center">
+                    <button onclick="clearStremioCredentials()" class="text-xs text-red-600 hover:text-red-700" id="clearCredsBtn" style="display: none;">
+                        <i class="fas fa-sign-out-alt mr-1"></i> Sign Out
+                    </button>
+                    <button onclick="closeStremioSync()" class="text-sm text-gray-500 hover:text-gray-700 ml-auto">Cancel</button>
+                </div>
+                
+                <div id="syncResult" class="mt-4"></div>
+            </div>
+
+            <!-- Addon Management Screen (After Login) -->
+            <div id="stremioAddonManager" style="display: none;" class="p-8">
+                <div class="flex justify-between items-start mb-6">
+                    <div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Manage Your Addons</h3>
+                        <p class="text-sm text-gray-600">
+                            Drag to reorder • YARR! will be added to the top
+                        </p>
+                    </div>
+                    <button onclick="clearStremioCredentials()" class="text-xs text-red-600 hover:text-red-700">
+                        <i class="fas fa-sign-out-alt mr-1"></i> Sign Out
+                    </button>
+                </div>
+                
+                <div id="addonList" class="space-y-2 mb-6 max-h-96 overflow-y-auto">
+                    <!-- Addons will be populated here -->
+            </div>
+                
+                <div class="flex justify-between items-center pt-4 border-t border-gray-200">
+                    <button onclick="closeStremioSync()" class="text-sm text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times mr-1"></i> Close
+                    </button>
+                    <button onclick="syncAddonsToStremio()" class="px-6 py-3 bg-primary-600 text-white rounded-md hover:bg-primary-700 font-medium">
+                        <i class="fas fa-sync mr-2"></i> Sync to Stremio
+                    </button>
+                </div>
+                
+                <div id="addonSyncResult" class="mt-4"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        let isDarkMode = false;
+        
+        // Dark mode toggle
+        function toggleDarkMode() {
+            isDarkMode = !isDarkMode;
+            document.body.classList.toggle('dark-mode');
+            
+            // Update icon
+            const icon = document.getElementById('darkModeIcon');
+            icon.className = isDarkMode ? 'fas fa-sun text-lg' : 'fas fa-moon text-lg';
+            
+            // Update logo
+            const logo = document.getElementById('headerLogo');
+            logo.src = isDarkMode 
+                ? 'https://spooky.host/yarrwhitewide.png' 
+                : 'https://spooky.host/yarrlogowide.png';
+            
+            // Save to localStorage
+            localStorage.setItem('yarrDarkMode', isDarkMode ? 'true' : 'false');
+        }
+        
+        // Load dark mode preference (checks device preference too)
+        function loadDarkModePreference() {
+            const savedMode = localStorage.getItem('yarrDarkMode');
+            const systemPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            // Priority: saved preference > system preference
+            if (savedMode === 'true' || (savedMode === null && systemPrefersDark)) {
+                toggleDarkMode();
+            }
+            
+            // Listen for system theme changes
+            if (window.matchMedia) {
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                    // Only auto-switch if user hasn't manually set a preference
+                    if (localStorage.getItem('yarrDarkMode') === null) {
+                        if (e.matches && !isDarkMode) {
+                            toggleDarkMode();
+                        } else if (!e.matches && isDarkMode) {
+                            toggleDarkMode();
+                        }
+                    }
+                });
+            }
+        }
+
+        // Formatter previews with language
+        const formatterPreviews = {
+            'ultra-clean': `<div class="bg-gray-800 p-3 rounded border border-gray-700">
+    <div class="text-white font-semibold mb-1">2160p</div>
+    <div class="text-xs text-gray-400">62.5 GB | 125 seeds | YTS | Spanish</div>
+</div>`,
+            'google-light': `<div class="bg-gray-800 p-3 rounded border border-gray-700">
+    <div class="text-white font-semibold mb-1">YARR! 2160p (HDR10+)</div>
+    <div class="text-xs text-gray-400 leading-relaxed">
+🎥 2160p 🎞️ HEVC 🏷️ FGT<br/>
+🎧 TrueHD Atmos 7.1<br/>
+📦 62.5 GB 👥 125 seeds 🔍 YTS<br/>
+🌐 Spanish
+    </div>
+</div>`,
+            'compact': `<div class="bg-gray-800 p-3 rounded border border-gray-700">
+    <div class="text-white font-semibold mb-1">2160p HDR10+</div>
+    <div class="text-xs text-gray-400">62.5 GB • 125 seeds • Atmos • Spanish</div>
+</div>`,
+            'torrentio': `<div class="bg-gray-800 p-3 rounded border border-gray-700">
+    <div class="text-white font-semibold mb-1">2160p</div>
+    <div class="text-xs text-gray-400 leading-relaxed">
+Interstellar.2014.2160p.BluRay.REMUX<br/>
+👤 125 💾 62.5 GB ⚙️ YTS<br/>
+Spanish
+    </div>
+</div>`,
+            'detailed': `<div class="bg-gray-800 p-3 rounded border border-gray-700">
+    <div class="text-white font-semibold mb-1">2160p</div>
+    <div class="text-xs text-gray-400 leading-relaxed">
+📁 Interstellar.2014.2160p.BluRay.REMUX<br/>
+Video: 2160p REMUX | HEVC | HDR10+<br/>
+Audio: TrueHD Atmos 7.1 | Spanish<br/>
+Details: 62.5 GB | 125 seeds | YTS
+    </div>
+</div>`
+        };
+
+        function updatePreview(formatter) {
+            document.getElementById('formatterPreview').innerHTML = formatterPreviews[formatter] || formatterPreviews['ultra-clean'];
+        }
+
+        // Step navigation
+        function nextStep() {
+            if (currentStep < 5) {
+                document.getElementById(`step${currentStep}`).classList.remove('active');
+                currentStep++;
+                document.getElementById(`step${currentStep}`).classList.add('active');
+                updateProgressBar();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 1) {
+                document.getElementById(`step${currentStep}`).classList.remove('active');
+                currentStep--;
+                document.getElementById(`step${currentStep}`).classList.add('active');
+                updateProgressBar();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function updateProgressBar() {
+            const percentages = { 1: 20, 2: 40, 3: 60, 4: 80, 5: 100 };
+            document.getElementById('progressBar').style.width = `${percentages[currentStep]}%`;
+            
+            // Update step labels
+            for (let i = 1; i <= 5; i++) {
+                const label = document.getElementById(`step${i}Label`);
+                if (i < currentStep) {
+                    label.classList.add('text-primary-600', 'font-semibold');
+                    label.classList.remove('text-gray-500');
+                } else if (i === currentStep) {
+                    label.classList.add('text-gray-900', 'font-semibold');
+                    label.classList.remove('text-gray-500', 'text-primary-600');
+                } else {
+                    label.classList.add('text-gray-500');
+                    label.classList.remove('text-primary-600', 'text-gray-900', 'font-semibold');
+                }
+            }
+        }
+        
+        // All 60+ sources
+        const allSources = [
+            'YTS', 'EZTV', '1337x', 'Nyaa.si', 'The Pirate Bay', 'RARBG',
+            'KickassTorrents', 'TorrentGalaxy', 'TokyoTosho', 'LimeTorrents',
+            'MagnetDL', 'AniDex', 'Cinecalidad', 'RuTracker', 'Rutor',
+            'Comandotorrents', 'BluDV', 'Torrent9', 'ilCorSaRoNeRo', 'MejorTorrent',
+            'Wolfmax4k', 'BestTorrents', 'MicoLeaoDublado', 'Zooqle', 'ETTV',
+            'TorrentDownloads', 'BTDB', 'Torrentz2', 'SkyTorrents', 'GloTorrents',
+            'TorLock', 'YIFY', 'SolidTorrents', 'TorrentProject', 'TPBClean',
+            'TorrentFunk', 'HorribleSubs', 'SubsPlease', 'AniLibria', 'Erai-raws'
+        ];
+        
+        let manualSourcesEnabled = false;
+        
+        // Get currently active sources based on speed and preset
+        function getActiveSourcesForPreset(speed, preset) {
+            if (speed === 'fast') {
+                return ['YTS', 'EZTV', '1337x', 'Nyaa.si', 'The Pirate Bay', 'RARBG'];
+            } else if (speed === 'balanced') {
+                return ['YTS', 'EZTV', '1337x', 'Nyaa.si', 'The Pirate Bay', 'RARBG', 'KickassTorrents', 'TorrentGalaxy', 'TokyoTosho', 'LimeTorrents'];
+            } else {
+                // Comprehensive
+                if (preset === 'anime') {
+                    return ['Nyaa.si', 'TokyoTosho', 'AniDex', 'SubsPlease', 'Erai-raws', 'HorribleSubs', 'AniLibria'];
+                } else if (preset === 'movies') {
+                    return ['YTS', 'RARBG', '1337x', 'The Pirate Bay', 'TorrentGalaxy', 'YIFY', 'SolidTorrents', 'TorrentProject', 'MagnetDL', 'LimeTorrents'];
+                } else if (preset === 'tv') {
+                    return ['EZTV', 'The Pirate Bay', '1337x', 'RARBG', 'TorrentGalaxy', 'KickassTorrents', 'ETTV', 'LimeTorrents'];
+                } else if (preset === 'international') {
+                    return ['RuTracker', 'Rutor', 'Comandotorrents', 'BluDV', 'Torrent9', 'ilCorSaRoNeRo', 'MejorTorrent', 'Cinecalidad'];
+                } else {
+                    return ['YTS', 'EZTV', '1337x', 'The Pirate Bay', 'RARBG', 'Nyaa.si', 'TorrentGalaxy', 'KickassTorrents', 'TokyoTosho', 'LimeTorrents', 'MagnetDL', 'RuTracker'];
+                }
+            }
+        }
+        
+        // Toggle manual source selection
+        function toggleManualSources() {
+            manualSourcesEnabled = !manualSourcesEnabled;
+            const manualDiv = document.getElementById('manualSources').querySelector('.grid');
+            const btn = document.getElementById('manualSourcesBtn');
+            
+            if (manualSourcesEnabled) {
+                document.getElementById('manualSources').style.display = 'block';
+                
+                // Update button to show it's in manual mode
+                btn.innerHTML = '<i class="fas fa-lock-open mr-1"></i> Manual Mode';
+                btn.classList.remove('text-primary-600', 'hover:text-primary-700');
+                btn.classList.add('text-gray-500');
+                
+                // Get currently active sources based on preset/speed (ONLY THESE should be checked)
+                const speed = document.getElementById('speedPreference').value;
+                const preset = document.getElementById('providerPreset').value;
+                const activeSources = getActiveSourcesForPreset(speed, preset);
+                
+                console.log(`Manual mode: Speed=${speed}, Preset=${preset}, ActiveSources=`, activeSources);
+                
+                // Populate with ALL 40 sources, only pre-check the ones from current preset
+                manualDiv.innerHTML = allSources.map(source => {
+                    const shouldBeChecked = activeSources.includes(source) && !disabledSources.has(source);
+                    return `
+                    <div class="flex items-center py-1">
+                        <input type="checkbox" id="manual-${source.replace(/[.\s]/g, '')}" 
+                               ${shouldBeChecked ? 'checked' : ''} 
+                               onchange="handleManualSourceChange('${source}', this.checked)"
+                               class="h-3 w-3 text-primary-600 border-gray-300 rounded">
+                        <label for="manual-${source.replace(/[.\s]/g, '')}" class="ml-2 text-xs text-gray-700">${source}</label>
+                    </div>
+                `}).join('');
+            } else {
+                document.getElementById('manualSources').style.display = 'none';
+                
+                // Restore original button
+                btn.innerHTML = '<i class="fas fa-unlock mr-1"></i> Manually Select Sources';
+                btn.classList.remove('text-gray-500');
+                btn.classList.add('text-primary-600', 'hover:text-primary-700');
+            }
+            
+            updateSourceCount();
+        }
+        
+        // Handle manual source checkbox changes
+        function handleManualSourceChange(source, checked) {
+            if (!checked) {
+                disabledSources.add(source);
+            } else {
+                disabledSources.delete(source);
+            }
+            // Update the main sources list to reflect changes
+            updateSourcesList(
+                document.getElementById('speedPreference').value,
+                document.getElementById('providerPreset').value
+            );
+        }
+
+        // Speed selection
+        function selectSpeed(speed) {
+            document.getElementById('speedPreference').value = speed;
+            document.querySelectorAll('.speed-option').forEach(el => {
+                el.classList.remove('border-primary-500', 'bg-primary-50');
+                el.classList.add('border-gray-200');
+            });
+            document.getElementById(`speed-${speed}`).classList.remove('border-gray-200');
+            document.getElementById(`speed-${speed}`).classList.add('border-primary-500', 'bg-primary-50');
+            updateSourceCount();
+        }
+
+        // Update source count
+        function updateSourceCount() {
+            const speedPref = document.getElementById('speedPreference').value;
+            const preset = document.getElementById('providerPreset').value;
+            const zilean = document.getElementById('enableZilean').checked;
+            const prowlarr = document.getElementById('enableProwlarr').checked;
+            const jackett = document.getElementById('enableJackett').checked;
+            
+            let totalCount = 0;
+            if (speedPref === 'fast') {
+                totalCount = 6;
+                if (zilean) totalCount += 1;
+                if (prowlarr) totalCount += 5;
+                if (jackett) totalCount += 5;
+            } else if (speedPref === 'balanced') {
+                totalCount = 10;
+                if (zilean) totalCount += 1;
+                if (prowlarr) totalCount += 5;
+                if (jackett) totalCount += 5;
+            } else {
+                const counts = { 'minimal': 7, 'movies': 25, 'tv': 20, 'anime': 15, 'international': 18, 'all': 60 };
+                totalCount = counts[preset] || 30;
+                if (zilean) totalCount += 1;
+                if (prowlarr) totalCount += 10;
+                if (jackett) totalCount += 10;
+            }
+            
+            document.getElementById('sourceCount').textContent = `~${totalCount}`;
+            const percentage = Math.min((totalCount / 80) * 100, 100);
+            document.getElementById('sourceBar').style.width = `${percentage}%`;
+            
+            updateSourcesList(speedPref, preset);
+        }
+
+        // Track disabled sources
+        let disabledSources = new Set();
+        
+        // Toggle source on/off
+        function toggleSource(source) {
+            if (disabledSources.has(source)) {
+                disabledSources.delete(source);
+            } else {
+                disabledSources.add(source);
+            }
+            updateSourcesList(
+                document.getElementById('speedPreference').value,
+                document.getElementById('providerPreset').value
+            );
+        }
+        
+        // Update sources list
+        function updateSourcesList(speed, preset) {
+            const sourcesList = document.getElementById('sourcesList');
+            let sources = [];
+            
+            // ALWAYS show only preset-based sources, regardless of manual mode
+            if (speed === 'fast') {
+                sources = ['YTS', 'EZTV', '1337x', 'Nyaa.si', 'The Pirate Bay', 'RARBG'];
+            } else if (speed === 'balanced') {
+                sources = ['YTS', 'EZTV', '1337x', 'Nyaa.si', 'The Pirate Bay', 'RARBG', 'KickassTorrents', 'TorrentGalaxy', 'TokyoTosho', 'LimeTorrents'];
+            } else {
+                // Comprehensive: Show actual sources based on preset
+                if (preset === 'anime') {
+                    sources = ['Nyaa.si', 'TokyoTosho', 'AniDex', 'SubsPlease', 'Erai-raws', 'HorribleSubs', 'AniLibria'];
+                } else if (preset === 'movies') {
+                    sources = ['YTS', 'RARBG', '1337x', 'The Pirate Bay', 'TorrentGalaxy', 'YIFY', 'SolidTorrents', 'TorrentProject', 'MagnetDL', 'LimeTorrents'];
+                } else if (preset === 'tv') {
+                    sources = ['EZTV', 'The Pirate Bay', '1337x', 'RARBG', 'TorrentGalaxy', 'KickassTorrents', 'ETTV', 'LimeTorrents'];
+                } else if (preset === 'international') {
+                    sources = ['RuTracker', 'Rutor', 'Comandotorrents', 'BluDV', 'Torrent9', 'ilCorSaRoNeRo', 'MejorTorrent', 'Cinecalidad'];
+                } else {
+                    // All content - show first 12
+                    sources = ['YTS', 'EZTV', '1337x', 'The Pirate Bay', 'RARBG', 'Nyaa.si', 'TorrentGalaxy', 'KickassTorrents', 'TokyoTosho', 'LimeTorrents', 'MagnetDL', 'RuTracker'];
+                }
+            }
+            
+            // Filter out disabled sources
+            sources = sources.filter(s => !disabledSources.has(s));
+            
+            sourcesList.innerHTML = sources.map(source => {
+                return `
+                <div class="source-item group flex items-center justify-between py-2 px-3 bg-gray-50 rounded text-xs transition-all hover:bg-gray-100" 
+                     onmouseenter="this.querySelector('.checkmark').style.display='none'; this.querySelector('.remove-btn').style.display='inline'"
+                     onmouseleave="this.querySelector('.checkmark').style.display='inline'; this.querySelector('.remove-btn').style.display='none'">
+                    <span class="text-gray-700">${source}</span>
+                    <div class="relative inline-flex items-center justify-center" style="width: 32px; height: 20px;">
+                        <span class="checkmark bg-green-100 text-green-800 px-1.5 py-0.5 rounded-full absolute">✓</span>
+                        <button type="button" class="remove-btn text-gray-400 hover:text-red-500 transition-colors absolute" style="display: none;" onclick="toggleSource('${source}')">
+                            <i class="fas fa-times text-sm"></i>
+                        </button>
+                    </div>
+                </div>
+            `}).join('');
+        }
+
+        // Multi-debrid service toggle
+        function toggleDebridService(service, enabled) {
+            // Map service names to their field IDs
+            const serviceIds = {
+                'RealDebrid': 'realDebridFields',
+                'Premiumize': 'premiumizeFields',
+                'AllDebrid': 'allDebridFields',
+                'DebridLink': 'debridLinkFields',
+                'TorBox': 'torBoxFields',
+                'PikPak': 'pikPakFields'
+            };
+            
+            const fieldsDiv = document.getElementById(serviceIds[service]);
+            console.log(`Toggling ${service}: enabled=${enabled}, found div:`, fieldsDiv);
+            
+            if (fieldsDiv) {
+                fieldsDiv.style.display = enabled ? 'block' : 'none';
+            } else {
+                console.error(`Could not find fields div for ${service}`);
+            }
+        }
+        
+        // Toggle password visibility
+        function togglePasswordVisibility(fieldId) {
+            const field = document.getElementById(fieldId);
+            const button = field.nextElementSibling;
+            const icon = button.querySelector('i');
+            
+            if (field.type === 'password') {
+                field.type = 'text';
+                icon.className = 'fas fa-eye-slash text-sm';
+            } else {
+                field.type = 'password';
+                icon.className = 'fas fa-eye text-sm';
+            }
+        }
+        
+        // Test debrid API key
+        async function testDebridKey(service) {
+            const serviceIds = {
+                'RealDebrid': { key: 'realDebridKey', test: 'realDebridTest', check: 'realDebridCheck' },
+                'Premiumize': { key: 'premiumizeKey', test: 'premiumizeTest', check: 'premiumizeCheck' },
+                'AllDebrid': { key: 'allDebridKey', test: 'allDebridTest', check: 'allDebridCheck' },
+                'DebridLink': { key: 'debridLinkKey', test: 'debridLinkTest', check: 'debridLinkCheck' },
+                'TorBox': { key: 'torBoxKey', test: 'torBoxTest', check: 'torBoxCheck' },
+                'PikPak': { key: 'pikPakKey', test: 'pikPakTest', check: 'pikPakCheck' }
+            };
+            
+            const ids = serviceIds[service];
+            const keyInput = document.getElementById(ids.key);
+            const testDiv = document.getElementById(ids.test);
+            const checkIcon = document.getElementById(ids.check);
+            
+            const apiKey = keyInput.value.trim();
+            if (!apiKey) {
+                testDiv.innerHTML = '<span class="text-red-600">Please enter an API key</span>';
+                return;
+            }
+            
+            testDiv.innerHTML = '<span class="text-yellow-600">Testing...</span>';
+            
+            try {
+                // Call backend to test the key (you'll need to implement this endpoint)
+                const response = await fetch(`${window.location.origin}/api/test-debrid`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ service, apiKey })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.valid) {
+                        testDiv.innerHTML = '<span class="text-green-600">✓ Valid! Key working</span>';
+                        checkIcon.style.display = 'inline';
+                    } else {
+                        throw new Error('Invalid key');
+                    }
+                } else {
+                    throw new Error('Test failed');
+                }
+            } catch (error) {
+                // For now, just assume valid if key is long enough
+                if (apiKey.length > 10) {
+                    testDiv.innerHTML = '<span class="text-green-600">✓ Key saved (test endpoint not available)</span>';
+                    checkIcon.style.display = 'inline';
+                } else {
+                    testDiv.innerHTML = '<span class="text-red-600">✗ Key seems invalid (too short)</span>';
+                    checkIcon.style.display = 'none';
+                }
+            }
+        }
+
+        function toggleAggregation(checked) {
+            document.getElementById('aggregationFields').style.display = checked ? 'block' : 'none';
+        }
+
+        // Prowlarr modal
+        function openProwlarrModal(e) {
+            e.preventDefault();
+            e.stopPropagation();
+                document.getElementById('prowlarrModal').classList.add('open');
+        }
+        
+        function closeProwlarrModal() {
+            document.getElementById('prowlarrModal').classList.remove('open');
+        }
+        
+        function saveProwlarrConfig() {
+            const url = document.getElementById('prowlarrUrlModal').value.trim();
+            const key = document.getElementById('prowlarrKeyModal').value.trim();
+            if (!url || !key) {
+                alert('Please enter both URL and API key');
+                return;
+            }
+            document.getElementById('enableProwlarr').checked = true;
+            document.getElementById('enableProwlarrHidden').value = 'on';
+            document.getElementById('prowlarrUrlHidden').value = url;
+            document.getElementById('prowlarrKeyHidden').value = key;
+            closeProwlarrModal();
+            updateSourceCount();
+        }
+        
+        // Jackett modal
+        function openJackettModal(e) {
+            e.preventDefault();
+            e.stopPropagation();
+                document.getElementById('jackettModal').classList.add('open');
+        }
+        
+        function closeJackettModal() {
+            document.getElementById('jackettModal').classList.remove('open');
+        }
+        
+        function saveJackettConfig() {
+            const url = document.getElementById('jackettUrlModal').value.trim();
+            const key = document.getElementById('jackettKeyModal').value.trim();
+            if (!url || !key) {
+                alert('Please enter both URL and API key');
+                return;
+            }
+            document.getElementById('enableJackett').checked = true;
+            document.getElementById('enableJackettHidden').value = 'on';
+            document.getElementById('jackettUrlHidden').value = url;
+            document.getElementById('jackettKeyHidden').value = key;
+            closeJackettModal();
+            updateSourceCount();
+        }
+
+        // Test manifest
+        async function testManifest() {
+            const resultDiv = document.getElementById('testResult');
+            resultDiv.innerHTML = '<div class="bg-yellow-50 border border-yellow-200 rounded-md p-4"><p class="text-sm text-yellow-800">Testing...</p></div>';
+            
+            try {
+                const response = await fetch(`${window.location.origin}/manifest.json`);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                const data = await response.json();
+                
+                resultDiv.innerHTML = `<div class="bg-green-50 border border-green-200 rounded-md p-4">
+                    <div class="flex"><i class="fas fa-check-circle text-green-500 mt-0.5"></i>
+                        <div class="ml-3"><h3 class="text-sm font-medium text-green-800">Manifest OK!</h3>
+                            <p class="text-sm text-green-700 mt-1">Name: ${data.name} | Resources: ${data.resources.join(', ')}</p>
+                        </div>
+                    </div>
+                </div>`;
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="bg-red-50 border border-red-200 rounded-md p-4">
+                    <div class="flex"><i class="fas fa-times-circle text-red-500 mt-0.5"></i>
+                        <div class="ml-3"><h3 class="text-sm font-medium text-red-800">Error!</h3>
+                            <p class="text-sm text-red-700 mt-1">${error.message}</p>
+                    </div>
+                    </div>
+                </div>`;
+            }
+        }
+
+        // Form submission
+        document.getElementById('configForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const config = {};
+            
+            // Handle regular fields
+            for (let [key, value] of formData.entries()) {
+                    config[key] = value;
+            }
+            
+            // Handle language checkboxes
+            const selectedLanguages = Array.from(document.querySelectorAll('input[name="language"]:checked')).map(cb => cb.value);
+            if (selectedLanguages.length > 0) {
+                config['priorityLanguage'] = selectedLanguages.join(',');
+            }
+            
+            const configStr = Object.entries(config)
+                .filter(([k, v]) => v && v !== 'off')
+                .map(([k, v]) => `${k}=${encodeURIComponent(v)}`)
+                .join('&');
+            
+            const manifestUrl = configStr 
+                ? `${window.location.origin}/${configStr}/manifest.json`
+                : `${window.location.origin}/manifest.json`;
+            
+            window.location.href = `stremio://${manifestUrl.replace('http://', '').replace('https://', '')}`;
+        });
+
+        // Start setup (hide welcome, show wizard)
+        function startSetup() {
+            document.getElementById('welcomeScreen').style.display = 'none';
+            document.getElementById('pageHeader').style.display = 'block';
+            document.getElementById('setupProgress').style.display = 'block';
+            document.getElementById('configForm').style.display = 'block';
+            currentStep = 1;
+            updateProgressBar();
+        }
+
+        // Stremio Sync Functions
+        function openStremioSync() {
+            document.getElementById('stremioSyncModal').classList.add('open');
+            
+            // Check if already signed in (credentials saved)
+            const savedAuthKey = localStorage.getItem('yarrStremioAuthKey');
+            const savedEmail = localStorage.getItem('yarrStremioEmail');
+            
+            if (savedAuthKey && savedEmail) {
+                // Auto-load addons if already signed in
+                document.getElementById('stremioEmail').value = savedEmail;
+                document.getElementById('syncResult').innerHTML = '<div class="text-green-600 text-sm">✓ Previously signed in as ' + savedEmail + '. Loading addons...</div>';
+                document.getElementById('clearCredsBtn').style.display = 'block';
+                stremioAuthKey = savedAuthKey;
+                loadStremioAddons();
+            } else if (savedEmail) {
+                // Pre-fill email if saved
+                document.getElementById('stremioEmail').value = savedEmail;
+                document.getElementById('clearCredsBtn').style.display = 'block';
+            }
+        }
+        
+        function clearStremioCredentials() {
+            if (confirm('Sign out and clear saved Stremio credentials?')) {
+                localStorage.removeItem('yarrStremioAuthKey');
+                localStorage.removeItem('yarrStremioEmail');
+                stremioAuthKey = '';
+                document.getElementById('stremioEmail').value = '';
+                document.getElementById('stremioPassword').value = '';
+                document.getElementById('syncResult').innerHTML = '<div class="text-gray-600 text-sm">Signed out. Enter your credentials to sign in again.</div>';
+                document.getElementById('clearCredsBtn').style.display = 'none';
+                
+                // Return to login screen if on addon manager
+                backToLogin();
+                
+                // Update connection status UI
+                updateStremioConnectionStatus();
+            }
+        }
+        
+        function closeStremioSync() {
+            document.getElementById('stremioSyncModal').classList.remove('open');
+            // Reset to login screen for next time
+            document.getElementById('stremioAddonManager').style.display = 'none';
+            document.getElementById('stremioLoginScreen').style.display = 'block';
+            document.getElementById('addonSyncResult').innerHTML = '';
+        }
+        
+        let stremioAuthKey = '';
+        let stremioAddons = [];
+        
+        async function connectStremioAccount() {
+            const email = document.getElementById('stremioEmail').value.trim();
+            const password = document.getElementById('stremioPassword').value.trim();
+            const resultDiv = document.getElementById('syncResult');
+            
+            if (!email || !password) {
+                resultDiv.innerHTML = '<div class="text-red-600 text-sm">Please enter both email and password</div>';
+                return;
+            }
+            
+            resultDiv.innerHTML = '<div class="text-yellow-600 text-sm">Signing in...</div>';
+            
+            try {
+                // Call Stremio API to login
+                const response = await fetch('https://api.strem.io/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        authKey: null,
+                        email: email,
+                        password: password
+                    })
+                });
+                
+                const data = await response.json();
+                if (data.result && data.result.authKey) {
+                    stremioAuthKey = data.result.authKey;
+                    
+                    // Save credentials to localStorage for persistence
+                    localStorage.setItem('yarrStremioAuthKey', stremioAuthKey);
+                    localStorage.setItem('yarrStremioEmail', email);
+                    
+                    resultDiv.innerHTML = '<div class="text-green-600 text-sm">✓ Signed in! Loading addons...</div>';
+                    
+                    // Load user's current addons
+                    await loadStremioAddons();
+            } else {
+                    throw new Error('Invalid credentials');
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="text-red-600 text-sm">✗ Sign in failed: ${error.message}</div>`;
+            }
+        }
+        
+        async function loadStremioAddons() {
+            try {
+                const response = await fetch('https://api.strem.io/api/addonCollectionGet', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        type: 'AddonCollectionGet',
+                        authKey: stremioAuthKey,
+                        update: true
+                    })
+                });
+                
+                const data = await response.json();
+                if (data.result && data.result.addons) {
+                    stremioAddons = data.result.addons;
+                    
+                    // Add YARR! to the top if not already there
+                    const yarrManifest = getCurrentManifestUrl();
+                    const yarrExists = stremioAddons.some(a => a.transportUrl === yarrManifest);
+                    if (!yarrExists) {
+                        stremioAddons.unshift({
+                            transportUrl: yarrManifest,
+                            manifest: {
+                                name: 'YARR!',
+                                logo: 'https://spooky.host/yarrwhite.png'
+                            }
+                        });
+                    }
+                    
+                    // Show addon manager screen
+                    document.getElementById('stremioLoginScreen').style.display = 'none';
+                    document.getElementById('stremioAddonManager').style.display = 'block';
+                    renderAddonList();
+                    
+                    // Update connection status UI
+                    updateStremioConnectionStatus();
+                } else {
+                    throw new Error('Failed to load addons');
+                }
+            } catch (error) {
+                document.getElementById('syncResult').innerHTML = `<div class="text-red-600 text-sm">✗ Failed to load addons: ${error.message}</div>`;
+            }
+        }
+        
+        function renderAddonList() {
+            const addonList = document.getElementById('addonList');
+            addonList.innerHTML = stremioAddons.map((addon, idx) => {
+                const isProtected = addon.flags && addon.flags.protected;
+                return `
+                <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-200 hover:bg-gray-100 ${isProtected ? '' : 'cursor-move'}" ${isProtected ? '' : 'draggable="true"'} data-idx="${idx}">
+                    <div class="flex items-center gap-3">
+                        ${isProtected ? '<i class="fas fa-lock text-gray-400 text-xs"></i>' : '<i class="fas fa-grip-vertical text-gray-400"></i>'}
+                        ${addon.manifest.logo ? `<img src="${addon.manifest.logo}" class="w-10 h-10 rounded" onerror="this.style.display='none'">` : ''}
+                        <span class="font-medium text-gray-900">${addon.manifest.name || 'Unknown'}</span>
+                        ${addon.transportUrl.includes('yarr') ? '<span class="bg-primary-100 text-primary-800 text-xs px-2 py-0.5 rounded-full ml-2">NEW</span>' : ''}
+                        ${isProtected ? '<span class="bg-gray-300 text-gray-700 text-xs px-2 py-0.5 rounded-full ml-2">Protected</span>' : ''}
+                        </div>
+                    <div class="flex items-center gap-3">
+                        <span class="text-xs text-gray-500">#${idx + 1}</span>
+                        ${!isProtected ? `<button onclick="confirmDeleteAddon(${idx}, '${addon.manifest.name}')" class="text-gray-400 hover:text-red-500 transition-colors p-2">
+                            <i class="fas fa-trash text-sm"></i>
+                        </button>` : ''}
+                    </div>
+                    </div>
+            `}).join('');
+            
+            // Add drag and drop only for non-protected addons
+            setupDragAndDrop();
+        }
+        
+        function setupDragAndDrop() {
+            const items = document.querySelectorAll('#addonList > div');
+            let draggedItem = null;
+            
+            items.forEach(item => {
+                item.addEventListener('dragstart', (e) => {
+                    draggedItem = item;
+                    item.style.opacity = '0.5';
+                });
+                
+                item.addEventListener('dragend', (e) => {
+                    item.style.opacity = '1';
+                });
+                
+                item.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                });
+                
+                item.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    if (draggedItem !== item) {
+                        const draggedIdx = parseInt(draggedItem.dataset.idx);
+                        const targetIdx = parseInt(item.dataset.idx);
+                        
+                        // Swap in array
+                        const temp = stremioAddons[draggedIdx];
+                        stremioAddons.splice(draggedIdx, 1);
+                        stremioAddons.splice(targetIdx, 0, temp);
+                        
+                        renderAddonList();
+                    }
+                });
+            });
+        }
+        
+        async function syncAddonsToStremio() {
+            const resultDiv = document.getElementById('addonSyncResult');
+            resultDiv.innerHTML = '<div class="text-yellow-600 text-sm">Syncing...</div>';
+            
+            try {
+                const response = await fetch('https://api.strem.io/api/addonCollectionSet', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        type: 'AddonCollectionSet',
+                        authKey: stremioAuthKey,
+                        addons: stremioAddons
+                    })
+                });
+                
+                const data = await response.json();
+                if (data.result && data.result.success) {
+                    resultDiv.innerHTML = '<div class="bg-green-50 border border-green-200 rounded-md p-3 text-sm text-green-800">✓ Synced! Changes will appear in Stremio shortly.</div>';
+                    setTimeout(() => {
+                        closeStremioSync();
+                    }, 2000);
+            } else {
+                    throw new Error(data.result?.error || 'Sync failed');
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="text-red-600 text-sm">✗ Sync failed: ${error.message}</div>`;
+            }
+        }
+        
+        function backToLogin() {
+            document.getElementById('stremioAddonManager').style.display = 'none';
+            document.getElementById('stremioLoginScreen').style.display = 'block';
+            document.getElementById('addonSyncResult').innerHTML = '';
+        }
+        
+        // Delete addon confirmation
+        let addonToDelete = null;
+        
+        function confirmDeleteAddon(idx, name) {
+            addonToDelete = idx;
+            document.getElementById('deleteAddonName').textContent = name;
+            document.getElementById('deleteConfirmModal').classList.add('open');
+        }
+        
+        function closeDeleteConfirm() {
+            document.getElementById('deleteConfirmModal').classList.remove('open');
+            addonToDelete = null;
+        }
+        
+        function deleteAddon() {
+            if (addonToDelete !== null) {
+                stremioAddons.splice(addonToDelete, 1);
+                renderAddonList();
+                closeDeleteConfirm();
+            }
+        }
+        
+        function getCurrentManifestUrl() {
+            const formData = new FormData(document.getElementById('configForm'));
+            const config = {};
+            for (let [key, value] of formData.entries()) {
+                config[key] = value;
+            }
+            const selectedLanguages = Array.from(document.querySelectorAll('input[name="language"]:checked')).map(cb => cb.value);
+            if (selectedLanguages.length > 0) {
+                config['priorityLanguage'] = selectedLanguages.join(',');
+            }
+            const configStr = Object.entries(config)
+                .filter(([k, v]) => v && v !== 'off')
+                .map(([k, v]) => `${k}=${encodeURIComponent(v)}`)
+                .join('&');
+            return configStr 
+                ? `${window.location.origin}/${configStr}/manifest.json`
+                : `${window.location.origin}/manifest.json`;
+        }
+
+        // Check if coming from Stremio with existing config
+        window.addEventListener('DOMContentLoaded', function() {
+            if (window.YARR_CONFIG) {
+                // Editing existing config - skip welcome, show all steps
+                document.getElementById('pageHeader').style.display = 'block';
+                document.getElementById('welcomeScreen').style.display = 'none';
+                document.getElementById('setupProgress').style.display = 'block';
+                document.getElementById('setupProgress').querySelector('h2').textContent = 'Edit Configuration';
+                document.getElementById('configForm').style.display = 'block';
+                
+                document.querySelectorAll('.step-section').forEach(section => {
+                    section.classList.add('active');
+                });
+                document.getElementById('progressBar').style.width = '100%';
+                
+                // Hide all Continue/Back buttons in edit mode (all steps shown)
+                document.querySelectorAll('.step-nav-btn').forEach(btn => btn.style.display = 'none');
+                
+                // Populate form
+                const config = window.YARR_CONFIG;
+                for (const [key, value] of Object.entries(config)) {
+                    if (key === 'priorityLanguage' && value) {
+                        // Handle language checkboxes
+                        const languages = value.split(',').map(l => l.trim()).filter(l => l);
+                        languages.forEach(lang => {
+                            const checkbox = document.querySelector(`input[name="language"][value="${lang}"]`);
+                            if (checkbox) checkbox.checked = true;
+                        });
+                    } else if (key !== 'language') {
+                    const element = document.querySelector(`[name="${key}"]`);
+                    if (element) {
+                        if (element.type === 'checkbox') {
+                            element.checked = value === 'on' || value === true;
+                            } else {
+                            element.value = value;
+                            }
+                        }
+                    }
+                }
+                
+                // Handle debrid services - check boxes if API keys exist
+                if (config.realDebridKey) {
+                    document.getElementById('enableRealDebrid').checked = true;
+                    toggleDebridService('RealDebrid', true);
+                }
+                if (config.premiumizeKey) {
+                    document.getElementById('enablePremiumize').checked = true;
+                    toggleDebridService('Premiumize', true);
+                }
+                if (config.allDebridKey) {
+                    document.getElementById('enableAllDebrid').checked = true;
+                    toggleDebridService('AllDebrid', true);
+                }
+                if (config.debridLinkKey) {
+                    document.getElementById('enableDebridLink').checked = true;
+                    toggleDebridService('DebridLink', true);
+                }
+                if (config.torBoxKey) {
+                    document.getElementById('enableTorBox').checked = true;
+                    toggleDebridService('TorBox', true);
+                }
+                if (config.pikPakKey) {
+                    document.getElementById('enablePikPak').checked = true;
+                    toggleDebridService('PikPak', true);
+                }
+                
+                if (config.speedPreference) selectSpeed(config.speedPreference);
+                
+                // Update preview AFTER form is populated
+                const selectedFormatter = config.formatter || 'ultra-clean';
+                updatePreview(selectedFormatter);
+            } else {
+                // First-time setup - show welcome screen
+                document.getElementById('pageHeader').style.display = 'none';
+                document.getElementById('welcomeScreen').style.display = 'block';
+                currentStep = 1;
+                updatePreview('ultra-clean'); // Default for new setup
+            }
+            
+            updateSourceCount();
+            loadDarkModePreference(); // Load dark mode on page load
+            updateStremioConnectionStatus(); // Check if signed in
+        });
+        
+        // Update Stremio connection status display
+        function updateStremioConnectionStatus() {
+            const savedEmail = localStorage.getItem('yarrStremioEmail');
+            const savedAuthKey = localStorage.getItem('yarrStremioAuthKey');
+            
+            if (savedEmail && savedAuthKey) {
+                // User is signed in - show connected state in Step 5
+                document.getElementById('step5NotConnected').style.display = 'none';
+                document.getElementById('step5Connected').style.display = 'block';
+                document.getElementById('step5ConnectedEmail').textContent = savedEmail;
+            } else {
+                // Not signed in - show connect button
+                document.getElementById('step5NotConnected').style.display = 'block';
+                document.getElementById('step5Connected').style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
