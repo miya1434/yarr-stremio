@@ -6,6 +6,12 @@ on:
     tags: [ 'v*' ]
   pull_request:
     branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to build (e.g., v1.0.0)'
+        required: false
+        default: 'latest'
 
 env:
   REGISTRY: docker.io

@@ -167,7 +167,7 @@ curl -sSL https://raw.githubusercontent.com/spookyhost1/yarr-stremio/main/instal
 docker run -d \
   --name yarr \
   -p 58827:58827 \
-  spookyhost1/yarr-stremio:latest
+  yarrhoster/yarr-stremio:latest
 ```
 
 **Option 3: Docker Compose**
@@ -175,7 +175,7 @@ docker run -d \
 version: '3.8'
 services:
   yarr:
-    image: spookyhost1/yarr-stremio:latest
+    image: yarrhoster/yarr-stremio:latest
     container_name: yarr
     ports:
       - "58827:58827"

@@ -14,7 +14,7 @@ First, make sure you have Docker installed. Then, just pop this into your termin
 docker run -d \
   --name yarr \
   -p 58827:58827 \
-  spookyhost1/yarr-stremio:latest
+  yarrhoster/yarr-stremio:latest
 ```
 
 That's it. YARR! is now running. To configure it, just open your browser and go to `http://localhost:58827/configure`.
@@ -29,7 +29,7 @@ Create a `docker-compose.yml` file and paste this in:
 version: '3.8'
 services:
   yarr:
-    image: spookyhost1/yarr-stremio:latest
+    image: yarrhoster/yarr-stremio:latest
     container_name: yarr
     ports:
       - "58827:58827"
