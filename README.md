@@ -114,6 +114,9 @@ It's all designed to be dead simple. No config files, no command line nonsense. 
 
 After setting everything up, you'll get beautifully formatted results in Stremio, packed with all the info you need.
 
+###WARNING###
+Donot use the connect to Stremio button, it will break your stremio account permanently
+
 ![Detailed View](https://spooky.host/yarr/detailed.png)
 
 ---
